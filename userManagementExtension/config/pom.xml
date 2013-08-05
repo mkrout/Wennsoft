@@ -3,16 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>wennsoft.signatureConnect</groupId>
-		<artifactId>signatureConnect-parent</artifactId>
+		<groupId>wennsoft.signatureConnect.userManagementExtension</groupId>
+		<artifactId>signatureConnect-userManagementExtension</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>wennsoft.signatureConnect.component</groupId>
-	<artifactId>signatureConnect-component</artifactId>
-	<name>SignatureConnect component</name>
-	<packaging>pom</packaging>
-	<modules>
-		<module>services</module>
-	</modules>
+
+	<artifactId>signatureConnect-userManagementExtension-config</artifactId>
+	<name>SignatureConnect UserManagement Extension Config</name>
+	<packaging>jar</packaging>
 </project>
  
