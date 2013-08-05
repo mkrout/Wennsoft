@@ -151,6 +151,8 @@
 
 	<modules>
 		<module>extension</module>
+		<module>UserManagement-extension</module>
+		<module>component</module>
 	</modules>
 
 	<build>
