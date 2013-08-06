@@ -1,37 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
-		<groupId>wennsoft.signatureConnect.component</groupId>
-		<artifactId>signatureConnect-component</artifactId>
+		<groupId>wennsoft.signatureConnect.userManagementExtension</groupId>
+		<artifactId>signatureConnect-userManagementExtension</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>wennsoft.signatureConnect.component</groupId>
-	<artifactId>signatureConnect-component-services</artifactId>
-	<name>SignatureConnect component services</name>
+	<groupId>wennsoft.signatureConnect.userManagementExtension.component.services</groupId>
+	<artifactId>signatureConnect-userManagementExtension-component-services</artifactId>
+	<name>SignatureConnect UserManagement Extension component services</name>
 	<packaging>jar</packaging>
-
-      <dependencies>
-
+    <dependencies>
         <dependency>
           <groupId>org.exoplatform.core</groupId>
           <artifactId>exo.core.component.organization.api</artifactId>
-    	   <version>2.5.5-GA-SNAPSHOT</version>
-     </dependency>
+    	   <version>2.5.4-GA</version>
+		</dependency>
         <dependency>
           <groupId>org.gatein.portal</groupId>
           <artifactId>exo.portal.component.common</artifactId>
-    	  <version>3.5.6.Final-SNAPSHOT</version>
+    	  <version>3.5.5.Final</version>
         </dependency>
         <dependency>
           <groupId>org.gatein.portal</groupId>
           <artifactId>exo.portal.component.portal</artifactId>
-    	  <version>3.5.6.Final-SNAPSHOT</version>
+    	  <version>3.5.5.Final</version>
         </dependency>
-
-
-
-      </dependencies>
-
+    </dependencies>
 </project>
