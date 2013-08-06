@@ -16,5 +16,6 @@
 	<modules>
 		<module>config</module>
 		<module>war</module>
+		<module>component</module>
 	</modules>
 </project>
