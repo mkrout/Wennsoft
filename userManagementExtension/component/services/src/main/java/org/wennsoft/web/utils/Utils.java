@@ -10,8 +10,6 @@ import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
 import org.gatein.common.logging.Logger;
 import org.gatein.common.logging.LoggerFactory;
-
-
 import org.exoplatform.services.mail.Message;
 import java.util.Random;
 
@@ -31,7 +29,6 @@ public class Utils {
     }
 
     public static boolean changePassword (String emailAccount){
-
         try {
             OrganizationService orgService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
             RequestLifeCycle.begin((ComponentRequestLifecycle) orgService);
@@ -56,33 +53,27 @@ public class Utils {
                      return true;
 
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
-        } finally {
-
-            RequestLifeCycle.end();
-        }
-
+	        } finally {
+	            RequestLifeCycle.end();
+	        }
         return false;
     }
 
     public  static void  sendMAil (String to, String  subject, String  mailText) {
-
         MailService mailSrc = (MailService) PortalContainer.getInstance().getComponentInstanceOfType(MailService.class);
         Message message = new Message() ;
         message.setTo(to);
         message.setSubject(subject) ;
         message.setBody(mailText) ;
         message.setMimeType("text/html") ;
-        try
-        {
+        try {
             mailSrc.sendMessage(message);
         }
-        catch(Exception e)
-        {
-             log.error("mail not send");
+        catch(Exception e) {
+             log.error("Mail not sent");
         }
     }
 }
