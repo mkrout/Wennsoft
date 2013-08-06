@@ -13,6 +13,11 @@ import org.gatein.common.logging.LoggerFactory;
 import org.exoplatform.services.mail.Message;
 import java.util.Random;
 
+/**
+ * @author MedAmine Krout
+ */
+
+
 public class Utils {
 
     private static final Logger log = LoggerFactory.getLogger(Utils.class);

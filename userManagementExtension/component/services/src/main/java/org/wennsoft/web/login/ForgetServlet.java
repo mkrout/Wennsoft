@@ -14,6 +14,10 @@ import org.gatein.common.logging.Logger;
 import org.gatein.common.logging.LoggerFactory;
 import org.wennsoft.web.utils.Utils;
 
+/**
+ * @author MedAmine Krout
+ */
+
 public class ForgetServlet extends AbstractHttpServlet {
      /**
      *
