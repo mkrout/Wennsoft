@@ -7,6 +7,10 @@
             <SigninFail>Email inexistant</SigninFail>
             <send>Envoyer Demande</send>
             <forgetpswd>Mot de passe oublie</forgetpswd>
+            <header>Merci de contacter notre support. Vous avez soumis une demande de nouveau mot de passe.</header>
+            <newpassd>Votre nouveau mot de passe est: </newpassd>
+            <footer>Merci</footer>
+            <subject>Reinitialisation de mot de passe</subject>
         </forget>
     </UserManagement>
 </bundle>

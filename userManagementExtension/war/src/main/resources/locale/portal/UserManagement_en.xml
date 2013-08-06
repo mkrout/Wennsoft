@@ -7,7 +7,10 @@
             <SigninFail>No user with the Email</SigninFail>
             <send>Send Request</send>
             <forgetpswd>Forget Password</forgetpswd>
-
+            <header>Thank you for contacting our support. You have submitted a request for a new password.</header>
+            <newpassd>Your new password is: </newpassd>
+            <footer>Thank you</footer>
+            <subject>Password reset</subject>
         </forget>
     </UserManagement>
 </bundle>

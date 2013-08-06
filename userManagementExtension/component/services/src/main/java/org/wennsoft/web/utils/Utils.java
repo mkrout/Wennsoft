@@ -28,38 +28,32 @@ public class Utils {
         return sb.toString();
     }
 
-    public static boolean changePassword (String emailAccount){
+    public static String changePassword (String emailAccount){
+        String sb=null;
         try {
             OrganizationService orgService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
             RequestLifeCycle.begin((ComponentRequestLifecycle) orgService);
             Query query = new Query();
             query.setEmail(emailAccount);
             PageList<User> users = null;
+
             try {
                 users = orgService.getUserHandler().findUsers(query);
                 if (users.getAll().size() > 0)
                 {
                     User user = users.getAll().get(0);
                     String email = user.getEmail();
-                    String sb = Utils.gneratePassword(8);
-                    log.info("Sending mails");
-                    log.info("New PSS  "+sb);
+                    sb = Utils.gneratePassword(8);
                     user.setPassword(sb.toString());
                     orgService.getUserHandler().saveUser(user, true);
-                    String to =email;
-                    String subject = "test send mail";
-                    String mailText = "Your New password is: "+ sb.toString() ;
-                    sendMAil(to, subject, mailText);
-                     return true;
-
-                }
+                 }
             } catch (Exception e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 	        } finally {
 	            RequestLifeCycle.end();
 	        }
-        return false;
+        return sb;
     }
 
     public  static void  sendMAil (String to, String  subject, String  mailText) {
