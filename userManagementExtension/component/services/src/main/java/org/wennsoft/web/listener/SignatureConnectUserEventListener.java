@@ -5,8 +5,8 @@ package org.wennsoft.web.listener;
 
 import org.exoplatform.services.organization.User;
 import org.exoplatform.services.organization.UserEventListener;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.portal.webui.util.Util;
 
 /**
@@ -14,7 +14,7 @@ import org.exoplatform.portal.webui.util.Util;
  */
 public class SignatureConnectUserEventListener extends UserEventListener {
 
-	private static final Logger log = LoggerFactory.getLogger(SignatureConnectUserEventListener.class);
+	private static final Log log = ExoLogger.getLogger(SignatureConnectUserEventListener.class);
 
     public void postSave(User user, boolean isNew) throws Exception {
     	String userName = user.getUserName();
@@ -34,7 +34,6 @@ public class SignatureConnectUserEventListener extends UserEventListener {
 	            	
 	         } else {// user updated
 	            	log.info("[User Management] " + userName + " modified");
-	            	
 	         }
 		}
         
