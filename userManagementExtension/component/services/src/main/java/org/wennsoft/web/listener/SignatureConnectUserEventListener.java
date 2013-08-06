@@ -17,15 +17,20 @@ public class SignatureConnectUserEventListener extends UserEventListener {
 	private static final Logger log = LoggerFactory.getLogger(SignatureConnectUserEventListener.class);
 
     public void postSave(User user, boolean isNew) throws Exception {
+        try {
+        	String userName = user.getUserName();
+            String currentUserName = Util.getPortalRequestContext().getRemoteUser();
+            if (isNew) { // user added
+            	log.info("[User Management] New user " + userName + " created by " + currentUserName);
+            	
+            } else {// user updated
+            	log.info("[User Management] " + currentUserName + " modified user " + userName);
+            	
+            }
+			
+		} catch (NullPointerException npe) {
+			log.info("[User Management] current user doesn't exist");
+		}
         
-        String userName = user.getUserName();
-        String currentUserName = Util.getPortalRequestContext().getRemoteUser();
-        if (isNew) { // user added
-        	log.info("[User Management] New user " + userName + " created by " + currentUserName);
-        	
-        } else {// user updated
-        	log.info("[User Management] " + currentUserName + " modified user " + userName);
-        	
-        }
     }
 }    
