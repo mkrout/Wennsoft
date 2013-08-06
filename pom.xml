@@ -152,7 +152,6 @@
 	<modules>
 		<module>customerBaseSiteExtension</module>
 		<module>userManagementExtension</module>
-		<module>component</module>
 	</modules>
 
 	<build>
