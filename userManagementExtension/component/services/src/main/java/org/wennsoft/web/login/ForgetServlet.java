@@ -10,6 +10,7 @@ import org.exoplatform.container.web.AbstractHttpServlet;
 import org.gatein.common.logging.LoggerFactory;
 import org.gatein.common.logging.Logger;
 import org.wennsoft.web.utils.Utils;
+import java.util.ResourceBundle;
 
 public class ForgetServlet extends AbstractHttpServlet {
      /**

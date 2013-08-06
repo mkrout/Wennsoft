@@ -31,7 +31,7 @@ public class Utils {
     }
 
     public static boolean changePassword (String emailAccount){
-
+         boolean send=false;
         try {
             OrganizationService orgService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
             RequestLifeCycle.begin((ComponentRequestLifecycle) orgService);
@@ -53,8 +53,7 @@ public class Utils {
                     String subject = "test send mail";
                     String mailText = "Your New password is: "+ sb.toString() ;
                     sendMAil(to, subject, mailText);
-                     return true;
-
+                    send=true;
                 }
 
             } catch (Exception e) {
@@ -65,7 +64,7 @@ public class Utils {
             RequestLifeCycle.end();
         }
 
-        return false;
+        return (send);
     }
 
     public  static void  sendMAil (String to, String  subject, String  mailText) {

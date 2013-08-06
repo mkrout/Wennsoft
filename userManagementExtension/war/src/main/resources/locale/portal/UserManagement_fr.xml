@@ -3,9 +3,10 @@
     <UserManagement>
         <forget>
             <emailAccount>E-mail</emailAccount>
-            <Forgetlabel>Mot de passe oubliée</Forgetlabel>
+            <Forgetlabel>Mot de passe oublie</Forgetlabel>
             <SigninFail>Email inexistant</SigninFail>
             <send>Envoyer Demande</send>
+            <forgetpswd>Mot de passe oublie</forgetpswd>
         </forget>
     </UserManagement>
 </bundle>
