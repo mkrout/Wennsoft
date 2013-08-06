@@ -6,6 +6,8 @@
             <Forgetlabel>Forget Password</Forgetlabel>
             <SigninFail>No user with the Email</SigninFail>
             <send>Send Request</send>
+            <forgetpswd>Forget Password</forgetpswd>
+
         </forget>
     </UserManagement>
 </bundle>

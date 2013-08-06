@@ -452,7 +452,7 @@
                         });
                     });
                 </script>
-<a href="<%=contextPath%>/login/jsp/forget.jsp">Mot de passe oublié ?</a>
+<a href="<%=contextPath%>/login/jsp/forget.jsp"><%=res.getString( "UserManagement.forget.forgetpswd")%></a>
 				<div id="UIPortalLoginFormAction" class="loginButton" onclick="login();">
 					<button class="button" href="#"><%=res.getString("portal.login.Signin")%></button>
 				</div>
