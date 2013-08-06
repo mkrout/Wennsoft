@@ -11,4 +11,27 @@
 	<artifactId>signatureConnect-component-services</artifactId>
 	<name>SignatureConnect component services</name>
 	<packaging>jar</packaging>
+
+      <dependencies>
+
+        <dependency>
+          <groupId>org.exoplatform.core</groupId>
+          <artifactId>exo.core.component.organization.api</artifactId>
+    	   <version>2.5.5-GA-SNAPSHOT</version>
+     </dependency>
+        <dependency>
+          <groupId>org.gatein.portal</groupId>
+          <artifactId>exo.portal.component.common</artifactId>
+    	  <version>3.5.6.Final-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.gatein.portal</groupId>
+          <artifactId>exo.portal.component.portal</artifactId>
+    	  <version>3.5.6.Final-SNAPSHOT</version>
+        </dependency>
+
+
+
+      </dependencies>
+
 </project>

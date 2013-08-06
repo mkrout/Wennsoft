@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle>
+    <UserManagement>
+        <forget>
+            <emailAccount>E-mail</emailAccount>
+            <Forgetlabel>Forget Password</Forgetlabel>
+            <SigninFail>No user with the Email</SigninFail>
+            <send>Send Request</send>
+        </forget>
+    </UserManagement>
+</bundle>
