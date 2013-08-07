@@ -36,4 +36,24 @@
 		<servlet-name>GateInServlet</servlet-name>
 		<url-pattern>/gateinservlet</url-pattern>
 	</servlet-mapping>
+	
+	
+	    <servlet>
+        <servlet-name>TermsAndConditionsViewServlet</servlet-name>
+        <servlet-class>org.wennsoft.web.condition.TermsAndConditionsViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TermsAndConditionsActionServlet</servlet-name>
+        <servlet-class>org.wennsoft.web.condition.TermsAndConditionsActionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TermsAndConditionsViewServlet</servlet-name>
+        <url-pattern>/wennsoft-terms-and-conditions</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TermsAndConditionsActionServlet</servlet-name>
+        <url-pattern>/wennsoft-terms-and-conditions-action</url-pattern>
+    </servlet-mapping>
 </web-app>

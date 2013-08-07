@@ -37,7 +37,6 @@ public class ForgetServlet extends AbstractHttpServlet {
         String np =   res.getString("UserManagement.forget.newpassd");
 
         String emailAccount = req.getParameter("emailAccount");
-        log.info(emailAccount);
         String sb=Utils.changePassword(emailAccount);
           if (sb!=null)
           {

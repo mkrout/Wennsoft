@@ -22,7 +22,7 @@ public class Utils {
 
     private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
-    public static String gneratePassword (int lenth) {
+    public static String generatePassword(int lenth) {
         String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         Random rand = new Random(System.currentTimeMillis());
         StringBuilder sb = new StringBuilder();
@@ -47,13 +47,12 @@ public class Utils {
                 if (users.getAll().size() > 0)
                 {
                     User user = users.getAll().get(0);
-                    String email = user.getEmail();
-                    sb = Utils.gneratePassword(8);
+                    sb = Utils.generatePassword(8);
                     user.setPassword(sb.toString());
                     orgService.getUserHandler().saveUser(user, true);
                  }
             } catch (Exception e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+               log.error("Cannot change password");
             }
 	        } finally {
 	            RequestLifeCycle.end();
