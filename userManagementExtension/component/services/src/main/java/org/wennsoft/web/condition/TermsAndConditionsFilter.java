@@ -70,7 +70,7 @@ public class TermsAndConditionsFilter implements Filter {
     boolean isRestUri = (requestUri.contains(REST_URI));
     boolean isDevMod = PropertyManager.isDevelopping();
 
-    if(! isRestUri && !accepted && !isDevMod && logged ) {
+    if(! isRestUri && !accepted && logged ) {
       // Get full url
       String reqUri = httpServletRequest.getRequestURI().toString();
       String queryString = httpServletRequest.getQueryString();

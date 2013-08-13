@@ -31,7 +31,13 @@ public class ForgetServlet extends AbstractHttpServlet {
         ResourceBundleService service = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
 
         ResourceBundle res = service.getResourceBundle(service.getSharedResourceBundleNames(), req.getLocale()) ;
+        req.setAttribute("Forgetlabel",res.getString("UserManagement.forget.Forgetlabel"));
+        req.setAttribute("SigninFail",res.getString("UserManagement.forget.SigninFail"));
+        req.setAttribute("emailAccount",res.getString("UserManagement.forget.emailAccount"));
+        req.setAttribute("send",res.getString("UserManagement.forget.send"));
 
+        req.setAttribute("contextPath", req.getContextPath());
+        resp.setContentType("text/html; charset=UTF-8");
        String headerMail = res.getString("UserManagement.forget.header");
         String footerMail = res.getString("UserManagement.forget.footer");
         String np =   res.getString("UserManagement.forget.newpassd");
@@ -49,11 +55,11 @@ public class ForgetServlet extends AbstractHttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.sendRedirect(redirectURI);
 
+
           }
         else {
-              req.setAttribute("org.wennsoft.web.login.forget.error", "true");
-              resp.setContentType("text/html; charset=UTF-8");
-              getServletContext().getRequestDispatcher("/login/jsp/forget.jsp").include(req, resp);
+              req.setAttribute("error", "true");
+              getServletContext().getRequestDispatcher("/WEB-INF/jsp/forget.jsp").include(req, resp);
           }
     }
 

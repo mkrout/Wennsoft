@@ -56,6 +56,7 @@ public class TermsAndConditionsActionServlet extends HttpServlet {
             userProfile.setAttribute("TCaccepted", "true");
             uph.saveUserProfile(userProfile, true);
             RequestLifeCycle.end();
+             logger.info("T&C accepted by user "+userId);
 
         } catch (Exception e) {
              logger.error("User Profile not updated");
