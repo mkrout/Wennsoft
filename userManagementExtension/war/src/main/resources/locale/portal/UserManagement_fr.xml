@@ -7,9 +7,16 @@
             <emailFooter>Merci</emailFooter>
             <emailSubject>Reinitialisation de mot de passe</emailSubject>
             <forgetPassword>Mot de passe oublie</forgetPassword>
-            <newPassword>Votre nouveau mot de passe est: </newPassword>
-            <send>Envoyer Demande</send>
+            <send>Reinitialiser le mot de passe</send>
             <signinFail>Email inexistant</signinFail>
+            <yourNewPassword>Votre nouveau mot de passe est: </yourNewPassword>
         </forget>
+        <change>
+            <changePassword>Changement du mot de passe</changePassword>
+            <newPassword>Nouveau mot de passe: </newPassword>
+            <oldPassword>Ancien mot de passe: </oldPassword>
+            <reNewPassword>Valider le nouveau mot de passe: </reNewPassword>
+            <send>Changer le mot de passe</send>
+        </change>
     </userManagement>
 </bundle>

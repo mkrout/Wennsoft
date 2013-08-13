@@ -27,7 +27,7 @@
                 </object-param>
             </init-params>
         </component-plugin>
-        <!--component-plugin profiles="all">
+        <component-plugin profiles="all">
             <name>Change Password Filter</name>
             <set-method>addFilterDefinitions</set-method>
             <type>org.exoplatform.web.filter.FilterDefinitionPlugin</type>
@@ -48,6 +48,6 @@
                     </object>
                 </object-param>
             </init-params>
-        </component-plugin-->
+        </component-plugin>
     </external-component-plugins>
 </configuration>

@@ -6,10 +6,17 @@
             <emailHeader>Thank you for contacting our support. You have submitted a request for a new password.</emailHeader>
             <emailFooter>Thank you</emailFooter>
             <emailSubject>Password reset</emailSubject>
-            <forgetPassword>Forget Password</forgetPassword>
-            <newPassword>Your new password is: </newPassword>
-            <send>Send Request</send>
+            <forgetPassword>Forget password</forgetPassword>
+            <send>Reset password</send>
             <signinFail>No user with the Email</signinFail>
+            <yourNewPassword>Your new password is: </yourNewPassword>
         </forget>
+        <change>
+            <changePassword>Change password</changePassword>
+            <newPassword>New password: </newPassword>
+            <oldPassword>Old password: </oldPassword>
+            <reNewPassword>Validate new password: </reNewPassword>
+            <send>Change password</send>
+        </change>
     </userManagement>
 </bundle>
