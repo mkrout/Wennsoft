@@ -26,15 +26,15 @@ public class ForgetServlet extends AbstractHttpServlet
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         
-        httpServletRequest.setAttribute("forgetlabel",resourceBundle.getString("userManagement.forget.forgetPassword"));
+        httpServletRequest.setAttribute("forgetPassword",resourceBundle.getString("userManagement.forget.forgetPassword"));
         httpServletRequest.setAttribute("signinFail",resourceBundle.getString("userManagement.forget.signinFail"));
         httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
-        String emailHeader = resourceBundle.getString("userManagement.forget.emailHeader");
-        String emailFooter = resourceBundle.getString("userManagement.forget.emailFooter");
         String emailAccount = httpServletRequest.getParameter("emailAccount");
+        String emailFooter = resourceBundle.getString("userManagement.forget.emailFooter");
+        String emailHeader = resourceBundle.getString("userManagement.forget.emailHeader");
         String newPassword = resourceBundle.getString("userManagement.forget.newPassword");
         String password = Utils.changePassword(emailAccount);
         if (password != null)
@@ -49,7 +49,6 @@ public class ForgetServlet extends AbstractHttpServlet
         else 
         {
             httpServletRequest.setAttribute("org.wennsoft.web.login.forget.error", "true");
-        	httpServletResponse.setContentType("text/html; charset=UTF-8");
             getServletContext().getRequestDispatcher("/login/jsp/forget.jsp").include(httpServletRequest, httpServletResponse);
         }
     }

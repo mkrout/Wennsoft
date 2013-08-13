@@ -26,7 +26,7 @@ public class ForgetViewServlet extends HttpServlet
     {
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
-        httpServletRequest.setAttribute("forgetlabel",resourceBundle.getString("userManagement.forget.forgetPassword"));
+        httpServletRequest.setAttribute("forgetPassword",resourceBundle.getString("userManagement.forget.forgetPassword"));
         httpServletRequest.setAttribute("signinFail",resourceBundle.getString("userManagement.forget.signinFail"));
         httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
@@ -37,7 +37,8 @@ public class ForgetViewServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+    {
         doPost(req, resp);
     }
 }

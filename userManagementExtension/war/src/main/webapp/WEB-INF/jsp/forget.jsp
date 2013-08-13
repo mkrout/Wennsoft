@@ -19,7 +19,7 @@
 <div class="uiLogin">
     <div class="loginContainer">
         <div class="loginHeader introBox">
-            <div class="userLoginIcon"><c:out value='${forgetlabel}'/></div>
+            <div class="userLoginIcon"><c:out value='${forgetPassword}'/></div>
         </div>
         <div class="loginContent">
             <div class="titleLogin">
