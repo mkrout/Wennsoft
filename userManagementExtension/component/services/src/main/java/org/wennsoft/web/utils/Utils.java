@@ -16,62 +16,71 @@ import java.util.Random;
 /**
  * @author MedAmine Krout
  */
-
-
-public class Utils {
-
-    private static final Logger log = LoggerFactory.getLogger(Utils.class);
-
-    public static String generatePassword(int lenth) {
-        String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        Random rand = new Random(System.currentTimeMillis());
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < lenth; i++) {
-            int pos = rand.nextInt(charset.length());
-            sb.append(charset.charAt(pos));
-        }
-        return sb.toString();
-    }
-
-    public static String changePassword (String emailAccount){
-        String sb=null;
-        try {
-            OrganizationService orgService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
-            RequestLifeCycle.begin((ComponentRequestLifecycle) orgService);
+public class Utils 
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
+    
+    public static String changePassword(String emailAccount)
+    {
+    	String password = new String();
+        try 
+        {
+            OrganizationService organizationService = (OrganizationService)PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+            RequestLifeCycle.begin((ComponentRequestLifecycle)organizationService);
             Query query = new Query();
             query.setEmail(emailAccount);
             PageList<User> users = null;
-
-            try {
-                users = orgService.getUserHandler().findUsers(query);
+            try 
+            {
+                users = organizationService.getUserHandler().findUsers(query);
                 if (users.getAll().size() > 0)
                 {
                     User user = users.getAll().get(0);
-                    sb = Utils.generatePassword(8);
-                    user.setPassword(sb.toString());
-                    orgService.getUserHandler().saveUser(user, true);
-                 }
-            } catch (Exception e) {
-               log.error("Cannot change password");
+                    password = generatePassword(8);
+                    user.setPassword(password);
+                    organizationService.getUserHandler().saveUser(user, true);
+                }
+            } 
+            catch (Exception exception) 
+            {
+            	LOGGER.error("Cannot change password");
             }
-	        } finally {
+	        } 
+            finally
+            {
 	            RequestLifeCycle.end();
 	        }
-        return sb;
+        return password;
     }
 
-    public  static void  sendMAil (String to, String  subject, String  mailText) {
-        MailService mailSrc = (MailService) PortalContainer.getInstance().getComponentInstanceOfType(MailService.class);
+    public static String generatePassword(int length) 
+    {
+        String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        Random random = new Random(System.currentTimeMillis());
+        StringBuilder password = new StringBuilder();
+        for (int count = 0; count < length; count++) 
+        {
+            int position = random.nextInt(charset.length());
+            password.append(charset.charAt(position));
+        }
+        return password.toString();
+    }
+
+    public  static void sendMAil(String to, String  subject, String  mailText) 
+    {
+        MailService mailService = (MailService)PortalContainer.getInstance().getComponentInstanceOfType(MailService.class);
         Message message = new Message() ;
         message.setTo(to);
         message.setSubject(subject) ;
         message.setBody(mailText) ;
         message.setMimeType("text/html") ;
-        try {
-            mailSrc.sendMessage(message);
+        try 
+        {
+        	mailService.sendMessage(message);
         }
-        catch(Exception e) {
-             log.error("Mail not sent");
+        catch (Exception exception) 
+        {
+            LOGGER.error("Mail not sent");
         }
     }
 }

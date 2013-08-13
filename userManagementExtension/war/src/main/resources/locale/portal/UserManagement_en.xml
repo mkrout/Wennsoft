@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bundle>
-    <UserManagement>
+    <userManagement>
         <forget>
             <emailAccount>E-mail</emailAccount>
-            <Forgetlabel>Forget Password</Forgetlabel>
-            <SigninFail>No user with the Email</SigninFail>
+            <emailHeader>Thank you for contacting our support. You have submitted a request for a new password.</emailHeader>
+            <emailFooter>Thank you</emailFooter>
+            <emailSubject>Password reset</emailSubject>
+            <forgetPassword>Forget Password</forgetPassword>
+            <newPassword>Your new password is: </newPassword>
             <send>Send Request</send>
-            <forgetpswd>Forget Password</forgetpswd>
-            <header>Thank you for contacting our support. You have submitted a request for a new password.</header>
-            <newpassd>Your new password is: </newpassd>
-            <footer>Thank you</footer>
-            <subject>Password reset</subject>
+            <signinFail>No user with the Email</signinFail>
         </forget>
-    </UserManagement>
+    </userManagement>
 </bundle>

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bundle>
-    <UserManagement>
+    <userManagement>
         <forget>
             <emailAccount>E-mail</emailAccount>
-            <Forgetlabel>Mot de passe oublie</Forgetlabel>
-            <SigninFail>Email inexistant</SigninFail>
+            <emailHeader>Merci de contacter notre support. Vous avez soumis une demande de nouveau mot de passe.</emailHeader>
+            <emailFooter>Merci</emailFooter>
+            <emailSubject>Reinitialisation de mot de passe</emailSubject>
+            <forgetPassword>Mot de passe oublie</forgetPassword>
+            <newPassword>Votre nouveau mot de passe est: </newPassword>
             <send>Envoyer Demande</send>
-            <forgetpswd>Mot de passe oublie</forgetpswd>
-            <header>Merci de contacter notre support. Vous avez soumis une demande de nouveau mot de passe.</header>
-            <newpassd>Votre nouveau mot de passe est: </newpassd>
-            <footer>Merci</footer>
-            <subject>Reinitialisation de mot de passe</subject>
+            <signinFail>Email inexistant</signinFail>
         </forget>
-    </UserManagement>
+    </userManagement>
 </bundle>

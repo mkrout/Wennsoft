@@ -15,30 +15,29 @@ import java.util.ResourceBundle;
 /**
  * @author MedAmine Krout
  */
-public class ForgetViewServlet extends HttpServlet {
-  private static final long serialVersionUID = 6467955354840693802L;
-  private final static String Forget_JSP_RESOURCE = "/WEB-INF/jsp/forget.jsp";
+public class ForgetViewServlet extends HttpServlet 
+{
+	private final static String Forget_JSP_RESOURCE = "/WEB-INF/jsp/forget.jsp";
     private static final String Forget_SERVLET_CTX = "/userManagementExtension";
+	private static final long serialVersionUID = 1L;
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      ResourceBundleService service = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
-      ResourceBundle res = service.getResourceBundle(service.getSharedResourceBundleNames(), req.getLocale()) ;
-      req.setAttribute("Forgetlabel",res.getString("UserManagement.forget.Forgetlabel"));
-      req.setAttribute("SigninFail",res.getString("UserManagement.forget.SigninFail"));
-      req.setAttribute("emailAccount",res.getString("UserManagement.forget.emailAccount"));
-      req.setAttribute("send",res.getString("UserManagement.forget.send"));
+    @Override
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
+    {
+        ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
+        ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
+        httpServletRequest.setAttribute("forgetlabel",resourceBundle.getString("userManagement.forget.forgetPassword"));
+        httpServletRequest.setAttribute("signinFail",resourceBundle.getString("userManagement.forget.signinFail"));
+        httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
+        httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
+        httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
+        httpServletResponse.setContentType("text/html; charset=UTF-8");
+        ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(Forget_SERVLET_CTX);
+        servletContext.getRequestDispatcher(Forget_JSP_RESOURCE).forward(httpServletRequest, httpServletResponse);
+    }
 
-
-      req.setAttribute("contextPath",req.getContextPath());
-      resp.setContentType("text/html; charset=UTF-8");
-      ServletContext TandCScreensContext = req.getSession().getServletContext().getContext(Forget_SERVLET_CTX);
-      TandCScreensContext.getRequestDispatcher(Forget_JSP_RESOURCE).forward(req, resp);
-  }
-
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    doPost(req, resp);
-  }
-
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
 }

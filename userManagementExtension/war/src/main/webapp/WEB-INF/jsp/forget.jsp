@@ -19,12 +19,12 @@
 <div class="uiLogin">
     <div class="loginContainer">
         <div class="loginHeader introBox">
-            <div class="userLoginIcon"><c:out value='${Forgetlabel}'/></div>
+            <div class="userLoginIcon"><c:out value='${forgetlabel}'/></div>
         </div>
         <div class="loginContent">
             <div class="titleLogin">
                 <c:if test="${error == 'true'}">
-                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${SigninFail}'/></div>
+                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${signinFail}'/></div>
                 </c:if>
             </div>
             <div class="centerLoginContent">
