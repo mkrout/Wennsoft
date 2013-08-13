@@ -37,8 +37,8 @@ public class ForgetViewServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
     {
-        doPost(req, resp);
+        doPost(httpServletRequest, httpServletResponse);
     }
 }

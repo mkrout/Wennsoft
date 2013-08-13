@@ -18,7 +18,8 @@ import org.wennsoft.web.utils.Utils;
 
 public class ForgetServlet extends AbstractHttpServlet 
 {
-    private static final long serialVersionUID = 1L;
+	private final static String Forget_JSP_RESOURCE = "/WEB-INF/jsp/forget.jsp";
+	private static final long serialVersionUID = 1L;
     
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
@@ -35,11 +36,11 @@ public class ForgetServlet extends AbstractHttpServlet
         String emailAccount = httpServletRequest.getParameter("emailAccount");
         String emailFooter = resourceBundle.getString("userManagement.forget.emailFooter");
         String emailHeader = resourceBundle.getString("userManagement.forget.emailHeader");
-        String newPassword = resourceBundle.getString("userManagement.forget.newPassword");
+        String yourNewPassword = resourceBundle.getString("userManagement.forget.yourNewPassword");
         String password = Utils.changePassword(emailAccount);
         if (password != null)
         {
-        	String mailText = emailHeader + "\n\n" +  newPassword + password + "\n\n" +  emailFooter;
+        	String mailText = emailHeader + "\n\n" +  yourNewPassword + password + "\n\n" +  emailFooter;
         	String subject = resourceBundle.getString("userManagement.forget.emailSubject");
             Utils.sendMAil(emailAccount, subject, mailText);
             String redirectURI = "/" + PortalContainer.getCurrentPortalContainerName() + "/login";
@@ -48,14 +49,14 @@ public class ForgetServlet extends AbstractHttpServlet
         }
         else 
         {
-            httpServletRequest.setAttribute("org.wennsoft.web.login.forget.error", "true");
-            getServletContext().getRequestDispatcher("/login/jsp/forget.jsp").include(httpServletRequest, httpServletResponse);
+            httpServletRequest.setAttribute("error", "true");
+            getServletContext().getRequestDispatcher(Forget_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
     {
-        doGet(req, resp);
+        doGet(httpServletRequest, httpServletResponse);
     }
 }    

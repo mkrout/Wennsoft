@@ -22,7 +22,7 @@ public class Utils
     
     public static String changePassword(String emailAccount)
     {
-    	String password = new String();
+    	String password = null;
         try 
         {
             OrganizationService organizationService = (OrganizationService)PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
