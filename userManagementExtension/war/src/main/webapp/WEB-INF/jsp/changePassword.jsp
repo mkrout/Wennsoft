@@ -23,7 +23,7 @@
                         </c:if>
                     </div>
                     <div class="centerLoginContent">
-                        <form name="changePasswordForm" action="<c:out value='${contextPath}'/>/wennsoft-change-password-action" method="post" style="margin: 0px;">
+                        <form name="changePasswordForm" action="<c:out value='${contextPath}'/>/changePassword" method="post" style="margin: 0px;">
                             <input  id="newPassword" name="newPassword" type="password" placeholder="<c:out value='${newPassword}'/>" onblur="this.placeholder = <c:out value='${newPassword}'/>" onfocus="this.placeholder = ''"/>
                             <input  id="reNewPassword" name="reNewPassword" type="password" placeholder="<c:out value='${reNewPassword}'/>" onblur="this.placeholder = <c:out value='${reNewPassword}'/>" onfocus="this.placeholder = ''"/>
                             <div id="UIPortalLoginFormAction" class="loginButton" onclick="submit();">

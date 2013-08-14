@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class ChangePasswordViewServlet extends HttpServlet 
 {
-    private final static String CHANGE_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/changePassword.jsp";
+    private static final String CHANGE_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/changePassword.jsp";
     private static final long serialVersionUID = 1L;
 
     @Override

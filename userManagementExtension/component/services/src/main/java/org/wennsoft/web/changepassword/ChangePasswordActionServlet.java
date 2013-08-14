@@ -24,9 +24,9 @@ import org.exoplatform.services.resources.ResourceBundleService;
 
 public class ChangePasswordActionServlet extends HttpServlet 
 {
-	private final static String CHANGE_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/changePassword.jsp";
 	private static final Log logger = ExoLogger.getLogger(ChangePasswordActionServlet.class);
     private static final long serialVersionUID = 1L;
+	private static final String CHANGE_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/changePassword.jsp";
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
@@ -62,7 +62,7 @@ public class ChangePasswordActionServlet extends HttpServlet
                 userProfileHandler.saveUserProfile(userProfile, true);
                 user.setPassword(newPassword);
                 organizationService.getUserHandler().saveUser(user, true);
-                // Redirect to the home page
+                //Redirect to the home page
                 String redirectURI = "/portal/";
                 httpServletResponse.sendRedirect(redirectURI);
             }

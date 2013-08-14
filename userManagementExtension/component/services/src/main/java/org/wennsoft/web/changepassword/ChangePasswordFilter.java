@@ -28,10 +28,10 @@ import org.exoplatform.web.filter.Filter;
 
 public class ChangePasswordFilter implements Filter 
 {
-    private static final String CHANGE_PASSWORD_SERVLET_CTX = "/userManagementExtension";
-    private static final String CHANGE_PASSWORD_SERVLET_URL = "/wennsoft-change-password";
-    private static final String INITIAL_URI_PARAM_NAME = "initialURI";
 	private static final Log logger = ExoLogger.getLogger(ChangePasswordFilter.class);
+    private static final String CHANGE_PASSWORD_SERVLET_CTX = "/userManagementExtension";
+    private static final String CHANGE_PASSWORD_SERVLET_URL = "/changePasswordView";
+    private static final String INITIAL_URI_PARAM_NAME = "initialURI";
     private static final String REST_URI = ExoContainerContext.getCurrentContainer().getContext().getRestContextName();
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException 
@@ -51,7 +51,7 @@ public class ChangePasswordFilter implements Filter
             {
                 UserProfile userProfile = userProfileHandler.findUserProfileByName(userId);
                 String changePassword = userProfile.getAttribute("changePassword");
-                if (changePassword!= null && changePassword.equals("true"))
+                if (changePassword != null && changePassword.equals("true"))
                 {
                     passwordChanged = true;
                 }
