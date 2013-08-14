@@ -453,7 +453,7 @@ body {
                         });
                     </script>
 
-                    <a href="/userManagementExtension/ForgetView"><%=res.getString("userManagement.forget.forgetPassword")%></a>
+                    <a href="/userManagementExtension/forgetView"><%=res.getString("userManagement.forget.forgetPassword")%></a>
 
 
                     <div id="UIPortalLoginFormAction" class="loginButton" onclick="login();">

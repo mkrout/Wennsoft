@@ -11,17 +11,22 @@ import java.io.IOException;
  * @author MedAmine Krout
  */
 public class TermsAndConditionsViewServlet extends HttpServlet {
-  private static final long serialVersionUID = 6467955354840693802L;
+  private static final long serialVersionUID = 2L;
   private final static String TC_JSP_RESOURCE = "/WEB-INF/jsp/condition/wennsoftconditions.jsp";
 
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      getServletContext().getRequestDispatcher(TC_JSP_RESOURCE).include(request, response);
+  protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+
+      httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
+      httpServletRequest.setAttribute("lang", httpServletRequest.getLocale().getLanguage());
+      httpServletResponse.setContentType("text/html; charset=UTF-8");
+      httpServletResponse.setCharacterEncoding("UTF-8");
+      getServletContext().getRequestDispatcher(TC_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
   }
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doPost(request, response);
+  protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+    doPost(httpServletRequest, httpServletResponse);
   }
 
 }

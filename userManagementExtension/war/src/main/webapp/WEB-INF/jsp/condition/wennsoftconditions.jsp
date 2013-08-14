@@ -1,44 +1,16 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 
-    Copyright (C) 2009 eXo Platform SAS.
-    
-    This is free software; you can redistribute it and/or modify it
-    under the terms of the GNU Lesser General Public License as
-    published by the Free Software Foundation; either version 2.1 of
-    the License, or (at your option) any later version.
-    
-    This software is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-    Lesser General Public License for more details.
-    
-    You should have received a copy of the GNU Lesser General Public
-    License along with this software; if not, write to the Free
-    Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-    02110-1301 USA, or see the FSF site: http://www.fsf.org.
-
---%>
-<%@ page import="java.net.URLEncoder" %>
-<%@ page import="javax.servlet.http.Cookie" %>
-<%@ page import="org.exoplatform.container.PortalContainer" %>
-<%@ page import="org.exoplatform.services.resources.ResourceBundleService" %>
-<%@ page import="java.util.ResourceBundle" %>
-<%@ page import="org.gatein.common.text.EntityEncoder" %>
-<%@ page language="java" %>
-<%
-    String contextPath = request.getContextPath();
-    String lang = request.getLocale().getLanguage();
-    response.setCharacterEncoding("UTF-8");
-    response.setContentType("text/html; charset=UTF-8");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%=lang%>" lang="<%=lang%>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<c:out value='${lang}'/>" lang="<c:out value='${lang}'/>">
 	<head>
 		<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 		<title>Wennsoft Subscription Agreement</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-		<link href="<%=request.getContextPath()%>/css/Style.css" rel="stylesheet" type="text/css"/>
+		<link href="<c:out value='${contextPath}'/>/css/Style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="<c:out value='${contextPath}'/>/javascript/welcomescreens.js"></script>
 	</head>
 	<body>
 		<div class="backLight"></div>
@@ -61,7 +33,7 @@
 				
 			</div>
 			<div class="bottom clearfix">
-				<form name="tcForm" action="<%= contextPath + "/wennsoft-terms-and-conditions-action"%>" method="post">
+				<form name="tcForm" action="<c:out value='${contextPath}'/>/wennsoft-terms-and-conditions-action" method="post">
 					<div class="pull-right">
 						<button class="btn inactive" disabled="disabled" id="continueButton" onclick="validate();">Continue</button>
 					</div>
@@ -70,7 +42,6 @@
 							<span>I agree with this terms and conditions agreement.</span>
 						</label>
 					</div>
-					<script type="text/javascript" src="<%=contextPath%>/javascript/welcomescreens.js"></script>
 				</form>
 			</div>
 		</div>

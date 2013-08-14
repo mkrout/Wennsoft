@@ -17,6 +17,8 @@
             <oldPassword>Ancien mot de passe: </oldPassword>
             <reNewPassword>Valider le nouveau mot de passe: </reNewPassword>
             <send>Changer le mot de passe</send>
+            <oldPasswordError>Ancien mot de passe errone</oldPasswordError>
+            <newPasswordError>Nouveau mot de passe invalide</newPasswordError>
         </change>
     </userManagement>
 </bundle>

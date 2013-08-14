@@ -39,6 +39,8 @@ public class ChangePasswordActionServlet extends HttpServlet
         httpServletRequest.setAttribute("newPassword",resourceBundle.getString("userManagement.change.newPassword"));
         httpServletRequest.setAttribute("reNewPassword",resourceBundle.getString("userManagement.change.reNewPassword"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.change.send"));
+        httpServletRequest.setAttribute("newPasswordError",resourceBundle.getString("userManagement.change.newPasswordError"));
+        httpServletRequest.setAttribute("oldPasswordError",resourceBundle.getString("userManagement.change.oldPasswordError"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         String oldPassword = httpServletRequest.getParameter("oldPassword");

@@ -17,6 +17,8 @@
             <oldPassword>Old password: </oldPassword>
             <reNewPassword>Validate new password: </reNewPassword>
             <send>Change password</send>
+            <oldPasswordError>Wrong old password</oldPasswordError>
+            <newPasswordError>Invalid new password</newPasswordError>
         </change>
     </userManagement>
 </bundle>

@@ -29,11 +29,8 @@ public class TermsAndConditionsFilter implements Filter {
   private static final String WENNSOFT_TandC_SCREENS_SERVLET_CTX = "/userManagementExtension";
   private static final String TC_SERVLET_URL = "/wennsoft-terms-and-conditions";
   private static final String INITIAL_URI_PARAM_NAME = "initialURI";
-  private static String REST_URI;
+  private static String REST_URI = ExoContainerContext.getCurrentContainer().getContext().getRestContextName();
 
-  public TermsAndConditionsFilter() {
-      REST_URI = ExoContainerContext.getCurrentContainer().getContext().getRestContextName();
-  }
 
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

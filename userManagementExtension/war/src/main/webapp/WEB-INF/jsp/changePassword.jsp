@@ -24,17 +24,17 @@
         <div class="loginContent">
             <div class="titleLogin">
                 <c:if test="${wrongOldPassword == 'true'}">
-                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${wrongOldPassword}'/></div>
+                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${oldPasswordError}'/></div>
                 </c:if>
                 <c:if test="${notValidNewPassword == 'true'}">
-                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${notValidNewPassword}'/></div>
+                    <div class="signinFail"><i class="uiIconError"></i><c:out value='${newPasswordError}'/></div>
                 </c:if>
             </div>
             <div class="centerLoginContent">
                 <form name="forgetForm" action="<c:out value='${contextPath}'/>/wennsoft-change-password-action" method="post" style="margin: 0px;">
-                    <input  id="oldPassword" name="oldPassword" type="text" placeholder="<c:out value='${oldPassword}'/>" onblur="this.placeholder = <c:out value='${oldPassword}'/>" onfocus="this.placeholder = ''"/>
-                    <input  id="newPassword" name="newPassword" type="text" placeholder="<c:out value='${newPassword}'/>" onblur="this.placeholder = <c:out value='${newPassword}'/>" onfocus="this.placeholder = ''"/>
-                    <input  id="reNewPassword" name="reNewPassword" type="text" placeholder="<c:out value='${reNewPassword}'/>" onblur="this.placeholder = <c:out value='${reNewPassword}'/>" onfocus="this.placeholder = ''"/>
+                    <input  id="oldPassword" name="oldPassword" type="password" placeholder="<c:out value='${oldPassword}'/>" onblur="this.placeholder = <c:out value='${oldPassword}'/>" onfocus="this.placeholder = ''"/>
+                    <input  id="newPassword" name="newPassword" type="password" placeholder="<c:out value='${newPassword}'/>" onblur="this.placeholder = <c:out value='${newPassword}'/>" onfocus="this.placeholder = ''"/>
+                    <input  id="reNewPassword" name="reNewPassword" type="password" placeholder="<c:out value='${reNewPassword}'/>" onblur="this.placeholder = <c:out value='${reNewPassword}'/>" onfocus="this.placeholder = ''"/>
                     <div id="UIPortalLoginFormAction" class="loginButton" onclick="forget();">
                         <button class="button" href="#"><c:out value='${send}'/></button>
                     </div>
