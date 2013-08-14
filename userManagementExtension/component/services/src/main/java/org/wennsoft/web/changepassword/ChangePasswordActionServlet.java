@@ -35,15 +35,12 @@ public class ChangePasswordActionServlet extends HttpServlet
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         
         httpServletRequest.setAttribute("changePassword",resourceBundle.getString("userManagement.change.changePassword"));
-        httpServletRequest.setAttribute("oldPassword",resourceBundle.getString("userManagement.change.oldPassword"));
         httpServletRequest.setAttribute("newPassword",resourceBundle.getString("userManagement.change.newPassword"));
         httpServletRequest.setAttribute("reNewPassword",resourceBundle.getString("userManagement.change.reNewPassword"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.change.send"));
         httpServletRequest.setAttribute("newPasswordError",resourceBundle.getString("userManagement.change.newPasswordError"));
-        httpServletRequest.setAttribute("oldPasswordError",resourceBundle.getString("userManagement.change.oldPasswordError"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
-        String oldPassword = httpServletRequest.getParameter("oldPassword");
         String newPassword = httpServletRequest.getParameter("newPassword");
         String reNewPassword = httpServletRequest.getParameter("reNewPassword");
         OrganizationService organizationService = (OrganizationService)PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
@@ -52,12 +49,7 @@ public class ChangePasswordActionServlet extends HttpServlet
         {
         	RequestLifeCycle.begin(PortalContainer.getInstance());
             User user = organizationService.getUserHandler().findUserByName(userId);
-            if (!oldPassword.equals(user.getPassword()))
-            {
-                httpServletRequest.setAttribute("wrongOldPassword", "true");
-                getServletContext().getRequestDispatcher(CHANGE_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
-            }
-            else if (!newPassword.equals(reNewPassword))
+            if (!newPassword.equals(reNewPassword))
             {
                 httpServletRequest.setAttribute("notValidNewPassword", "true");
                 getServletContext().getRequestDispatcher(CHANGE_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);

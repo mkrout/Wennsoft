@@ -24,7 +24,6 @@ public class ChangePasswordViewServlet extends HttpServlet
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         httpServletRequest.setAttribute("changePassword",resourceBundle.getString("userManagement.change.changePassword"));
-        httpServletRequest.setAttribute("oldPassword",resourceBundle.getString("userManagement.change.oldPassword"));
         httpServletRequest.setAttribute("newPassword",resourceBundle.getString("userManagement.change.newPassword"));
         httpServletRequest.setAttribute("reNewPassword",resourceBundle.getString("userManagement.change.reNewPassword"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.change.send"));

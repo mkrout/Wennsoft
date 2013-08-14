@@ -3,22 +3,20 @@
     <userManagement>
         <forget>
             <emailAccount>E-mail</emailAccount>
-            <emailHeader>Thank you for contacting our support. You have submitted a request for a new password.</emailHeader>
-            <emailFooter>Thank you</emailFooter>
-            <emailSubject>Password reset</emailSubject>
+            <emailHeader>You have submitted a request for a new password.</emailHeader>
+            <emailFooter>Thank you for contacting our support</emailFooter>
+            <emailSubject>Reset password</emailSubject>
             <forgetPassword>Forget password</forgetPassword>
-            <send>Reset password</send>
+            <send>Send</send>
             <signinFail>No user with the Email</signinFail>
             <yourNewPassword>Your new password is: </yourNewPassword>
         </forget>
         <change>
             <changePassword>Change password</changePassword>
-            <newPassword>New password: </newPassword>
-            <oldPassword>Old password: </oldPassword>
-            <reNewPassword>Validate new password: </reNewPassword>
-            <send>Change password</send>
-            <oldPasswordError>Wrong old password</oldPasswordError>
+            <newPassword>New password</newPassword>
             <newPasswordError>Invalid new password</newPasswordError>
+            <reNewPassword>Validate new password</reNewPassword>
+            <send>Send</send>
         </change>
     </userManagement>
 </bundle>

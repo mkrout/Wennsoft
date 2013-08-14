@@ -2,22 +2,20 @@
 <bundle>
     <userManagement>
         <forget>
-            <emailAccount>E-mail</emailAccount>
-            <emailHeader>Merci de contacter notre support. Vous avez soumis une demande de nouveau mot de passe.</emailHeader>
-            <emailFooter>Merci</emailFooter>
-            <emailSubject>Reinitialisation de mot de passe</emailSubject>
-            <forgetPassword>Mot de passe oublie</forgetPassword>
-            <send>Reinitialiser le mot de passe</send>
+            <emailAccount>Email</emailAccount>
+            <emailHeader>Vous avez soumis une demande de nouveau mot de passe.</emailHeader>
+            <emailFooter>Merci de contacter notre support.</emailFooter>
+            <emailSubject>Réinitialisation du mot de passe</emailSubject>
+            <forgetPassword>Mot de passe oublié</forgetPassword>
+            <send>Envoyer</send>
             <signinFail>Email inexistant</signinFail>
             <yourNewPassword>Votre nouveau mot de passe est: </yourNewPassword>
         </forget>
         <change>
-            <changePassword>Changement du mot de passe</changePassword>
-            <newPassword>Nouveau mot de passe: </newPassword>
-            <oldPassword>Ancien mot de passe: </oldPassword>
-            <reNewPassword>Valider le nouveau mot de passe: </reNewPassword>
-            <send>Changer le mot de passe</send>
-            <oldPasswordError>Ancien mot de passe errone</oldPasswordError>
+            <changePassword>Changer le mot de passe</changePassword>
+            <newPassword>Nouveau mot de passe</newPassword>
+            <reNewPassword>Valider le nouveau mot de passe</reNewPassword>
+            <send>Envoyer</send>
             <newPasswordError>Nouveau mot de passe invalide</newPasswordError>
         </change>
     </userManagement>

@@ -65,19 +65,19 @@ public class ChangePasswordFilter implements Filter
         boolean isRestUri = requestUri.contains(REST_URI);
         if(!isRestUri && !passwordChanged && logged) 
         {
-                // Get full url
-                String requestURI = httpServletRequest.getRequestURI();
-                String queryString = httpServletRequest.getQueryString();
-                if (queryString != null) 
-                {
-            	    requestURI += "?" + queryString;
-                }
-                // Get plf extension servlet context (because ChangePasswordFilter and wennsoft-change-password servlet declaration are not on same context (webapp))
-                ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(CHANGE_PASSWORD_SERVLET_CTX);
-                // Forward to resource from this context 
-                String targetURI = (new StringBuilder()).append(CHANGE_PASSWORD_SERVLET_URL + "?" + INITIAL_URI_PARAM_NAME + "=").append(requestURI).toString();
-                servletContext.getRequestDispatcher(targetURI).forward(httpServletRequest, httpServletResponse);
-                return;
+            // Get full url
+            String requestURI = httpServletRequest.getRequestURI();
+            String queryString = httpServletRequest.getQueryString();
+            if (queryString != null) 
+            {
+                requestURI += "?" + queryString;
+            }
+            // Get plf extension servlet context (because ChangePasswordFilter and wennsoft-change-password servlet declaration are not on same context (webapp))
+            ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(CHANGE_PASSWORD_SERVLET_CTX);
+            // Forward to resource from this context 
+            String targetURI = (new StringBuilder()).append(CHANGE_PASSWORD_SERVLET_URL + "?" + INITIAL_URI_PARAM_NAME + "=").append(requestURI).toString();
+            servletContext.getRequestDispatcher(targetURI).forward(httpServletRequest, httpServletResponse);
+            return;
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
