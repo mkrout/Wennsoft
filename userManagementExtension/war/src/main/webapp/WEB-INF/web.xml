@@ -31,12 +31,12 @@
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>ForgetViewServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.login.ForgetViewServlet</servlet-class>
+        <servlet-name>ForgetPasswordViewServlet</servlet-name>
+        <servlet-class>org.wennsoft.web.login.ForgetPasswordViewServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ForgetServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.login.ForgetServlet</servlet-class>
+        <servlet-name>ForgetPasswordActionServlet</servlet-name>
+        <servlet-class>org.wennsoft.web.login.ForgetPasswordActionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TermsAndConditionsViewServlet</servlet-name>
@@ -60,27 +60,27 @@
         <url-pattern>/gateinservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgetViewServlet</servlet-name>
-        <url-pattern>/forgetView</url-pattern>
+        <servlet-name>ForgetPasswordViewServlet</servlet-name>
+        <url-pattern>/forgetPasswordView</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgetServlet</servlet-name>
-        <url-pattern>/forget</url-pattern>
+        <servlet-name>ForgetPasswordActionServlet</servlet-name>
+        <url-pattern>/forgetPassword</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TermsAndConditionsViewServlet</servlet-name>
-        <url-pattern>/wennsoft-terms-and-conditions</url-pattern>
+        <url-pattern>/termsAndConditionsView</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TermsAndConditionsActionServlet</servlet-name>
-        <url-pattern>/wennsoft-terms-and-conditions-action</url-pattern>
+        <url-pattern>/termsAndConditions</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordViewServlet</servlet-name>
-        <url-pattern>/wennsoft-change-password</url-pattern>
+        <url-pattern>/changePasswordView</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordActionServlet</servlet-name>
-        <url-pattern>/wennsoft-change-password-action</url-pattern>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
 </web-app>
