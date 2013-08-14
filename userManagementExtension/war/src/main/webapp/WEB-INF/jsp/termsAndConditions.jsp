@@ -15,7 +15,7 @@
         <div class="uiWelcomeBox" id="AccountSetup">
 		    <div class="header">Terms and Conditions Agreement</div>
 		    <div class="content" id="AccountSetup">
-			    <p class="c15 c17"><span class="c0 c4">Wennsoft</span><span class="c0"><br/>
+			    <!--p class="c15 c17"><span class="c0 c4">Wennsoft</span><span class="c0"><br/>
 				    1970 S Calhoun Rd.New Berlin, WI 53151</span></p>
 			    <p class="c15 c17"><span class="c0 c4">Wennsoft master Subscription Agreement</span></p>
 			    <p class="c9"><span class="c0">PLEASE READ THIS MASTER SUBSCRIPTION AGREEMENT BEFORE
@@ -23,7 +23,9 @@
 					SERVICES, CUSTOMER SIGNIFIES ITS ASSENT TO THIS AGREEMENT. IF YOU ARE ACTING ON BEHALF
 				    OF AN ENTITY, THEN YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO ENTER INTO THIS
 					AGREEMENT ON BEHALF OF THAT ENTITY. IF CUSTOMER DOES NOT ACCEPT THE TERMS OF THIS
-				    AGREEMENT, THEN IT MUST NOT PURCHASE OR USE THE PRODUCTS OR SERVICES.</span></p>
+				    AGREEMENT, THEN IT MUST NOT PURCHASE OR USE THE PRODUCTS OR SERVICES.</span></p-->
+
+                <div><c:out value='${termCondition}'/></div>
 			</div>
 		    <div class="bottom clearfix">
 			    <form name="termsAndConditionscForm" action="<c:out value='${contextPath}'/>/termsAndConditions" method="post">

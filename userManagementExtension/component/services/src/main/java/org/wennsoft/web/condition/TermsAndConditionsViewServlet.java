@@ -1,10 +1,18 @@
 package org.wennsoft.web.condition;
 
+import javax.jcr.RepositoryException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import javax.jcr.Node;
+import javax.jcr.Session;
+import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.jcr.ext.app.SessionProviderService;
+import org.exoplatform.container.PortalContainer;
+import org.exoplatform.services.jcr.ext.common.SessionProvider;
+import org.exoplatform.services.jcr.core.ManageableRepository;
 
 /**
  * @author MedAmine Krout
@@ -22,6 +30,25 @@ public class TermsAndConditionsViewServlet extends HttpServlet
         httpServletRequest.setAttribute("lang", httpServletRequest.getLocale().getLanguage());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         httpServletResponse.setCharacterEncoding("UTF-8");
+        RepositoryService repositoryService = (RepositoryService) PortalContainer.getInstance().getComponentInstanceOfType(RepositoryService.class);
+        SessionProviderService sessionProviderService = (SessionProviderService) PortalContainer.getInstance().getComponentInstanceOfType(SessionProviderService.class);
+        SessionProvider  sessionProvider = sessionProviderService.getSessionProvider(null);
+        String workspace = "collaboration";
+        Session sess = null;
+        try {
+            ManageableRepository manageableRepository = repositoryService.getCurrentRepository();
+            sess = sessionProvider.getSession(workspace, manageableRepository);
+            Node node = (Node) sess.getItem("/condition");
+            String tac =  node.getNode("default.html/jcr:content").getProperty("jcr:data").getString();
+            System.out.println(node.getNode("default.html/jcr:content").getProperty("jcr:data").getString());
+            httpServletRequest.setAttribute("termCondition", tac);
+        } catch (RepositoryException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+
+
         getServletContext().getRequestDispatcher(TERMS_AND_CONDITIONS_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
     }
 
