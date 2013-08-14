@@ -16,9 +16,9 @@ import org.wennsoft.web.utils.Utils;
  * @author MedAmine Krout
  */
 
-public class ForgetServlet extends AbstractHttpServlet 
+public class ForgetPasswordActionServlet extends AbstractHttpServlet 
 {
-	private final static String Forget_JSP_RESOURCE = "/WEB-INF/jsp/forget.jsp";
+	private final static String FORGET_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/forgetPassword.jsp";
 	private static final long serialVersionUID = 1L;
     
     @Override
@@ -28,7 +28,7 @@ public class ForgetServlet extends AbstractHttpServlet
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         
         httpServletRequest.setAttribute("forgetPassword",resourceBundle.getString("userManagement.forget.forgetPassword"));
-        httpServletRequest.setAttribute("signinFail",resourceBundle.getString("userManagement.forget.signinFail"));
+        httpServletRequest.setAttribute("emailError",resourceBundle.getString("userManagement.forget.emailError"));
         httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
@@ -49,8 +49,8 @@ public class ForgetServlet extends AbstractHttpServlet
         }
         else 
         {
-            httpServletRequest.setAttribute("error", "true");
-            getServletContext().getRequestDispatcher(Forget_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
+            httpServletRequest.setAttribute("notValidEmail", "true");
+            getServletContext().getRequestDispatcher(FORGET_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
         }
     }
 

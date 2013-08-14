@@ -8,7 +8,7 @@
             <emailSubject>Reset password</emailSubject>
             <forgetPassword>Forget password</forgetPassword>
             <send>Send</send>
-            <signinFail>No user with the Email</signinFail>
+            <emailError>No user with this Email</emailError>
             <yourNewPassword>Your new password is: </yourNewPassword>
         </forget>
         <change>

@@ -15,10 +15,10 @@ import java.util.ResourceBundle;
 /**
  * @author MedAmine Krout
  */
-public class ForgetViewServlet extends HttpServlet 
+public class ForgetPasswordViewServlet extends HttpServlet 
 {
-	private final static String Forget_JSP_RESOURCE = "/WEB-INF/jsp/forget.jsp";
-    private static final String Forget_SERVLET_CTX = "/userManagementExtension";
+	private final static String FORGET_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/forgetPassword.jsp";
+    private static final String FORGET_PASSWORD_SERVLET_CTX = "/userManagementExtension";
 	private static final long serialVersionUID = 1L;
 
     @Override
@@ -27,13 +27,13 @@ public class ForgetViewServlet extends HttpServlet
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         httpServletRequest.setAttribute("forgetPassword",resourceBundle.getString("userManagement.forget.forgetPassword"));
-        httpServletRequest.setAttribute("signinFail",resourceBundle.getString("userManagement.forget.signinFail"));
+        httpServletRequest.setAttribute("emailError",resourceBundle.getString("userManagement.forget.emailError"));
         httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
         httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
-        ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(Forget_SERVLET_CTX);
-        servletContext.getRequestDispatcher(Forget_JSP_RESOURCE).forward(httpServletRequest, httpServletResponse);
+        ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(FORGET_PASSWORD_SERVLET_CTX);
+        servletContext.getRequestDispatcher(FORGET_PASSWORD_JSP_RESOURCE).forward(httpServletRequest, httpServletResponse);
     }
 
     @Override

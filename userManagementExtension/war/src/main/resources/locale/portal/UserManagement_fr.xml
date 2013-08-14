@@ -8,7 +8,7 @@
             <emailSubject>Réinitialisation du mot de passe</emailSubject>
             <forgetPassword>Mot de passe oublié</forgetPassword>
             <send>Envoyer</send>
-            <signinFail>Email inexistant</signinFail>
+            <emailError>Aucun utilisateur avec cet Email</emailError>
             <yourNewPassword>Votre nouveau mot de passe est: </yourNewPassword>
         </forget>
         <change>
