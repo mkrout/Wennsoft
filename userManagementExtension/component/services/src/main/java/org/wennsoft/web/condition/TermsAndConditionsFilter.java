@@ -32,7 +32,7 @@ public class TermsAndConditionsFilter implements Filter
 	private static final String REST_URI = ExoContainerContext.getCurrentContainer().getContext().getRestContextName();
     private static final String TERMS_AND_CONDITIONS_SERVLET_CTX = "/userManagementExtension";
     private static final String TERMS_AND_CONDITIONS_SERVLET_URL = "/termsAndConditionsView";
-    
+
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException 
     {
         HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;

@@ -39,16 +39,11 @@ public class TermsAndConditionsViewServlet extends HttpServlet
             ManageableRepository manageableRepository = repositoryService.getCurrentRepository();
             sess = sessionProvider.getSession(workspace, manageableRepository);
             Node node = (Node) sess.getItem("/condition");
-            String tac =  node.getNode("default.html/jcr:content").getProperty("jcr:data").getString();
-            System.out.println(node.getNode("default.html/jcr:content").getProperty("jcr:data").getString());
-            httpServletRequest.setAttribute("termCondition", tac);
+            String content =  node.getNode("default.html/jcr:content").getProperty("jcr:data").getString();
+            httpServletRequest.setAttribute("termCondition", content);
         } catch (RepositoryException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
-
-
-
         getServletContext().getRequestDispatcher(TERMS_AND_CONDITIONS_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
     }
 
