@@ -28,7 +28,7 @@ import org.exoplatform.web.filter.Filter;
 
 public class ChangePasswordFilter implements Filter 
 {
-	private static final Log logger = ExoLogger.getLogger(ChangePasswordFilter.class);
+	private static Log logger = ExoLogger.getLogger(ChangePasswordFilter.class);
     private static final String CHANGE_PASSWORD_SERVLET_CTX = "/userManagementExtension";
     private static final String CHANGE_PASSWORD_SERVLET_URL = "/changePasswordView";
     private static final String INITIAL_URI_PARAM_NAME = "initialURI";

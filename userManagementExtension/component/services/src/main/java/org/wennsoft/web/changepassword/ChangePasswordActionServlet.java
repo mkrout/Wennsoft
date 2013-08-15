@@ -24,7 +24,7 @@ import org.exoplatform.services.resources.ResourceBundleService;
 
 public class ChangePasswordActionServlet extends HttpServlet 
 {
-	private static final Log logger = ExoLogger.getLogger(ChangePasswordActionServlet.class);
+	private static Log logger = ExoLogger.getLogger(ChangePasswordActionServlet.class);
     private static final long serialVersionUID = 1L;
 	private static final String CHANGE_PASSWORD_JSP_RESOURCE = "/WEB-INF/jsp/changePassword.jsp";
 
@@ -34,11 +34,11 @@ public class ChangePasswordActionServlet extends HttpServlet
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         
-        httpServletRequest.setAttribute("changePassword",resourceBundle.getString("userManagement.change.changePassword"));
-        httpServletRequest.setAttribute("newPassword",resourceBundle.getString("userManagement.change.newPassword"));
-        httpServletRequest.setAttribute("reNewPassword",resourceBundle.getString("userManagement.change.reNewPassword"));
-        httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.change.send"));
-        httpServletRequest.setAttribute("newPasswordError",resourceBundle.getString("userManagement.change.newPasswordError"));
+        httpServletRequest.setAttribute("changePassword", resourceBundle.getString("userManagement.change.changePassword"));
+        httpServletRequest.setAttribute("newPassword", resourceBundle.getString("userManagement.change.newPassword"));
+        httpServletRequest.setAttribute("reNewPassword", resourceBundle.getString("userManagement.change.reNewPassword"));
+        httpServletRequest.setAttribute("send", resourceBundle.getString("userManagement.change.send"));
+        httpServletRequest.setAttribute("newPasswordError", resourceBundle.getString("userManagement.change.newPasswordError"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         String newPassword = httpServletRequest.getParameter("newPassword");

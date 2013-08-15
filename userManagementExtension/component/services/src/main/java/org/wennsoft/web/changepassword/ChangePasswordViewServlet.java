@@ -23,13 +23,13 @@ public class ChangePasswordViewServlet extends HttpServlet
     {
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
-        httpServletRequest.setAttribute("changePassword",resourceBundle.getString("userManagement.change.changePassword"));
-        httpServletRequest.setAttribute("newPassword",resourceBundle.getString("userManagement.change.newPassword"));
-        httpServletRequest.setAttribute("reNewPassword",resourceBundle.getString("userManagement.change.reNewPassword"));
-        httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.change.send"));
+        httpServletRequest.setAttribute("changePassword", resourceBundle.getString("userManagement.change.changePassword"));
+        httpServletRequest.setAttribute("newPassword", resourceBundle.getString("userManagement.change.newPassword"));
+        httpServletRequest.setAttribute("reNewPassword", resourceBundle.getString("userManagement.change.reNewPassword"));
+        httpServletRequest.setAttribute("send", resourceBundle.getString("userManagement.change.send"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
-      getServletContext().getRequestDispatcher(CHANGE_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
+        getServletContext().getRequestDispatcher(CHANGE_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
     }
 
     @Override
