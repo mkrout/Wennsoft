@@ -38,19 +38,36 @@ public class TermsAndConditionsViewServlet extends HttpServlet
         RepositoryService repositoryService = (RepositoryService)PortalContainer.getInstance().getComponentInstanceOfType(RepositoryService.class);
         SessionProviderService sessionProviderService = (SessionProviderService)PortalContainer.getInstance().getComponentInstanceOfType(SessionProviderService.class);
         SessionProvider sessionProvider = sessionProviderService.getSessionProvider(null);
-        String workspace = "collaboration";
+        String workspace = null;
+        String path = null;
+
+        if ( System.getProperty("wennsoft.termsandconditions.content.workspace")!= null && System.getProperty("wennsoft.termsandconditions.content.path")!= null)
+        {
+            workspace = System.getProperty("wennsoft.termsandconditions.content.workspace");
+            path = System.getProperty("wennsoft.termsandconditions.content.path");
+        }
+
+        else
+        {
+           logger.info("T&C content location not found in the configuration, default values will be used");
+            workspace = "collaboration";
+            path = "/terms-and-conditions";
+        }
         Session session = null;
         try 
         {
             ManageableRepository manageableRepository = repositoryService.getCurrentRepository();
             session = sessionProvider.getSession(workspace, manageableRepository);
-            Node tersmAndConditionsNode = (Node) session.getItem("/terms-and-conditions");
+            Node tersmAndConditionsNode = (Node) session.getItem(path);
             String tersmAndConditionsNodeContent =  tersmAndConditionsNode.getNode("default.html/jcr:content").getProperty("jcr:data").getString();
             httpServletRequest.setAttribute("tcNodeContent", tersmAndConditionsNodeContent);
         } 
         catch (RepositoryException repositoryException)
         {
-            logger.error( "Item not found");
+            logger.error( "T&C content not found");
+        }
+        finally {
+            session.logout();
         }
         getServletContext().getRequestDispatcher(TERMS_AND_CONDITIONS_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
     }

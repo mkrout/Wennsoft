@@ -42,6 +42,16 @@ public class TermsAndConditionsFilter implements Filter
         String userId = identity.getUserId();
         boolean accepted = false;
         boolean logged = false;
+        boolean tcEnabled = false;
+        if ( System.getProperty("wennsoft.termsandconditions.enable")!= null)
+        {
+            if (System.getProperty("wennsoft.termsandconditions.enable").equals("true"))
+            {
+                tcEnabled = true;
+            }
+        }
+
+
         if(!userId.equals("__anonim"))
         {
             logged=true;
@@ -62,7 +72,7 @@ public class TermsAndConditionsFilter implements Filter
         }
         String requestUri = httpServletRequest.getRequestURI();
         boolean isRestUri = requestUri.contains(REST_URI);
-        if(!isRestUri && !accepted && logged) 
+        if(!isRestUri && !accepted && logged && tcEnabled)
         {
             // Get full url
             String requestURI = httpServletRequest.getRequestURI();
