@@ -27,10 +27,10 @@ public class ForgetPasswordActionServlet extends AbstractHttpServlet
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
         ResourceBundle resourceBundle = resourceBundleService.getResourceBundle(resourceBundleService.getSharedResourceBundleNames(), httpServletRequest.getLocale()) ;
         
-        httpServletRequest.setAttribute("forgetPassword",resourceBundle.getString("userManagement.forget.forgetPassword"));
-        httpServletRequest.setAttribute("emailError",resourceBundle.getString("userManagement.forget.emailError"));
-        httpServletRequest.setAttribute("emailAccount",resourceBundle.getString("userManagement.forget.emailAccount"));
-        httpServletRequest.setAttribute("send",resourceBundle.getString("userManagement.forget.send"));
+        httpServletRequest.setAttribute("forgetPassword", resourceBundle.getString("userManagement.forget.forgetPassword"));
+        httpServletRequest.setAttribute("emailError", resourceBundle.getString("userManagement.forget.emailError"));
+        httpServletRequest.setAttribute("emailAccount", resourceBundle.getString("userManagement.forget.emailAccount"));
+        httpServletRequest.setAttribute("send", resourceBundle.getString("userManagement.forget.send"));
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         String emailAccount = httpServletRequest.getParameter("emailAccount");
