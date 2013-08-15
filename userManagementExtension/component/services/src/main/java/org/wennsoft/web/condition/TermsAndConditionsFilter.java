@@ -27,7 +27,7 @@ import org.exoplatform.web.filter.Filter;
 
 public class TermsAndConditionsFilter implements Filter 
 {
-	private static final Log logger = ExoLogger.getLogger(TermsAndConditionsFilter.class);
+	private static Log logger = ExoLogger.getLogger(TermsAndConditionsFilter.class);
 	private static final String INITIAL_URI_PARAM_NAME = "initialURI";
 	private static final String REST_URI = ExoContainerContext.getCurrentContainer().getContext().getRestContextName();
     private static final String TERMS_AND_CONDITIONS_SERVLET_CTX = "/userManagementExtension";
