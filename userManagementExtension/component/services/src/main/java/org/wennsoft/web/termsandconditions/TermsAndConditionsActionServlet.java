@@ -1,4 +1,4 @@
-package org.wennsoft.web.condition;
+package org.wennsoft.web.termsandconditions;
 
 import java.io.IOException;
 

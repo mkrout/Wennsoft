@@ -19,6 +19,12 @@ public class ChangePasswordViewServlet extends HttpServlet
     private static final long serialVersionUID = 1L;
 
     @Override
+    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
+    {
+        doPost(httpServletRequest, httpServletResponse);
+    }
+    
+    @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
     {
         ResourceBundleService resourceBundleService = (ResourceBundleService)PortalContainer.getInstance().getComponentInstanceOfType(ResourceBundleService.class);
@@ -30,11 +36,5 @@ public class ChangePasswordViewServlet extends HttpServlet
         httpServletRequest.setAttribute("contextPath", httpServletRequest.getContextPath());
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         getServletContext().getRequestDispatcher(CHANGE_PASSWORD_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
-    {
-        doPost(httpServletRequest, httpServletResponse);
     }
 }

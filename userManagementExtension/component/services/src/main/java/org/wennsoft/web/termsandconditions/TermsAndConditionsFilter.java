@@ -1,4 +1,4 @@
-package org.wennsoft.web.condition;
+package org.wennsoft.web.termsandconditions;
 
 import java.io.IOException;
 
@@ -43,15 +43,10 @@ public class TermsAndConditionsFilter implements Filter
         boolean accepted = false;
         boolean logged = false;
         boolean tcEnabled = false;
-        if ( System.getProperty("wennsoft.termsandconditions.enable")!= null)
+        if (System.getProperty("wennsoft.termsandconditions.enable") != null && System.getProperty("wennsoft.termsandconditions.enable").equals("true"))
         {
-            if (System.getProperty("wennsoft.termsandconditions.enable").equals("true"))
-            {
-                tcEnabled = true;
-            }
+            tcEnabled = true;
         }
-
-
         if(!userId.equals("__anonim"))
         {
             logged=true;
@@ -74,16 +69,13 @@ public class TermsAndConditionsFilter implements Filter
         boolean isRestUri = requestUri.contains(REST_URI);
         if(!isRestUri && !accepted && logged && tcEnabled)
         {
-            // Get full url
             String requestURI = httpServletRequest.getRequestURI();
             String queryString = httpServletRequest.getQueryString();
             if (queryString != null) 
             {
                 requestURI += "?" + queryString;
             }
-            // Get plf extension servlet context (because TermsAndConditionsFilter and wennsoft-terms-and-conditions servlet declaration are not on same context (webapp))
             ServletContext TandCScreensContext = httpServletRequest.getSession().getServletContext().getContext(TERMS_AND_CONDITIONS_SERVLET_CTX);
-            // Forward to resource from this context: 
             String uriTarget = (new StringBuilder()).append(TERMS_AND_CONDITIONS_SERVLET_URL + "?" + INITIAL_URI_PARAM_NAME + "=").append(requestURI).toString();
             TandCScreensContext.getRequestDispatcher(uriTarget).forward(httpServletRequest, httpServletResponse);
             return;

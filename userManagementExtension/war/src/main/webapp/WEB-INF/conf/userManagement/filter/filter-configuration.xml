@@ -13,7 +13,7 @@
                     <name>Terms and Conditions Filter</name>
                     <object type="org.exoplatform.web.filter.FilterDefinition">
                         <field name="filter">
-                            <object type="org.wennsoft.web.condition.TermsAndConditionsFilter"/>
+                            <object type="org.wennsoft.web.termsandconditions.TermsAndConditionsFilter"/>
                         </field>
                         <field name="patterns">
                             <collection type="java.util.ArrayList" item-type="java.lang.String">

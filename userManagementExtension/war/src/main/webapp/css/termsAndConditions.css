@@ -1,4 +1,5 @@
-body {
+body.terms-and-conditions 
+{
     background: url("/platform-extension/css/welcome-screens/images/login_texture.jpg") repeat;
     font-family: HelveticaNeue, Arial, sans-serif;
     font-size: 13px;
@@ -7,35 +8,36 @@ body {
     height: auto;
 }
 
-.pull-left {
+.pull-left 
+{
     float: left;
 }
 
-.pull-right {
+.pull-right 
+{
     float: right;
 }
 
-.clearfix {
+.clearfix 
+{
     *zoom: 1;
 }
-.clearfix:before,
-.clearfix:after {
+.clearfix:before, .clearfix:after 
+{
     display: table;
     content: "";
 // Fixes Opera/contenteditable bug:
 // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
 			    line-height: 0;
-    }
+}
 
-.clearfix:after {
+.clearfix:after 
+{
     clear: both;
 }
 
-a {
-    color: #2f5e92;
-}
-
-.backLight {
+.back-light 
+{
     border-radius: 80px 80px 80px 80px;
     box-shadow: 0 0 200px white;
     height: 280px;
@@ -43,7 +45,8 @@ a {
     width: 280px;
 }
 
-.uiWelcomeBox {
+.ui-welcome-box 
+{
     background-color:  #fff;
     border-radius: 10px;
     box-shadow: 0 1px 3px #3d3d3d;
@@ -51,7 +54,8 @@ a {
     width: 512px;
 }
 
-.uiWelcomeBox .header {
+.ui-welcome-box .header 
+{
     background: url("/platform-extension/css/welcome-screens/images/headerBG.png") repeat-x scroll 0 0 transparent;
     border: 1px solid #393939;
     border-radius: 4px 4px 0 0;
@@ -63,7 +67,8 @@ a {
     color: #c1c1c1;
 }
 
-.uiWelcomeBox .content {
+.ui-welcome-box .content 
+{
     background-color: #FFFFFF;
     margin: 0 auto;
     padding: 10px 30px;
@@ -73,13 +78,15 @@ a {
     overflow-y: scroll;
 }
 
-.uiWelcomeBox .bottom {
+.ui-welcome-box .bottom 
+{
     background: url("/platform-extension/css/welcome-screens/images/bottomBG.png") no-repeat center bottom;
     text-align: center;
     padding: 25px 30px;
 }
 
-.uiWelcomeBox button {
+.ui-welcome-box button 
+{
     background: url("/platform-extension/css/welcome-screens/images/loginAction.png") repeat-x;
     border: 1px solid #224886;
     border-radius: 4px;
@@ -92,20 +99,22 @@ a {
     cursor: pointer;
 }
 
-.uiWelcomeBox button.inactive {
+.ui-welcome-box button.inactive 
+{
     opacity: 0.5;
     cursor: default;
 }
 
-.uiWelcomeBox .uiCheckbox {
+.ui-welcome-box .ui-check-box 
+{
     position: relative;
     display: inline-block;
     margin: 10px 5px;
 	line-height: 20px;
 }
 
-.uiWelcomeBox .uiCheckbox input[type="checkbox"]:checked,
-.uiWelcomeBox .uiCheckbox  input[type="checkbox"]:not(:checked) {
+.ui-welcome-box .ui-check-box input[type="checkbox"]:checked, .ui-welcome-box .ui-check-box  input[type="checkbox"]:not(:checked)
+{
     margin: 4px 0 0; 
     opacity: 0;
     padding: 0;
@@ -113,20 +122,21 @@ a {
     position: absolute;
     top: 0;
     z-index: 100;
-
 }
 
-.uiWelcomeBox .uiCheckbox input {
+.ui-welcome-box .ui-check-box input 
+{
     margin-left: -18px e("\0/");
     min-height: 10px e("\0/");
 }
 
-.uiWelcomeBox .uiCheckbox > span {
+.ui-welcome-box .ui-check-box > span 
+{
     display: inline-block;
     text-indent: 18px;
 }
 
-.uiWelcomeBox .uiCheckbox input[type="checkbox"]:checked + span:after {
+.ui-welcome-box .ui-check-box input[type="checkbox"]:checked + span:after {
     border-bottom: 2px solid #466799;
     border-left: 2px solid #466799;
     content: "";
@@ -147,7 +157,8 @@ a {
 	background: transparent e("\0/");
 }
 
-.uiWelcomeBox .uiCheckbox input[type="checkbox"] + span:before {
+.ui-welcome-box .ui-check-box input[type="checkbox"] + span:before 
+{
     background: #d2d2d2;
     border-radius: 3px;
     -webkit-border-radius: 3px;

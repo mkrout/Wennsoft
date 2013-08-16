@@ -1,4 +1,4 @@
-package org.wennsoft.web.login;
+package org.wennsoft.web.forgetpassword;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
