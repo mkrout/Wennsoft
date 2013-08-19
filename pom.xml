@@ -152,6 +152,7 @@
 	<modules>
 		<module>customerBaseSiteExtension</module>
 		<module>userManagementExtension</module>
+        <module>wennadmin</module>
 	</modules>
 
 	<build>
