@@ -17,5 +17,6 @@
 		<module>config</module>
 		<module>war</module>
 		<module>component/services</module>
+        <module>portlets</module>		
 	</modules>
 </project>
