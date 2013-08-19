@@ -7,26 +7,26 @@
     <head>
         <title>Forget password</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link href="<c:out value='${contextPath}'/>/css/Style_forget.css" rel="stylesheet" type="text/css"/>
+        <link href="<c:out value="${contextPath}"/>/css/forgetPassword.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
-        <div class="loginBGLight"><span></span></div>
-        <div class="uiLogin">
-            <div class="loginContainer">
-                <div class="loginHeader introBox">
-                    <div class="userLoginIcon"><c:out value='${forgetPassword}'/></div>
+    <body class="forget-password">
+        <div class="bg-light"><span></span></div>
+        <div class="ui-forget-password">
+            <div class="forget-password-container">
+                <div class="forget-password-header intro-box">
+                    <div class="forget-password-icon"><c:out value="${forgetPassword}"/></div>
                 </div>
-                <div class="loginContent">
-                    <div class="titleLogin">
+                <div class="forget-password-content">
+                    <div class="forget-password-title">
                         <c:if test="${notValidEmail == 'true'}">
-                            <div class="signinFail"><i class="uiIconError"></i><c:out value='${emailError}'/></div>
+                            <div class="email-error"><i class="forget-password-icon-error"></i><c:out value="${emailError}"/></div>
                          </c:if>
                     </div>
-                    <div class="centerLoginContent">
-                        <form name="forgetPasswordForm" action="<c:out value='${contextPath}'/>/forgetPassword" method="post" style="margin: 0px;">
-                            <input  id="emailAccount" name="emailAccount" type="text" placeholder="<c:out value='${emailAccount}'/>" onblur="this.placeholder = <c:out value='${emailAccount}'/>" onfocus="this.placeholder = ''"/>
-                            <div id="UIPortalLoginFormAction" class="loginButton" onclick="submit();">
-                                <button class="button" href="#"><c:out value='${send}'/></button>
+                    <div class="center-forget-password-content">
+                        <form id="forgetPasswordForm" name="forgetPasswordForm" action="<c:out value="${contextPath}"/>/forgetPassword" method="post">
+                            <input  id="emailAccount" name="emailAccount" type="text" placeholder="<c:out value="${emailAccount}"/>" onblur="this.placeholder = <c:out value="${emailAccount}"/>" onfocus="this.placeholder = ''"/>
+                            <div id="forgetPasswordFormAction" class="forget-password-button" onclick="submit();">
+                                <button class="button" href="#"><c:out value="${send}"/></button>
                             </div>
                         </form>
                     </div>

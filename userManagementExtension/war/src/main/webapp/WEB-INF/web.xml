@@ -36,19 +36,19 @@
     </servlet>
     <servlet>
         <servlet-name>ForgetPasswordViewServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.login.ForgetPasswordViewServlet</servlet-class>
+        <servlet-class>org.wennsoft.web.forgetpassword.ForgetPasswordViewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgetPasswordActionServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.login.ForgetPasswordActionServlet</servlet-class>
+        <servlet-class>org.wennsoft.web.forgetpassword.ForgetPasswordActionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TermsAndConditionsViewServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.condition.TermsAndConditionsViewServlet</servlet-class>
+        <servlet-class>org.wennsoft.web.termsandconditions.TermsAndConditionsViewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TermsAndConditionsActionServlet</servlet-name>
-        <servlet-class>org.wennsoft.web.condition.TermsAndConditionsActionServlet</servlet-class>
+        <servlet-class>org.wennsoft.web.termsandconditions.TermsAndConditionsActionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangePasswordViewServlet</servlet-name>

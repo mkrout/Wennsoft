@@ -1,4 +1,4 @@
-package org.wennsoft.web.condition;
+package org.wennsoft.web.termsandconditions;
 
 import java.io.IOException;
 
@@ -27,7 +27,13 @@ public class TermsAndConditionsViewServlet extends HttpServlet
 	private static Log logger = ExoLogger.getLogger(TermsAndConditionsViewServlet.class);
 	private static final long serialVersionUID = 1L;
 	private static final String TERMS_AND_CONDITIONS_JSP_RESOURCE = "/WEB-INF/jsp/termsAndConditions.jsp";
-
+    
+	@Override
+	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
+	{
+	    doPost(httpServletRequest, httpServletResponse);
+	}
+	
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
     {
@@ -40,16 +46,14 @@ public class TermsAndConditionsViewServlet extends HttpServlet
         SessionProvider sessionProvider = sessionProviderService.getSessionProvider(null);
         String workspace = null;
         String path = null;
-
-        if ( System.getProperty("wennsoft.termsandconditions.content.workspace")!= null && System.getProperty("wennsoft.termsandconditions.content.path")!= null)
+        if (System.getProperty("wennsoft.termsandconditions.content.workspace") != null && System.getProperty("wennsoft.termsandconditions.content.path") != null)
         {
             workspace = System.getProperty("wennsoft.termsandconditions.content.workspace");
-            path = System.getProperty("wennsoft.termsandconditions.content.path");
+            path = System.getProperty("wennsoft.termsandconditions.content.path") + "/terms-and-conditions";
         }
-
         else
         {
-           logger.info("T&C content location not found in the configuration, default values will be used");
+            logger.info("T&C content location not found in the configuration, default values will be used");
             workspace = "collaboration";
             path = "/terms-and-conditions";
         }
@@ -70,11 +74,5 @@ public class TermsAndConditionsViewServlet extends HttpServlet
             session.logout();
         }
         getServletContext().getRequestDispatcher(TERMS_AND_CONDITIONS_JSP_RESOURCE).include(httpServletRequest, httpServletResponse);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
-    {
-        doPost(httpServletRequest, httpServletResponse);
     }
 }

@@ -1,4 +1,4 @@
-package org.wennsoft.web.login;
+package org.wennsoft.web.forgetpassword;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.services.resources.ResourceBundleService;
@@ -21,6 +21,12 @@ public class ForgetPasswordViewServlet extends HttpServlet
     private static final String FORGET_PASSWORD_SERVLET_CTX = "/userManagementExtension";
 	private static final long serialVersionUID = 1L;
 
+	@Override
+    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
+    {
+        doPost(httpServletRequest, httpServletResponse);
+    }
+	
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
     {
@@ -34,11 +40,5 @@ public class ForgetPasswordViewServlet extends HttpServlet
         httpServletResponse.setContentType("text/html; charset=UTF-8");
         ServletContext servletContext = httpServletRequest.getSession().getServletContext().getContext(FORGET_PASSWORD_SERVLET_CTX);
         servletContext.getRequestDispatcher(FORGET_PASSWORD_JSP_RESOURCE).forward(httpServletRequest, httpServletResponse);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException 
-    {
-        doPost(httpServletRequest, httpServletResponse);
     }
 }

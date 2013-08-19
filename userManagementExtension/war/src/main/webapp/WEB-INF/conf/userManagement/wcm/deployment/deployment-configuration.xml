@@ -22,10 +22,10 @@
             <field name="target">
               <object type="org.exoplatform.services.deployment.DeploymentDescriptor$Target">
                 <field name="workspace">
-                  <string>collaboration</string>
+                  <string>${wennsoft.termsandconditions.content.workspace:collaboration}</string>
                 </field>
                 <field name="nodePath">
-                  <string>/</string>
+                  <string>${wennsoft.termsandconditions.content.path:/}</string>
                 </field>
               </object>
             </field>

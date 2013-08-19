@@ -1,24 +1,25 @@
 package org.wennsoft.web.utils;
 
+import java.util.Random;
+
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.ComponentRequestLifecycle;
 import org.exoplatform.container.component.RequestLifeCycle;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.mail.MailService;
+import org.exoplatform.services.mail.Message;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
-import org.gatein.common.logging.Logger;
-import org.gatein.common.logging.LoggerFactory;
-import org.exoplatform.services.mail.Message;
-import java.util.Random;
 
 /**
  * @author MedAmine Krout
  */
 public class Utils 
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
+	private static Log logger = ExoLogger.getLogger(Utils.class);
     
     public static String changePassword(String emailAccount)
     {
@@ -43,7 +44,7 @@ public class Utils
             } 
             catch (Exception exception) 
             {
-            	LOGGER.error("Cannot change password");
+            	logger.error("Cannot change password");
             }
 	        } 
             finally
@@ -80,7 +81,7 @@ public class Utils
         }
         catch (Exception exception) 
         {
-            LOGGER.error("Mail not sent");
+        	logger.error("Mail not sent");
         }
     }
 }
