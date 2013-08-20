@@ -12,7 +12,9 @@ import org.exoplatform.services.organization.User;
 
 public class FindUsersPageList extends PageListAccess<User, Query> 
 {
-    public FindUsersPageList(Query state, int pageSize) 
+	private static final long serialVersionUID = 1L;
+
+	public FindUsersPageList(Query state, int pageSize) 
     {
         super(state, pageSize);
     }

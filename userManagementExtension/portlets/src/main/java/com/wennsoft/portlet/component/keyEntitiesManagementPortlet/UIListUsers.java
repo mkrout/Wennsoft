@@ -136,8 +136,15 @@ public class UIListUsers extends UISearch
         grid_.getUIPageIterator().setPageList(new FindUsersPageList(query, 10));
     }
    
-    public static class DisplayUserKeyEntitiesActionListener extends EventListener<UIListUsers> {
-        public void execute(Event<UIListUsers> event) throws Exception {
+    public static class DisplayUserKeyEntitiesActionListener extends EventListener<UIListUsers> 
+    {
+        public void execute(Event<UIListUsers> event) throws Exception 
+        {
+            UIListUsers uiListUsers = event.getSource();
+            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
+            UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
+            uiKeyEntitiesForm.setRendered(true);
+            event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
         }
     }
 }

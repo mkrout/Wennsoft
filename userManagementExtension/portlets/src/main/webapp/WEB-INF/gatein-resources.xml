@@ -9,7 +9,7 @@
     <application-name>userManagementPortlets</application-name>
     <portlet-name>keyEntitiesManagementPortlet</portlet-name>
     <skin-name>Default</skin-name>
-    <css-path>/skin/webui/component/keyEntitiesManagementPortlet/DefaultStylesheet.css</css-path>
+    <css-path>/skin/webui/component/keyEntitiesManagementPortlet/Style.css</css-path>
   </portlet-skin>
   
 </gatein-resources>
