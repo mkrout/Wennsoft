@@ -150,7 +150,8 @@
 	</dependencyManagement-->
 
 	<modules>
-		<module>customerBaseSiteExtension</module>
+		<!--module>customerBaseSiteExtension</module-->
+		<module>CustomerConnect</module>
 		<module>userManagementExtension</module>
 	</modules>
 
