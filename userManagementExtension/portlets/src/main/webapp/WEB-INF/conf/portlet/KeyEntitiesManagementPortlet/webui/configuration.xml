@@ -3,7 +3,7 @@
   </annotation-classes>
 
   <application>
-    <ui-component-root>com.wennsoft.portlet.component.UIKeyEntitiesManagementPortlet</ui-component-root>
+    <ui-component-root>com.wennsoft.portlet.component.keyEntitiesManagementPortlet.UIKeyEntitiesManagementPortlet</ui-component-root>
     <state-manager>org.exoplatform.webui.application.portlet.ParentAppStateManager</state-manager>
     <application-lifecycle-listeners>
     </application-lifecycle-listeners>

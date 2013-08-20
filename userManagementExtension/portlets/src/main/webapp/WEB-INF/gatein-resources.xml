@@ -6,10 +6,10 @@
     xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_3">
 
   <portlet-skin>
-    <application-name>wennadmin</application-name>
-    <portlet-name>UIWennAdminPortlet</portlet-name>
+    <application-name>userManagementPortlets</application-name>
+    <portlet-name>keyEntitiesManagementPortlet</portlet-name>
     <skin-name>Default</skin-name>
-    <css-path>/skin/webui/component/UIKeyEntitiesManagementPortlet/DefaultStylesheet.css</css-path>
+    <css-path>/skin/webui/component/keyEntitiesManagementPortlet/DefaultStylesheet.css</css-path>
   </portlet-skin>
   
 </gatein-resources>
