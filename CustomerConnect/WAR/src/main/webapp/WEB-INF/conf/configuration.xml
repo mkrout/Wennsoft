@@ -4,4 +4,5 @@
                xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
     <import>war:/conf/customer-connect/portal/group-page-configuration.xml</import>
     <import>war:/conf/customer-connect/portal/portal-configuration.xml</import>
+    <import>war:/conf/customer-connect/wcm/deployment/deployment-configuration.xml</import>
 </configuration>

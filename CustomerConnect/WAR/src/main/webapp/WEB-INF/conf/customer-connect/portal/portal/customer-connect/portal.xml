@@ -27,7 +27,7 @@
                             </preference>
                             <preference>
                                 <name>nodeIdentifier</name>
-                                <value>/sites/customer/web contents/site artifacts/Logo</value>
+                                <value>/sites/customer-connect/web contents/site artifacts/logo</value>
                                 <read-only>false</read-only>
                             </preference>
                             <preference>
@@ -89,7 +89,7 @@
                             </preference>
                             <preference>
                                 <name>nodeIdentifier</name>
-                                <value>/sites/customer/web contents/site artifacts/Signin</value>
+                                <value>/sites/customer-connect/web contents/site artifacts/signin</value>
                                 <read-only>false</read-only>
                             </preference>
                             <preference>
@@ -163,7 +163,7 @@
                     </preference>
                     <preference>
                         <name>nodeIdentifier</name>
-                        <value>/sites/customer/web contents/site artifacts/Footer</value>
+                        <value>/sites/customer-connect/web contents/site artifacts/footer</value>
                         <read-only>false</read-only>
                     </preference>
                     <preference>
