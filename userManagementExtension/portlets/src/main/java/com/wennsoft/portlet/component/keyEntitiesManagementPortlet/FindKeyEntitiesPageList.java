@@ -18,12 +18,15 @@ public class FindKeyEntitiesPageList extends PageListAccess<KeyEntity, String>
 	@Override
 	protected ListAccess<KeyEntity> create(String state) throws Exception {
         List<KeyEntity> keyEntities = new ArrayList<KeyEntity>();
-        KeyEntity keyEntity = new KeyEntity("Customer", "12-1031", "Handy Gloves Inc.");
-        keyEntities.add(keyEntity);
-        keyEntity = new KeyEntity("Customer", "12-1032", "eXoplatform");
-        keyEntities.add(keyEntity);
-        keyEntity = new KeyEntity("Customer", "12-1033", "Capgemini");
-        keyEntities.add(keyEntity);
+        if (state.equals("root")) 
+        {   
+            KeyEntity keyEntity = new KeyEntity("Customer", "Handy Gloves Inc.", "12-1031");
+            keyEntities.add(keyEntity);
+            keyEntity = new KeyEntity("Customer", "eXoplatform", "12-1032");
+            keyEntities.add(keyEntity);
+            keyEntity = new KeyEntity("Customer", "Capgemini", "12-1033");
+            keyEntities.add(keyEntity);
+        }
 		return new ListAccessImpl<KeyEntity>(KeyEntity.class, keyEntities);
 	}
 }

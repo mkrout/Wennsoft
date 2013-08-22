@@ -15,32 +15,42 @@ import org.exoplatform.webui.form.UIForm;
     events = 
     { 
         @EventConfig(listeners = UIKeyEntitiesForm.SaveActionListener.class, phase = Phase.DECODE), 
-        @EventConfig(listeners = UIKeyEntitiesForm.CancelActionListener.class, phase = Phase.DECODE)
+        @EventConfig(listeners = UIKeyEntitiesForm.CancelActionListener.class, phase = Phase.DECODE),
+        @EventConfig(listeners = UIKeyEntitiesForm.AddKeyEntitiesActionListener.class, phase = Phase.DECODE)
     }
 )
 @Serialized
 public class UIKeyEntitiesForm extends UIForm
 {
-
-    public UIKeyEntitiesForm() throws Exception
+	public void load(String userName) throws Exception
     {
-        addChild(UIListKeyEntities.class, null, null);
-        setActions(new String[] {"Save", "Cancel"});
+		addChild(UIListKeyEntities.class, null, null);
+        setActions(new String[] {"Save", "Cancel", "AddKeyEntities"});
     }
 
-    public static class SaveActionListener extends EventListener<UIListKeyEntities> 
+    public static class SaveActionListener extends EventListener<UIKeyEntitiesForm> 
     {
-        public void execute(Event<UIListKeyEntities> event) throws Exception 
+        public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
         {
         	System.out.println("UserKeyEntities saved successfully");
         }
     }
     
-    public static class CancelActionListener extends EventListener<UIListKeyEntities> 
+    public static class CancelActionListener extends EventListener<UIKeyEntitiesForm> 
     {
-        public void execute(Event<UIListKeyEntities> event) throws Exception 
+        public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
         {
         	System.out.println("UserKeyEntities cancelled successfully");
+        }
+    }
+    
+    public static class AddKeyEntitiesActionListener extends EventListener<UIKeyEntitiesForm> 
+    {
+        public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
+        {
+            UIKeyEntitiesForm uiKeyEntitiesForm = event.getSource();
+            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesForm.getParent();
+            uiKeyEntitiesManagementPortlet.setAddPopup();
         }
     }
 }

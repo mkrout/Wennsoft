@@ -28,7 +28,7 @@ import org.exoplatform.webui.form.UIFormStringInput;
 )
 
 @Serialized
-public class UIListUsers extends UISearch 
+public class UIListUsers extends UISearch
 {
     public static final String EMAIL = "email";
     public static final String FIRST_NAME = "firstName";
@@ -141,9 +141,18 @@ public class UIListUsers extends UISearch
         public void execute(Event<UIListUsers> event) throws Exception 
         {
             UIListUsers uiListUsers = event.getSource();
+            String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
             UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
             uiKeyEntitiesForm.setRendered(true);
+            UIListKeyEntities uiListKeyEntities = uiKeyEntitiesForm.getChild(UIListKeyEntities.class);
+            if (uiListKeyEntities != null) 
+            {
+            	uiKeyEntitiesForm.removeChild(UIListKeyEntities.class);
+            }
+            uiKeyEntitiesForm.load(userName);
+            uiListKeyEntities = uiKeyEntitiesForm.getChild(UIListKeyEntities.class);
+            uiListKeyEntities.load(userName);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
         }
     }
