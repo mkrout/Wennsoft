@@ -14,23 +14,23 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 @Serialized
 public class UIKeyEntitiesManagementPortlet extends UIPortletApplication 
 {
-    final static public String ADD_POPUP = "KeysAntitiesAddPopup";
+    final static public String KEY_ENTITIES_ADD_POPUP = "KeysAntitiesAddPopup";
 
     public UIKeyEntitiesManagementPortlet() throws Exception 
     {
         addChild(UIListUsers.class, null, null).setRendered(true);
         addChild(UIKeyEntitiesForm.class, null, null).setRendered(false);
-        setAddPopup() ;
     }
 
-    public void setAddPopup() throws Exception {
-        removeChildById(ADD_POPUP) ;
-        UIPopupWindow uiPopup = addChild(UIPopupWindow.class, null, ADD_POPUP);
-        uiPopup.setWindowSize(500, 400);
-        UIKeyEntitiesAdd uiAdd = uiPopup.createUIComponent(UIKeyEntitiesAdd.class, null, null);
-        uiAdd.update() ;
-        uiPopup.setUIComponent(uiAdd) ;
-        uiPopup.setShow(true) ;
-        uiPopup.setResizable(true) ;
+    public void setAddPopup() throws Exception 
+    {
+        removeChildById(KEY_ENTITIES_ADD_POPUP) ;
+        UIPopupWindow uiPopupWindow = addChild(UIPopupWindow.class, null, KEY_ENTITIES_ADD_POPUP);
+        uiPopupWindow.setWindowSize(500, 400);
+        UIKeyEntitiesAdd uiKeyEntitiesAdd = uiPopupWindow.createUIComponent(UIKeyEntitiesAdd.class, null, null);
+        uiKeyEntitiesAdd.init() ;
+        uiPopupWindow.setUIComponent(uiKeyEntitiesAdd) ;
+        uiPopupWindow.setShow(true) ;
+        uiPopupWindow.setResizable(true) ;
     }
 }
