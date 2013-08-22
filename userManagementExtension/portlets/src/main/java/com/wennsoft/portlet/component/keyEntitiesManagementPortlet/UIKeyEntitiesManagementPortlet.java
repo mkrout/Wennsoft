@@ -28,7 +28,7 @@ public class UIKeyEntitiesManagementPortlet extends UIPortletApplication
         UIPopupWindow uiPopup = addChild(UIPopupWindow.class, null, ADD_POPUP);
         uiPopup.setWindowSize(500, 400);
         UIKeyEntitiesAdd uiAdd = uiPopup.createUIComponent(UIKeyEntitiesAdd.class, null, null);
-        uiAdd.update() ;
+        uiAdd.init() ;
         uiPopup.setUIComponent(uiAdd) ;
         uiPopup.setShow(true) ;
         uiPopup.setResizable(true) ;
