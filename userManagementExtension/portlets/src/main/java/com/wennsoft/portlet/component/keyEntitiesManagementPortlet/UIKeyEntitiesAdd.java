@@ -43,7 +43,7 @@ public class UIKeyEntitiesAdd extends UIForm
     public final static String[] TABLE_COLUMNS = {NAME, NUMBER, INPUT};
     private static String product;
 
-    private List<KeyEntity> keyEntities = new ArrayList<KeyEntity>();
+   private List<KeyEntity> keyEntities = new ArrayList<KeyEntity>();
     
     public void init() throws Exception 
     {
@@ -57,7 +57,8 @@ public class UIKeyEntitiesAdd extends UIForm
 
     public void update() throws Exception 
     {
-        if (product!=null && product.equals("customer")) 
+        keyEntities.clear();
+        if (product!=null && product.equals("customer"))
     	{
     	    KeyEntity keyEntity = new KeyEntity("customer", "Handy Gloves Inc1.", "12-1031");
     	    keyEntities.add(keyEntity);
