@@ -1,5 +1,8 @@
 package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.exoplatform.commons.serialization.api.annotations.Serialized;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.web.application.ApplicationMessage;
@@ -7,13 +10,13 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIApplication;
-import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.core.UIContainer;
+import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.core.UIPageIterator;
 import org.exoplatform.webui.core.lifecycle.UIContainerLifecycle;
 import org.exoplatform.webui.event.Event;
-import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
+import org.exoplatform.webui.event.EventListener;
 
 @ComponentConfig
 (
@@ -28,17 +31,18 @@ import org.exoplatform.webui.event.Event.Phase;
 public class UIListKeyEntities extends UIContainer 
 {
     public static final String CONNECT = "connectId";
-    public static final String KEY_ENTITY_NUMBER = "keyEntityNumber";
-    public static final String KEY_ENTITY_NAME = "keyEntityName";
+    public static final String KEY = "key";
     private static final String[] KEY_ENTITY_ACTION = { "Delete"};
     
-    private static final String[] KEY_ENTITY_BEAN_FIELD = { CONNECT, KEY_ENTITY_NUMBER, KEY_ENTITY_NAME };
-    private UIGrid grid_;
+    private static final String[] KEY_ENTITY_BEAN_FIELD = { CONNECT, KEY };
+    private static UIGrid grid_;
+    private static String state_;
     
     public void load(String state) throws Exception
     {
+    	state_ = state;
     	grid_= addChild(UIGrid.class, null, "UIListKeyEntitiesGird");
-        grid_.configure(CONNECT, KEY_ENTITY_BEAN_FIELD, KEY_ENTITY_ACTION);
+        grid_.configure(KEY, KEY_ENTITY_BEAN_FIELD, KEY_ENTITY_ACTION);
         grid_.getUIPageIterator().setId("UIListKeyEntitiesGirdIterator");
         grid_.getUIPageIterator().setParent(this);
         grid_.getUIPageIterator().setPageList(new FindKeyEntitiesPageList(state, 10));
@@ -63,7 +67,28 @@ public class UIListKeyEntities extends UIContainer
     {
         public void execute(Event<UIListKeyEntities> event) throws Exception 
         {
-        	System.out.println("UserKeyEntities deleted successfully");
+        	UIListKeyEntities uiListKeyEntities = event.getSource();
+        	String key = event.getRequestContext().getRequestParameter(OBJECTID);
+        	String keyEntities = Utils.getAttributeUserProfile(state_, "keyEntities");
+            String keyEntity = new String();
+            if (keyEntities != null)
+            {
+            	List<String> splittedKeyEntities = new ArrayList<String>();
+            	for (String splittedKeyEntity : keyEntities.split("&"))
+            	{
+            		if (!splittedKeyEntity.split("/")[1].equals(key))
+            		{
+            			splittedKeyEntities.add(splittedKeyEntity);
+            		}
+            	}
+            	for (String splittedKeyEntity : splittedKeyEntities)
+            	{
+            		keyEntity += splittedKeyEntity + "&";
+            	}
+            	Utils.setAttributeUserProfile(state_, "keyEntities", keyEntity);
+            	uiListKeyEntities.load(state_);
+            	event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
+            }
         }
     }
 }
