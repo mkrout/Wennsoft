@@ -96,7 +96,7 @@ public class UIKeyEntitiesAdd extends UIForm
 
                 for (Map.Entry<String, String> entry : customer_.entrySet()) {
                     uiInputSet.addChild(new UIFormInputInfo(entry.getKey(), null, entry.getValue()));
-                    keyValue=keyValue+":"+entry.getKey()+";"+entry.getValue();
+                    keyValue=keyValue+entry.getKey()+":"+entry.getValue()+";";
                 }
                 UIFormCheckBoxInput<String> uiCheckbox = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
                 uiCheckbox.setChecked(false);
