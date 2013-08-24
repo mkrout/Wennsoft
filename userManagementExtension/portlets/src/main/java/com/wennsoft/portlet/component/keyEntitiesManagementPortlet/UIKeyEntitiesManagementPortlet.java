@@ -22,13 +22,13 @@ public class UIKeyEntitiesManagementPortlet extends UIPortletApplication
         addChild(UIKeyEntitiesForm.class, null, null).setRendered(false);
     }
 
-    public void setAddPopup() throws Exception 
+    public void setAddPopup() throws Exception
     {
         removeChildById(KEY_ENTITIES_ADD_POPUP) ;
         UIPopupWindow uiPopupWindow = addChild(UIPopupWindow.class, null, KEY_ENTITIES_ADD_POPUP);
         uiPopupWindow.setWindowSize(500, 400);
         UIKeyEntitiesAdd uiKeyEntitiesAdd = uiPopupWindow.createUIComponent(UIKeyEntitiesAdd.class, null, null);
-        uiKeyEntitiesAdd.init() ;
+        uiKeyEntitiesAdd.init("test") ;
         uiPopupWindow.setUIComponent(uiKeyEntitiesAdd) ;
         uiPopupWindow.setShow(true) ;
         uiPopupWindow.setResizable(true) ;

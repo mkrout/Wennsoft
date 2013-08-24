@@ -1,7 +1,10 @@
 package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -42,11 +45,13 @@ public class UIKeyEntitiesAdd extends UIForm
     public final static String TABLE_NAME =  "UIKeyEntitiesAdd";
     public final static String[] TABLE_COLUMNS = {NAME, NUMBER, INPUT};
     private static String product;
+    private static String userName;
 
-    private List<KeyEntity> keyEntities = new ArrayList<KeyEntity>();
+   private List<KeyEntity> keyEntities = new ArrayList<KeyEntity>();
     
-    public void init() throws Exception 
+    public void init(String userName_) throws Exception
     {
+        userName = userName_;
         UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCTS, null, null);
         initProductSelectBox(uiFormProductSelectBox);
         uiFormProductSelectBox.setOnChange(PRODUCTS_ONCHANGE);
@@ -57,46 +62,102 @@ public class UIKeyEntitiesAdd extends UIForm
 
     public void update() throws Exception 
     {
-        if (product!=null && product.equals("customer")) 
-    	{
-    	    KeyEntity keyEntity = new KeyEntity("customer", "Handy Gloves Inc1.", "12-1031");
-    	    keyEntities.add(keyEntity);
-    	    keyEntity = new KeyEntity("customer", "eXoplatform1", "12-1032");
-    	    keyEntities.add(keyEntity);
-    	    keyEntity = new KeyEntity("customer", "Capgemini1", "12-1033");
-    	    keyEntities.add(keyEntity); 
-    	}
-    	if (product!=null && product.equals("other")) 
-    	{
-    	    KeyEntity keyEntity = new KeyEntity("other", "XXXXXX", "12-1034");
-    	    keyEntities.add(keyEntity);
-    	    keyEntity = new KeyEntity("other", "YYYYYY", "12-1035");
-    	    keyEntities.add(keyEntity);
-    	    keyEntity = new KeyEntity("other", "ZZZZZZ", "12-1036");
-    	    keyEntities.add(keyEntity); 
-    	} 
-        UIFormInputSet uiInputSet;
-        removeChild(UIFormTableInputSet.class);
+        List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
         UIFormTableInputSet uiFormTableInputSet = createUIComponent(UIFormTableInputSet.class, null, null);
-        uiFormTableInputSet.setName(TABLE_NAME);
-        uiFormTableInputSet.setColumns(TABLE_COLUMNS);
-        UIFormInputInfo uiName;
-        UIFormInputInfo uiNumber;
-        for(KeyEntity keyEntity_ : keyEntities)
-        {
-            String keyEntityName = keyEntity_.getKeyEntityName();
-            String keyEntityNumber = keyEntity_.getKeyEntityNumber();
-            uiInputSet = new UIFormInputSet(keyEntityName);
-            uiName = new UIFormInputInfo(NAME, null, keyEntityName);
-            uiNumber = new UIFormInputInfo(NUMBER, null, keyEntityNumber);
-            uiInputSet.addChild(uiName);
-            uiInputSet.addChild(uiNumber);
-            UIFormCheckBoxInput<String> uiCheckbox = new UIFormCheckBoxInput<String>(keyEntityNumber, keyEntityNumber, null);
-            uiCheckbox.setChecked(false);
-            uiCheckbox.setValue(keyEntityName);
-            uiInputSet.addChild(uiCheckbox);
-            uiFormTableInputSet.addChild(uiInputSet);
+        if (product!=null && product.equals("customer"))
+    	{
+            Map<String, String> customer = new HashMap<String, String>();
+            customer.put("Customer Name","Handy Gloves Inc.");
+            customer.put("Customer Number","12-1031");
+            customers.add(customer);
+            customer = new HashMap();
+            customer.put("Customer Name","eXoplatform1");
+            customer.put("Customer Number", "12-1032");
+            customers.add(customer);
+            customer = new HashMap();
+            customer.put("Customer Name","Capgemini1");
+            customer.put("Customer Number","12-1033");
+            customers.add(customer);
+            String[] TABLE_COLUMNS = new String [customer.size()+1];
+             int i=0;
+            for (Map.Entry<String, String> entry : customer.entrySet()) {
+                TABLE_COLUMNS[i]= entry.getKey();
+                i++;
+            }
+            TABLE_COLUMNS[i]="Input";
+            UIFormInputSet uiInputSet;
+            removeChild(UIFormTableInputSet.class);
+            uiFormTableInputSet.setName(TABLE_NAME);
+            uiFormTableInputSet.setColumns(TABLE_COLUMNS);
+
+            for( Map<String, String> customer_ : customers)
+            {
+                String keyValue="connect:"+product ;
+                uiInputSet = new UIFormInputSet(TABLE_COLUMNS[0]);
+
+                for (Map.Entry<String, String> entry : customer_.entrySet()) {
+                    uiInputSet.addChild(new UIFormInputInfo(entry.getKey(), null, entry.getValue()));
+                    keyValue=keyValue+"/"+entry.getKey()+":"+entry.getValue();
+                }
+                UIFormCheckBoxInput<String> uiCheckbox = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
+                uiCheckbox.setChecked(false);
+                uiCheckbox.setValue(keyValue);
+                uiInputSet.addChild(uiCheckbox);
+                uiFormTableInputSet.addChild(uiInputSet);
+            }
+    	}
+    	if (product!=null && product.equals("vendor"))
+    	{
+            Map<String, String> vendor = new HashMap<String, String>();
+            vendor.put("Vendor Number","SAV-1200");
+            vendor.put("Vendor Branch","MKE");
+            vendor.put("Vendor Name","Gloves");
+            vendors.add(vendor);
+            vendor = new HashMap();
+            vendor.put("Vendor Number","SAV-1202");
+            vendor.put("Vendor Branch", "AAA");
+            vendor.put("Vendor Name","eXoplatform1");
+            vendors.add(vendor);
+            vendor = new HashMap();
+            vendor.put("Vendor Number","SAV-1204");
+            vendor.put("Vendor Branch","FFF");
+            vendor.put("Vendor Name","Capgemini1");
+            vendors.add(vendor);
+            vendor = new HashMap();
+            vendor.put("Vendor Number","SAV-1300");
+            vendor.put("Vendor Branch","ZZZ");
+            vendor.put("Vendor Name","Handy");
+            vendors.add(vendor);
+            String[] TABLE_COLUMNS = new String [vendor.size()+1];
+            int i=0;
+            for (Map.Entry<String, String> entry : vendor.entrySet()) {
+                TABLE_COLUMNS[i]= entry.getKey();
+                i++;
+            }
+            TABLE_COLUMNS[i]="Input";
+            UIFormInputSet uiInputSet;
+            removeChild(UIFormTableInputSet.class);
+            uiFormTableInputSet.setName(TABLE_NAME);
+            uiFormTableInputSet.setColumns(TABLE_COLUMNS);
+
+            for( Map<String, String> vendor_ : vendors)
+            {
+                String keyValue="connect:"+product ;
+                uiInputSet = new UIFormInputSet(TABLE_COLUMNS[0]);
+
+                for (Map.Entry<String, String> entry : vendor_.entrySet()) {
+                    uiInputSet.addChild(new UIFormInputInfo(entry.getKey(), null, entry.getValue()));
+                    keyValue=keyValue+"/"+entry.getKey()+":"+entry.getValue();
+                }
+                UIFormCheckBoxInput<String> uiCheckbox = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
+                uiCheckbox.setChecked(false);
+                uiCheckbox.setValue(keyValue);
+                uiInputSet.addChild(uiCheckbox);
+                uiFormTableInputSet.addChild(uiInputSet);
+            }
         }
+
         addUIFormInput(uiFormTableInputSet);
     }
 
@@ -149,33 +210,36 @@ public class UIKeyEntitiesAdd extends UIForm
             List<KeyEntity> selectedKeys = new ArrayList<KeyEntity>();
             List<UIFormCheckBoxInput> listCheckbox =  new ArrayList<UIFormCheckBoxInput>();
             uiKeyEntitiesAdd.findComponentOfType(listCheckbox, UIFormCheckBoxInput.class);
+            String userProfile ="";
             for(UIFormCheckBoxInput checkbox : listCheckbox) 
             {
                 if(checkbox.isChecked())
                 { 
                     selectedKeys.add(uiKeyEntitiesAdd.getKeyEntityByNumber(checkbox.getName()));
-                    System.out.println(checkbox.getName()+"  added");
-                }	
+                    System.out.println(checkbox.getValue()+"  added");
+                    userProfile=userProfile+"|"+checkbox.getValue();
+                }
             }
             if(selectedKeys.size() == 0) 
             {
                 uiApplication.addMessage(new ApplicationMessage("No keys entities selected", null));
                 return;
             }
+            System.out.println(userProfile);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
             UIPopupWindow uiPopupWindow = uiKeyEntitiesManagementPortlet.findComponentById(UIKeyEntitiesManagementPortlet.KEY_ENTITIES_ADD_POPUP);
             uiPopupWindow.setShowMask(true);
             uiPopupWindow.setRendered(false);
         }
     }
-    
+
     private void initProductSelectBox(UIFormSelectBox productSelectBox)
     {
         List<SelectItemOption<String>> product_ = new ArrayList<SelectItemOption<String>>();
         SelectItemOption<String> option;
         option = new SelectItemOption<String>("Customer Connect", "customer");
         product_.add(option);
-        option = new SelectItemOption<String>("Other Connect", "other");
+        option = new SelectItemOption<String>("Vendor Connect", "vendor");
         product_.add(option);
         productSelectBox.setOptions(product_);
         productSelectBox.setValue(option.getValue());
