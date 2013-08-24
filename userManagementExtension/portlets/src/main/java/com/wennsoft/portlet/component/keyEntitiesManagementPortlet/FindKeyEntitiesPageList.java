@@ -38,8 +38,11 @@ public class FindKeyEntitiesPageList extends PageListAccess<KeyEntity, String>
         	String[] splittedKeyEntities = keyEntities.split("&");
         	for (String splittedKeyEntity : splittedKeyEntities)
         	{
-        		keyEntity = new KeyEntity(splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
-        		listKeyEntities.add(keyEntity);
+        	    if (!splittedKeyEntity.equals(""))
+        		{
+        		    keyEntity = new KeyEntity(splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
+        		    listKeyEntities.add(keyEntity);
+        		}
         	}
         }
 		return new ListAccessImpl<KeyEntity>(KeyEntity.class, listKeyEntities);

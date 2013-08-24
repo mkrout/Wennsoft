@@ -41,6 +41,11 @@ public class UIListKeyEntities extends UIContainer
     public void load(String state) throws Exception
     {
     	state_ = state;
+    	grid_ = getChild(UIGrid.class);
+        if (grid_ != null) 
+        {
+        	removeChild(UIGrid.class);
+        }
     	grid_= addChild(UIGrid.class, null, "UIListKeyEntitiesGird");
         grid_.configure(KEY, KEY_ENTITY_BEAN_FIELD, KEY_ENTITY_ACTION);
         grid_.getUIPageIterator().setId("UIListKeyEntitiesGirdIterator");

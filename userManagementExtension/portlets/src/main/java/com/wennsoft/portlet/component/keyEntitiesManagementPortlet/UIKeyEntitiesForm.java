@@ -14,8 +14,6 @@ import org.exoplatform.webui.form.UIForm;
     lifecycle = UIFormLifecycle.class, template = "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesForm.gtmpl", 
     events = 
     { 
-        @EventConfig(listeners = UIKeyEntitiesForm.SaveActionListener.class, phase = Phase.DECODE), 
-        @EventConfig(listeners = UIKeyEntitiesForm.CancelActionListener.class, phase = Phase.DECODE),
         @EventConfig(listeners = UIKeyEntitiesForm.AddKeyEntitiesActionListener.class, phase = Phase.DECODE)
     }
 )
@@ -24,26 +22,15 @@ public class UIKeyEntitiesForm extends UIForm
 {
 	public void load(String userName) throws Exception
     {
+		UIListKeyEntities uiListKeyEntities = getChild(UIListKeyEntities.class);
+        if (uiListKeyEntities != null) 
+        {
+        	removeChild(UIListKeyEntities.class);
+        }
 		addChild(UIListKeyEntities.class, null, null);
-        setActions(new String[] {"Save", "Cancel", "AddKeyEntities"});
+        setActions(new String[] {"AddKeyEntities"});
     }
 
-    public static class SaveActionListener extends EventListener<UIKeyEntitiesForm> 
-    {
-        public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
-        {
-        	System.out.println("UserKeyEntities saved successfully");
-        }
-    }
-    
-    public static class CancelActionListener extends EventListener<UIKeyEntitiesForm> 
-    {
-        public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
-        {
-        	System.out.println("UserKeyEntities cancelled successfully");
-        }
-    }
-    
     public static class AddKeyEntitiesActionListener extends EventListener<UIKeyEntitiesForm> 
     {
         public void execute(Event<UIKeyEntitiesForm> event) throws Exception 
