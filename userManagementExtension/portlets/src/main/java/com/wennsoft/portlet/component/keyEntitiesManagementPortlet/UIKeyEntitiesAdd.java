@@ -27,7 +27,7 @@ import org.exoplatform.webui.form.UIFormTableInputSet;
 */
 @ComponentConfig
 (
-    lifecycle = UIFormLifecycle.class, template =  "classpath:groovy/ecm/webui/form/UIForm.gtmpl",
+    lifecycle = UIFormLifecycle.class, template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
     events = 
     {
         @EventConfig(listeners = UIKeyEntitiesAdd.SaveActionListener.class, phase=Phase.DECODE),
@@ -43,6 +43,7 @@ public class UIKeyEntitiesAdd extends UIForm
 	public final static String INCLUDE = "include";
     private static String product;
     private static String userName;
+    private static String keyEntitiesAttributeValue;
     
     private void initProductSelectBox(UIFormSelectBox productSelectBox)
     {
@@ -101,6 +102,8 @@ public class UIKeyEntitiesAdd extends UIForm
                 UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
                 uiFormCheckBoxInput.setChecked(false);
                 uiFormCheckBoxInput.setValue(keyValue);
+                if (keyEntitiesAttributeValue.contains(keyValue))
+                    uiFormCheckBoxInput.setDisabled(true);
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
@@ -150,6 +153,8 @@ public class UIKeyEntitiesAdd extends UIForm
                 UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
                 uiFormCheckBoxInput.setChecked(false);
                 uiFormCheckBoxInput.setValue(keyValue);
+                if (keyEntitiesAttributeValue.contains(keyValue))
+                    uiFormCheckBoxInput.setDisabled(true);
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
@@ -160,6 +165,7 @@ public class UIKeyEntitiesAdd extends UIForm
     public void init(String userName_) throws Exception
     {
         userName = userName_;
+        keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities")+ "&":"";
         UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCTS, null, null);
         initProductSelectBox(uiFormProductSelectBox);
         uiFormProductSelectBox.setOnChange(PRODUCTS_ONCHANGE);
@@ -224,7 +230,6 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiApplication.addMessage(new ApplicationMessage("UIKeyEntitiesAdd.msg.noKeyEntitiesSelected", null));
                 return;
             }
-            String keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities")+ "&":"";
             Utils.setAttributeUserProfile(userName, "keyEntities", keyEntitiesAttributeValue + attributeValue);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesAdd.getAncestorOfType(UIKeyEntitiesManagementPortlet.class);
             UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
