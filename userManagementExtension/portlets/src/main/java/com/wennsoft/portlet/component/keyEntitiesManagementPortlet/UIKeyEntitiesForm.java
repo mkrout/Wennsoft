@@ -20,8 +20,11 @@ import org.exoplatform.webui.form.UIForm;
 @Serialized
 public class UIKeyEntitiesForm extends UIForm
 {
-	public void load(String userName) throws Exception
+	private static String userName;
+	
+	public void load(String userName_) throws Exception
     {
+	    userName = userName_;
 		UIListKeyEntities uiListKeyEntities = getChild(UIListKeyEntities.class);
         if (uiListKeyEntities != null) 
         {
@@ -37,7 +40,7 @@ public class UIKeyEntitiesForm extends UIForm
         {
             UIKeyEntitiesForm uiKeyEntitiesForm = event.getSource();
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesForm.getParent();
-            uiKeyEntitiesManagementPortlet.setAddPopup();
+            uiKeyEntitiesManagementPortlet.setAddPopup(userName);
         }
     }
 }

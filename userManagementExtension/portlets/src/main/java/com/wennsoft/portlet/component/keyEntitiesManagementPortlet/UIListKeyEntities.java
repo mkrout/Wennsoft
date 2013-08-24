@@ -55,7 +55,7 @@ public class UIListKeyEntities extends UIContainer
 	    if (pageIterator.getAvailable() == 0) 
 	    {
 	        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication();
-	        uiApp.addMessage(new ApplicationMessage("UIListKeyEntities.label.noKeyEntity", null));
+	        uiApp.addMessage(new ApplicationMessage("UIListKeyEntities.msg.noKeyEntity", null));
 	    }
     }
 
