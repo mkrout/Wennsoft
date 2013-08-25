@@ -103,7 +103,9 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiFormCheckBoxInput.setChecked(false);
                 uiFormCheckBoxInput.setValue(keyValue);
                 if (keyEntitiesAttributeValue.contains(keyValue))
+                {	
                     uiFormCheckBoxInput.setDisabled(true);
+                }    
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
@@ -154,7 +156,9 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiFormCheckBoxInput.setChecked(false);
                 uiFormCheckBoxInput.setValue(keyValue);
                 if (keyEntitiesAttributeValue.contains(keyValue))
+                {	
                     uiFormCheckBoxInput.setDisabled(true);
+                }
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
@@ -165,7 +169,7 @@ public class UIKeyEntitiesAdd extends UIForm
     public void init(String userName_) throws Exception
     {
         userName = userName_;
-        keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities")+ "&":"";
+        keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities") + "&":"";
         UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCTS, null, null);
         initProductSelectBox(uiFormProductSelectBox);
         uiFormProductSelectBox.setOnChange(PRODUCTS_ONCHANGE);

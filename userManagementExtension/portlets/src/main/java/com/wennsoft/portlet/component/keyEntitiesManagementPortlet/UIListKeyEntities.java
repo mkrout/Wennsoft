@@ -88,9 +88,9 @@ public class UIListKeyEntities extends UIContainer
             	}
             	for (String splittedKeyEntity : splittedKeyEntities)
             	{
-            		keyEntity += splittedKeyEntity + "&";
+            		keyEntity += "&" + splittedKeyEntity ;
             	}
-            	Utils.setAttributeUserProfile(state_, "keyEntities", keyEntity);
+            	Utils.setAttributeUserProfile(state_, "keyEntities", !keyEntity.equals("")?keyEntity.substring(1):keyEntity);
             	uiListKeyEntities.load(state_);
             	event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
             }
