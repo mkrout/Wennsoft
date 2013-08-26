@@ -37,7 +37,7 @@ import org.exoplatform.webui.form.UIFormTableInputSet;
 )
 public class UIKeyEntitiesAdd extends UIForm 
 {
-    public final static String PRODUCTS = "products";
+    public final static String PRODUCT = "product";
     public final static String PRODUCTS_ONCHANGE = "ChangeProduct";
     public final static String TABLE_NAME =  "UIKeyEntitiesAdd";
 	public final static String INCLUDE = "include";
@@ -63,7 +63,7 @@ public class UIKeyEntitiesAdd extends UIForm
     {
         List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
         List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
-        UIFormTableInputSet uiFormTableInputSet = createUIComponent(UIFormTableInputSet.class, null, null);
+        UIFormTableInputSet uiFormTableInputSet = createUIComponent(UIFormTableInputSet.class, null, TABLE_NAME);
         if (product!=null && product.equals("customer"))
     	{
             Map<String, String> customer = new HashMap<String, String>();
@@ -170,7 +170,7 @@ public class UIKeyEntitiesAdd extends UIForm
     {
         userName = userName_;
         keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities") + "&":"";
-        UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCTS, null, null);
+        UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCT, null, null);
         initProductSelectBox(uiFormProductSelectBox);
         uiFormProductSelectBox.setOnChange(PRODUCTS_ONCHANGE);
         setActions(new String[] {"Save", "Cancel"}) ;
@@ -196,7 +196,7 @@ public class UIKeyEntitiesAdd extends UIForm
         public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
         {
             UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource() ;
-            UIFormSelectBox productSelection = uiKeyEntitiesAdd.getUIFormSelectBox(PRODUCTS);
+            UIFormSelectBox productSelection = uiKeyEntitiesAdd.getUIFormSelectBox(PRODUCT);
             product = productSelection.getValue();
             uiKeyEntitiesAdd.update();
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesAdd);
