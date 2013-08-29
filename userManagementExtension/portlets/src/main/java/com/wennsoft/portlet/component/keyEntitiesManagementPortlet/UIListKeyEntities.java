@@ -79,7 +79,7 @@ public class UIListKeyEntities extends UIContainer
             if (keyEntities != null)
             {
             	List<String> splittedKeyEntities = new ArrayList<String>();
-            	for (String splittedKeyEntity : keyEntities.split("&"))
+            	for (String splittedKeyEntity : keyEntities.split("@"))
             	{
             		if (!splittedKeyEntity.split("/")[1].equals(key))
             		{
@@ -88,7 +88,7 @@ public class UIListKeyEntities extends UIContainer
             	}
             	for (String splittedKeyEntity : splittedKeyEntities)
             	{
-            		keyEntity += "&" + splittedKeyEntity ;
+            		keyEntity += "@" + splittedKeyEntity ;
             	}
             	Utils.setAttributeUserProfile(state_, "keyEntities", !keyEntity.equals("")?keyEntity.substring(1):keyEntity);
             	uiListKeyEntities.load(state_);

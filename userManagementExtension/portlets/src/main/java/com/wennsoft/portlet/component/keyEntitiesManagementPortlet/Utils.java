@@ -1,10 +1,24 @@
 package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
+import org.apache.commons.lang.StringUtils;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.RequestLifeCycle;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.services.organization.UserProfileHandler;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriBuilder;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.util.*;
 
 public class Utils 
 {
@@ -27,4 +41,269 @@ public class Utils
         userProfileHandler.saveUserProfile(userProfile, false);
         RequestLifeCycle.end();
     }
+
+    static public String readInputStream(InputStream inputStream) throws Throwable
+    {
+        StringBuffer output = new StringBuffer();
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((inputStream)));
+        char[] charBuffer = new char[4096];
+        int bufferIndex = 0;
+        do
+        {
+            if ((bufferIndex = bufferedReader.read(charBuffer, 0, 4096)) >= 0)
+            {
+                output.append(charBuffer, 0, bufferIndex);
+            }
+        }
+        while (bufferIndex > 0);
+
+        return output.toString();
+    }
+
+    static public String readMetadata(String webServiceUri, String controller) throws Throwable
+    {
+        String metadata = null;
+
+
+            HttpURLConnection connection = null;
+            try
+            {
+                StringBuffer webServiceUriPathBuffer = new StringBuffer();
+                webServiceUriPathBuffer.append("/Connect");
+                if (controller != null && !controller.isEmpty())
+                {
+                    webServiceUriPathBuffer.append(String.format("/%s", controller));
+                }
+                webServiceUriPathBuffer.append(String.format("/%s", "Metadata"));
+
+                UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
+
+                connection = (HttpURLConnection)builder.build().toURL().openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Content-Type", "json");
+                connection.setDoInput(true);
+
+                connection.connect();
+
+                metadata = readInputStream(connection.getInputStream());
+            }
+            finally
+            {
+                if (connection != null)
+                {
+                    connection.disconnect();
+                }
+            }
+
+
+        return metadata;
+    }
+
+
+   static public String readData(String webServiceUri, String controller, String entityId, MultivaluedMap<String, String> parameters) throws Throwable
+    {
+        String data = null;
+
+        HttpURLConnection connection = null;
+        try
+        {
+            StringBuffer webServiceUriPathBuffer = new StringBuffer();
+            webServiceUriPathBuffer.append("/Connect");
+            if (controller != null && !controller.isEmpty())
+            {
+                webServiceUriPathBuffer.append(String.format("/%s", controller));
+
+                if (entityId != null && !entityId.isEmpty())
+                {
+                    webServiceUriPathBuffer.append(String.format("/%s", entityId));
+                }
+            }
+            UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
+            if (parameters != null)
+            {
+                for (String parameterName : parameters.keySet())
+                {
+                    builder.queryParam(parameterName, StringUtils.join(parameters.get(parameterName), ","));
+                }
+            }
+
+            connection = (HttpURLConnection)builder.build().toURL().openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "json");
+            connection.setDoInput(true);
+
+            connection.connect();
+            if (connection.getResponseCode() == 200)
+            {
+                data = readInputStream(connection.getInputStream());
+            }
+            else
+            {
+                JSONObject errorMessageJsonObject = new JSONObject();
+                errorMessageJsonObject.put("Error", connection.getResponseCode());
+                errorMessageJsonObject.put("Message", new JSONObject(readInputStream(connection.getErrorStream())));
+                throw new Exception(errorMessageJsonObject.toString());
+            }
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                connection.disconnect();
+            }
+        }
+
+        return data;
+    }
+
+    static public String getEntitiesList(String webServiceUri, String controller, String parameters) throws Throwable
+    {
+        String data = null;
+
+        HttpURLConnection connection = null;
+        try
+        {
+            StringBuffer webServiceUriPathBuffer = new StringBuffer();
+            webServiceUriPathBuffer.append("/Connect");
+            if (controller != null && !controller.isEmpty())
+            {
+                webServiceUriPathBuffer.append(String.format("/%s", controller));
+
+            }
+
+            if (parameters != null)
+            {
+                webServiceUriPathBuffer.append(String.format("%s", parameters));
+            }
+
+            UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
+            connection = (HttpURLConnection)builder.build().toURL().openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "json");
+            connection.setDoInput(true);
+
+            connection.connect();
+            if (connection.getResponseCode() == 200)
+            {
+                data = readInputStream(connection.getInputStream());
+            }
+            else
+            {
+                JSONObject errorMessageJsonObject = new JSONObject();
+                errorMessageJsonObject.put("Error", connection.getResponseCode());
+                errorMessageJsonObject.put("Message", new JSONObject(readInputStream(connection.getErrorStream())));
+                throw new Exception(errorMessageJsonObject.toString());
+            }
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                connection.disconnect();
+            }
+        }
+
+        return data;
+    }
+
+    public static Map<String, Object> convertJsonString(String json) throws Throwable
+    {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+        if (json != null && !json.isEmpty())
+        {
+            JSONArray jsonArray = null;
+            JSONObject jsonObject = null;
+            try
+            {
+                jsonArray = new JSONArray(json);
+            }
+            catch (JSONException jsonArrayException)
+            {
+                try
+                {
+                    jsonObject = new JSONObject(json);
+                }
+                catch (JSONException jsonObjectException)
+                {
+                    throw jsonObjectException;
+                }
+            }
+
+            if (jsonArray != null)
+            {
+                jsonMap.put("Data", convertJsonArray(jsonArray));
+            }
+            else if (jsonObject != null)
+            {
+                jsonMap = convertJsonObject(jsonObject);
+            }
+        }
+
+        return jsonMap;
+    }
+
+    private static List<Object> convertJsonArray(JSONArray jsonArray) throws Throwable
+    {
+        List<Object> jsonArrayList = new ArrayList<Object>();
+
+        for (int jsonArrayIndex = 0; jsonArrayIndex < jsonArray.length(); jsonArrayIndex++)
+        {
+            Object jsonArrayObject = jsonArray.get(jsonArrayIndex);
+            if (jsonArrayObject.getClass().equals(JSONArray.class))
+            {
+                jsonArrayList.add(convertJsonArray((JSONArray) jsonArrayObject));
+            }
+            else if (jsonArrayObject.getClass().equals(JSONObject.class))
+            {
+                jsonArrayList.add(convertJsonObject((JSONObject) jsonArrayObject));
+            }
+            else
+            {
+                jsonArrayList.add(jsonArrayObject);
+            }
+        }
+
+        return jsonArrayList;
+    }
+
+    public static Map<String, Object> convertJsonObject(JSONObject jsonObject) throws Throwable
+    {
+        Map<String, Object> jsonObjectMap = new HashMap<String, Object>();
+
+        if (jsonObject.equals(JSONObject.NULL))
+        {
+            jsonObjectMap = null;
+        }
+        else
+        {
+            Iterator<?> jsonIterator = jsonObject.keys();
+            while (jsonIterator.hasNext())
+            {
+                String key = (String)jsonIterator.next();
+                Object value = jsonObject.get(key);
+
+                if (value.equals(JSONObject.NULL))
+                {
+                    jsonObjectMap.put(key, null);
+                }
+                else if (value.getClass().equals(JSONArray.class))
+                {
+                    jsonObjectMap.put(key, convertJsonArray((JSONArray)value));
+                }
+                else if (value.getClass().equals(JSONObject.class))
+                {
+                    jsonObjectMap.put(key, convertJsonObject((JSONObject)value));
+                }
+                else
+                {
+                    jsonObjectMap.put(key, value);
+                }
+            }
+        }
+
+        return jsonObjectMap;
+    }
+
 }

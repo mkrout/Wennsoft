@@ -24,7 +24,7 @@ public class FindKeyEntitiesPageList extends PageListAccess<KeyEntity, String>
         KeyEntity keyEntity;
         if (keyEntities != null)
         {
-        	String[] splittedKeyEntities = keyEntities.split("&");
+        	String[] splittedKeyEntities = keyEntities.split("@");
         	for (String splittedKeyEntity : splittedKeyEntities)
         	{
         	    if (!splittedKeyEntity.equals(""))
