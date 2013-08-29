@@ -2,13 +2,20 @@ package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
 public class KeyEntity 
 {
-    private String connectId;
+	private String num;
+	private String connectId;
 	private String key;
 	
-    public KeyEntity(String connectId, String key) 
+    public KeyEntity(String num, String connectId, String key) 
     {
-	    this.connectId = connectId;
+    	this.num = num;
+    	this.connectId = connectId;
 	    this.key = key;
+    }
+    
+    public String getNum() 
+    {
+	    return num; 
     }
 	
     public String getConnectId() 
@@ -19,6 +26,11 @@ public class KeyEntity
 	public String getKey() 
     {
 	    return key;
+    }
+	
+	public void setNum(String num) 
+    {
+        this.num = num;
     }
 	
 	public void setConnectId(String connectId) 

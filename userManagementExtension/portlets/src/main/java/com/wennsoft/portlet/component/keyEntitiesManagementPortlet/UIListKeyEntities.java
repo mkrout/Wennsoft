@@ -32,6 +32,7 @@ public class UIListKeyEntities extends UIContainer
 {
     public static final String CONNECT = "connectId";
     public static final String KEY = "key";
+    public static final String NUM = "num";
     private static final String[] KEY_ENTITY_ACTION = { "Delete"};
     
     private static final String[] KEY_ENTITY_BEAN_FIELD = { CONNECT, KEY };
@@ -47,16 +48,10 @@ public class UIListKeyEntities extends UIContainer
         	removeChild(UIGrid.class);
         }
     	grid_= addChild(UIGrid.class, null, "UIListKeyEntitiesGird");
-        grid_.configure(KEY, KEY_ENTITY_BEAN_FIELD, KEY_ENTITY_ACTION);
+        grid_.configure(NUM, KEY_ENTITY_BEAN_FIELD, KEY_ENTITY_ACTION);
         grid_.getUIPageIterator().setId("UIListKeyEntitiesGirdIterator");
         grid_.getUIPageIterator().setParent(this);
         grid_.getUIPageIterator().setPageList(new FindKeyEntitiesPageList(state, 10));
-        UIPageIterator pageIterator = grid_.getUIPageIterator();
-	    if (pageIterator.getAvailable() == 0) 
-	    {
-	        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication();
-	        uiApp.addMessage(new ApplicationMessage("UIListKeyEntities.msg.noKeyEntity", null));
-	    }
     }
 
     @Override
@@ -73,7 +68,17 @@ public class UIListKeyEntities extends UIContainer
         public void execute(Event<UIListKeyEntities> event) throws Exception 
         {
         	UIListKeyEntities uiListKeyEntities = event.getSource();
-        	String key = event.getRequestContext().getRequestParameter(OBJECTID);
+        	String num = event.getRequestContext().getRequestParameter(OBJECTID);
+        	String key = new String();
+        	List<KeyEntity> beans = (List<KeyEntity>) grid_.getBeans();
+        	for (KeyEntity bean : beans)
+        	{
+        	    if (bean.getNum().equals(num))
+        	    {
+        	        key = bean.getKey();
+        	        break;
+        	    }
+        	}
         	String keyEntities = Utils.getAttributeUserProfile(state_, "keyEntities");
             String keyEntity = new String();
             if (keyEntities != null)

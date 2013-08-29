@@ -25,12 +25,14 @@ public class FindKeyEntitiesPageList extends PageListAccess<KeyEntity, String>
         if (keyEntities != null)
         {
         	String[] splittedKeyEntities = keyEntities.split("@");
+        	int count = 0;
         	for (String splittedKeyEntity : splittedKeyEntities)
         	{
         	    if (!splittedKeyEntity.equals(""))
         		{
-        		    keyEntity = new KeyEntity(splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
+        		    keyEntity = new KeyEntity(String.valueOf(count), splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
         		    listKeyEntities.add(keyEntity);
+        		    count++;
         		}
         	}
         }
