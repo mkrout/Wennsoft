@@ -1,9 +1,12 @@
 package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import org.exoplatform.commons.utils.SerializablePageList;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -12,14 +15,14 @@ import org.exoplatform.webui.core.UIPopupWindow;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
-import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
+import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormCheckBoxInput;
 import org.exoplatform.webui.form.UIFormInputInfo;
 import org.exoplatform.webui.form.UIFormInputSet;
+import org.exoplatform.webui.form.UIFormPageIterator;
 import org.exoplatform.webui.form.UIFormSelectBox;
-import org.exoplatform.webui.form.UIFormTableInputSet;
 
 
 /**
@@ -63,7 +66,8 @@ public class UIKeyEntitiesAdd extends UIForm
     {
         List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
         List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
-        UIFormTableInputSet uiFormTableInputSet = createUIComponent(UIFormTableInputSet.class, null, TABLE_NAME);
+        UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
+        List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         if (product!=null && product.equals("customer"))
         {
 
@@ -77,10 +81,10 @@ public class UIKeyEntitiesAdd extends UIForm
             columnsTable[customer.size()] = INCLUDE;  */
 
             UIFormInputSet uiFormInputSet;
-            removeChild(UIFormTableInputSet.class);
+            removeChild(UIFormTableIteratorInputSet.class);
             uiFormTableInputSet.setName(TABLE_NAME);
             uiFormTableInputSet.setColumns(columnsTable);
-
+            addChild(uiFormTableInputSet);
             String data = null;
             String webServiceUri= "http://localhost";
             String controller= "Customers";
@@ -112,6 +116,7 @@ public class UIKeyEntitiesAdd extends UIForm
                     uiFormCheckBoxInput.setDisabled(true);
                 }
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
+                uiFormInputSetList.add(uiFormInputSet);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
             } catch (Throwable throwable) {
@@ -127,17 +132,17 @@ public class UIKeyEntitiesAdd extends UIForm
             vendor.put("Vendor Name","Gloves");
             vendors.add(vendor);
             vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1202");
+            vendor.put("Vendor Number","SAV-1201");
             vendor.put("Vendor Branch", "AAA");
             vendor.put("Vendor Name","eXoplatform1");
             vendors.add(vendor);
             vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1204");
+            vendor.put("Vendor Number","SAV-1202");
             vendor.put("Vendor Branch","FFF");
             vendor.put("Vendor Name","Capgemini1");
             vendors.add(vendor);
             vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1300");
+            vendor.put("Vendor Number","SAV-1203");
             vendor.put("Vendor Branch","ZZZ");
             vendor.put("Vendor Name","Han & dy");
             vendors.add(vendor);
@@ -149,9 +154,10 @@ public class UIKeyEntitiesAdd extends UIForm
             }
             columnsTable[vendor.size()] = INCLUDE;
             UIFormInputSet uiFormInputSet;
-            removeChild(UIFormTableInputSet.class);
+            removeChild(UIFormTableIteratorInputSet.class);
             uiFormTableInputSet.setName(TABLE_NAME);
             uiFormTableInputSet.setColumns(columnsTable);
+            addChild(uiFormTableInputSet);
             for( Map<String, String> vendor_ : vendors)
             {
                 String keyValue= product + "/" ;
@@ -169,10 +175,14 @@ public class UIKeyEntitiesAdd extends UIForm
                     uiFormCheckBoxInput.setDisabled(true);
                 }
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
+                uiFormInputSetList.add(uiFormInputSet);
                 uiFormTableInputSet.addChild(uiFormInputSet);
+                
             }
         }
-        addUIFormInput(uiFormTableInputSet);
+        UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
+        SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class,uiFormInputSetList, 2);
+        uiIterator.setPageList(pageList);
     }
 
     public void init(String userName_) throws Exception
