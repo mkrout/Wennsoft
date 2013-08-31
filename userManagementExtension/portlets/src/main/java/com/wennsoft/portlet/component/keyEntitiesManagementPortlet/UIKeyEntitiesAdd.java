@@ -23,6 +23,7 @@ import org.exoplatform.webui.form.UIFormInputInfo;
 import org.exoplatform.webui.form.UIFormInputSet;
 import org.exoplatform.webui.form.UIFormPageIterator;
 import org.exoplatform.webui.form.UIFormSelectBox;
+import org.json.JSONObject;
 
 
 /**
@@ -73,7 +74,7 @@ public class UIKeyEntitiesAdd extends UIForm
 
             String[] columnsTable = {"CustomerNumber","CustomerName",INCLUDE};
             /*int count = 0;
-            for (Map.Entry<String, String> entry : customer.entrySet()) 
+            for (Map.Entry<String, String> entry : customer.entrySet())
             {
                 columnsTable[count]= entry.getKey();
                 count++;
@@ -86,22 +87,24 @@ public class UIKeyEntitiesAdd extends UIForm
             uiFormTableInputSet.setColumns(columnsTable);
             addChild(uiFormTableInputSet);
             String data = null;
-            String webServiceUri= "http://localhost";
+            String bridgeUri= "http://localhost:8080/interaction-manager/service/bridge/customer-connect";
             String controller= "Customers";
             String parameters= "?fields=CustomerNumber,CustomerName";
 
-            try {
-                data= Utils.getEntitiesList(webServiceUri, controller, parameters);
+            try
+            {
+
+            data= Utils.getEntitiesList(bridgeUri, controller, parameters);
 
             Map<String, Object> entitiesList =new HashMap<String, Object>(Utils.convertJsonString(data));
 
             List<Object> entities = (List <Object>) entitiesList.get("aaData");
-            for  (Object entitiy : entities)
+            for  (Object entity : entities)
             {
                 String keyValue = product + "/" ;
                 uiFormInputSet = new UIFormInputSet(columnsTable[0]);
-                ArrayList <String> aaaa=  (ArrayList<String>) entitiy;
-                Iterator<String> it = aaaa.iterator();
+                ArrayList <String> entity_=  (ArrayList<String>) entity;
+                Iterator<String> it = entity_.iterator();
                 int i=0;
                 while (it.hasNext()) {
                     String value = it.next();
@@ -120,9 +123,8 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
             } catch (Throwable throwable) {
-                throwable.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                throwable.printStackTrace();
             }
-
         }
         if (product!=null && product.equals("vendor"))
         {
@@ -177,7 +179,7 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormInputSetList.add(uiFormInputSet);
                 uiFormTableInputSet.addChild(uiFormInputSet);
-                
+
             }
         }
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);

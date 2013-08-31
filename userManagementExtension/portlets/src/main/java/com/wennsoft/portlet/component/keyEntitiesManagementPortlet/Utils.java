@@ -1,6 +1,10 @@
 package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.RequestLifeCycle;
 import org.exoplatform.services.organization.OrganizationService;
@@ -9,9 +13,6 @@ import org.exoplatform.services.organization.UserProfileHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -19,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.*;
+
 
 public class Utils 
 {
@@ -61,111 +63,41 @@ public class Utils
         return output.toString();
     }
 
-    static public String readMetadata(String webServiceUri, String controller) throws Throwable
-    {
-        String metadata = null;
-
-
-            HttpURLConnection connection = null;
-            try
-            {
-                StringBuffer webServiceUriPathBuffer = new StringBuffer();
-                webServiceUriPathBuffer.append("/Connect");
-                if (controller != null && !controller.isEmpty())
-                {
-                    webServiceUriPathBuffer.append(String.format("/%s", controller));
-                }
-                webServiceUriPathBuffer.append(String.format("/%s", "Metadata"));
-
-                UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
-
-                connection = (HttpURLConnection)builder.build().toURL().openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Content-Type", "json");
-                connection.setDoInput(true);
-
-                connection.connect();
-
-                metadata = readInputStream(connection.getInputStream());
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.disconnect();
-                }
-            }
-
-
-        return metadata;
-    }
-
-
-   static public String readData(String webServiceUri, String controller, String entityId, MultivaluedMap<String, String> parameters) throws Throwable
-    {
-        String data = null;
-
-        HttpURLConnection connection = null;
-        try
-        {
-            StringBuffer webServiceUriPathBuffer = new StringBuffer();
-            webServiceUriPathBuffer.append("/Connect");
-            if (controller != null && !controller.isEmpty())
-            {
-                webServiceUriPathBuffer.append(String.format("/%s", controller));
-
-                if (entityId != null && !entityId.isEmpty())
-                {
-                    webServiceUriPathBuffer.append(String.format("/%s", entityId));
-                }
-            }
-            UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
-            if (parameters != null)
-            {
-                for (String parameterName : parameters.keySet())
-                {
-                    builder.queryParam(parameterName, StringUtils.join(parameters.get(parameterName), ","));
-                }
-            }
-
-            connection = (HttpURLConnection)builder.build().toURL().openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "json");
-            connection.setDoInput(true);
-
-            connection.connect();
-            if (connection.getResponseCode() == 200)
-            {
-                data = readInputStream(connection.getInputStream());
-            }
-            else
-            {
-                JSONObject errorMessageJsonObject = new JSONObject();
-                errorMessageJsonObject.put("Error", connection.getResponseCode());
-                errorMessageJsonObject.put("Message", new JSONObject(readInputStream(connection.getErrorStream())));
-                throw new Exception(errorMessageJsonObject.toString());
-            }
-        }
-        finally
-        {
-            if (connection != null)
-            {
-                connection.disconnect();
-            }
-        }
-
-        return data;
-    }
-
     static public String getEntitiesList(String webServiceUri, String controller, String parameters) throws Throwable
     {
-        String data = null;
+       String data = null;
+         /*
+        String url = "http://localhost:8080/interaction-manager/service/bridge/customer-connect/Customers?fields=CustomerNumber,CustomerName";
+
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(url);
+
+        // add request header
+       // request.addHeader("User-Agent", USER_AGENT);
+
+        HttpResponse response = client.execute(request);
+
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " +
+                response.getStatusLine().getStatusCode());
+
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        System.out.println(result.toString());
+          data= result.toString();
+        */
 
         HttpURLConnection connection = null;
         try
         {
             StringBuffer webServiceUriPathBuffer = new StringBuffer();
-            webServiceUriPathBuffer.append("/Connect");
             if (controller != null && !controller.isEmpty())
             {
                 webServiceUriPathBuffer.append(String.format("/%s", controller));
@@ -180,9 +112,6 @@ public class Utils
             UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
             connection = (HttpURLConnection)builder.build().toURL().openConnection();
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "json");
-            connection.setDoInput(true);
-
             connection.connect();
             if (connection.getResponseCode() == 200)
             {
@@ -306,4 +235,6 @@ public class Utils
         return jsonObjectMap;
     }
 
-}
+  }
+
+
