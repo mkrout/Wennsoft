@@ -13,35 +13,42 @@ import org.exoplatform.webui.form.UIFormTableInputSet;
 
 @ComponentConfig(template = "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIFormTableIteratorInputSet.gtmpl")
 @Serialized
-public class UIFormTableIteratorInputSet extends UIFormTableInputSet {
-
+public class UIFormTableIteratorInputSet extends UIFormTableInputSet 
+{
     UIFormPageIterator uiIterator_;
-
-    public UIFormTableIteratorInputSet() throws Exception {
+    public UIFormTableIteratorInputSet() throws Exception 
+    {
         uiIterator_ = createUIComponent(UIFormPageIterator.class, null, null);
         addChild(uiIterator_);
     }
 
-    public UIFormPageIterator getUIFormPageIterator() {
+    public UIFormPageIterator getUIFormPageIterator() 
+    {
         return uiIterator_;
     }
 
     @SuppressWarnings("unchecked")
-    public UIComponent findComponentById(String lookupId) {
+    public UIComponent findComponentById(String lookupId) 
+    {
         if (uiIterator_.getId().equals(lookupId))
+        {	
             return uiIterator_;
+        }    
         return super.findComponentById(lookupId);
     }
 
     @SuppressWarnings("unchecked")
-    public void processDecode(WebuiRequestContext context) throws Exception {
+    public void processDecode(WebuiRequestContext context) throws Exception 
+    {
         List<UIComponent> children = uiIterator_.getCurrentPageData();
-        for (UIComponent child : children) {
+        for (UIComponent child : children) 
+        {
             List<UIFormInputBase> inputs = new ArrayList<UIFormInputBase>();
             child.findComponentOfType(inputs, UIFormInputBase.class);
             for (UIFormInputBase input : inputs) {
                 String inputValue = context.getRequestParameter(input.getId());
-                if (inputValue == null || inputValue.trim().length() == 0) {
+                if (inputValue == null || inputValue.trim().length() == 0) 
+                {
                     inputValue = context.getRequestParameter(input.getName());
                 }
                 input.decode(inputValue, context);

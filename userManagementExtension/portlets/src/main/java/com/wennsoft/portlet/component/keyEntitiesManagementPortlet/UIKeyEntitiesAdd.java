@@ -23,22 +23,22 @@ import org.exoplatform.webui.form.UIFormInputInfo;
 import org.exoplatform.webui.form.UIFormInputSet;
 import org.exoplatform.webui.form.UIFormPageIterator;
 import org.exoplatform.webui.form.UIFormSelectBox;
-import org.json.JSONObject;
 
 
 /**
  * @author MedAmine Krout
  */
 @ComponentConfig
-        (
-                lifecycle = UIFormLifecycle.class, template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
-                events =
-                        {
-                                @EventConfig(listeners = UIKeyEntitiesAdd.SaveActionListener.class, phase=Phase.DECODE),
-                                @EventConfig(listeners = UIKeyEntitiesAdd.CancelActionListener.class, phase=Phase.DECODE),
-                                @EventConfig(listeners = UIKeyEntitiesAdd.ChangeProductActionListener.class, phase=Phase.DECODE)
-                        }
-        )
+(
+    lifecycle = UIFormLifecycle.class, 
+    template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
+    events =
+        {
+            @EventConfig(listeners = UIKeyEntitiesAdd.SaveActionListener.class, phase=Phase.DECODE),
+            @EventConfig(listeners = UIKeyEntitiesAdd.CancelActionListener.class, phase=Phase.DECODE),
+            @EventConfig(listeners = UIKeyEntitiesAdd.ChangeProductActionListener.class, phase=Phase.DECODE)
+        }
+)
 public class UIKeyEntitiesAdd extends UIForm
 {
     public final static String PRODUCT = "product";
@@ -71,16 +71,7 @@ public class UIKeyEntitiesAdd extends UIForm
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         if (product!=null && product.equals("customer"))
         {
-
             String[] columnsTable = {"CustomerNumber","CustomerName",INCLUDE};
-            /*int count = 0;
-            for (Map.Entry<String, String> entry : customer.entrySet())
-            {
-                columnsTable[count]= entry.getKey();
-                count++;
-            }
-            columnsTable[customer.size()] = INCLUDE;  */
-
             UIFormInputSet uiFormInputSet;
             removeChild(UIFormTableIteratorInputSet.class);
             uiFormTableInputSet.setName(TABLE_NAME);
@@ -90,39 +81,38 @@ public class UIKeyEntitiesAdd extends UIForm
             String bridgeUri= "http://localhost:8080/interaction-manager/service/bridge/customer-connect";
             String controller= "Customers";
             String parameters= "?fields=CustomerNumber,CustomerName";
-
             try
             {
-
-            data= Utils.getEntitiesList(bridgeUri, controller, parameters);
-
-            Map<String, Object> entitiesList =new HashMap<String, Object>(Utils.convertJsonString(data));
-
-            List<Object> entities = (List <Object>) entitiesList.get("aaData");
-            for  (Object entity : entities)
-            {
-                String keyValue = product + "/" ;
-                uiFormInputSet = new UIFormInputSet(columnsTable[0]);
-                ArrayList <String> entity_=  (ArrayList<String>) entity;
-                Iterator<String> it = entity_.iterator();
-                int i=0;
-                while (it.hasNext()) {
-                    String value = it.next();
-                    uiFormInputSet.addChild(new UIFormInputInfo(columnsTable[i], null, value));
-                    keyValue=keyValue + columnsTable[i] + ":" + value+ ";";
-                }
-                UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
-                uiFormCheckBoxInput.setChecked(false);
-                uiFormCheckBoxInput.setValue(keyValue);
-                if (keyEntitiesAttributeValue.contains(keyValue))
+                data= Utils.getEntitiesList(bridgeUri, controller, parameters);
+                Map<String, Object> entitiesMap =new HashMap<String, Object>(Utils.convertJsonString(data));
+                List<Object> entitiesList = (List <Object>) entitiesMap.get("aaData");
+                for (Object entity : entitiesList)
                 {
-                    uiFormCheckBoxInput.setDisabled(true);
+                    String keyValue = product + "/" ;
+                    uiFormInputSet = new UIFormInputSet(columnsTable[0]);
+                    List<String> entity_=  (List<String>) entity;
+                    Iterator<String> iterator = entity_.iterator();
+                    int count = 0;
+                    while (iterator.hasNext()) 
+                    {
+                        String value = iterator.next();
+                        uiFormInputSet.addChild(new UIFormInputInfo(columnsTable[count], null, value));
+                        keyValue=keyValue + columnsTable[count] + ":" + value+ ";";
+                    }
+                    UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
+                    uiFormCheckBoxInput.setChecked(false);
+                    uiFormCheckBoxInput.setValue(keyValue);
+                    if (keyEntitiesAttributeValue.contains(keyValue))
+                    {
+                        uiFormCheckBoxInput.setDisabled(true);
+                    }  
+                    uiFormInputSet.addChild(uiFormCheckBoxInput);
+                    uiFormInputSetList.add(uiFormInputSet);
+                    uiFormTableInputSet.addChild(uiFormInputSet);
                 }
-                uiFormInputSet.addChild(uiFormCheckBoxInput);
-                uiFormInputSetList.add(uiFormInputSet);
-                uiFormTableInputSet.addChild(uiFormInputSet);
-            }
-            } catch (Throwable throwable) {
+            } 
+            catch (Throwable throwable) 
+            {
                 throwable.printStackTrace();
             }
         }
@@ -150,7 +140,8 @@ public class UIKeyEntitiesAdd extends UIForm
             vendors.add(vendor);
             String[] columnsTable = new String [vendor.size()+1];
             int count = 0;
-            for (Map.Entry<String, String> entry : vendor.entrySet()) {
+            for (Map.Entry<String, String> entry : vendor.entrySet()) 
+            {
                 columnsTable[count]= entry.getKey();
                 count++;
             }
@@ -179,11 +170,10 @@ public class UIKeyEntitiesAdd extends UIForm
                 uiFormInputSet.addChild(uiFormCheckBoxInput);
                 uiFormInputSetList.add(uiFormInputSet);
                 uiFormTableInputSet.addChild(uiFormInputSet);
-
             }
         }
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
-        SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class,uiFormInputSetList, 2);
+        SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class,uiFormInputSetList, 3);
         uiIterator.setPageList(pageList);
     }
 
