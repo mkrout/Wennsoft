@@ -13,11 +13,16 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.RequestLifeCycle;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.services.organization.UserProfileHandler;
+import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -143,7 +148,7 @@ public class Utils
     public static String getEntitiesList(String webServiceUri, String controller, String parameters) throws Throwable
     {
         String data = null;
-        HttpURLConnection connection = null;
+        HttpClient client = new DefaultHttpClient();
         try
         {
             StringBuffer webServiceUriPathBuffer = new StringBuffer();
@@ -157,27 +162,31 @@ public class Utils
                 webServiceUriPathBuffer.append(String.format("%s", parameters));
             }
             UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
-            connection = (HttpURLConnection)builder.build().toURL().openConnection();
-            connection.setRequestMethod("GET");
-            connection.setAllowUserInteraction(true);
-            connection.connect();
-            if (connection.getResponseCode() == 200)
-            {
-                data = readInputStream(connection.getInputStream());
+            HttpGet request = new HttpGet(builder.build());
+            request.addHeader("User", PortletRequestContext.getCurrentInstance().getRemoteUser());
+            HttpResponse response = client.execute(request);
+            if (response.getStatusLine().getStatusCode() == 200)
+            {   BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+                StringBuffer result = new StringBuffer();
+                String line = "";
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                data = result.toString();
             }
             else
             {
                 JSONObject errorMessageJsonObject = new JSONObject();
-                errorMessageJsonObject.put("Error", connection.getResponseCode());
-                errorMessageJsonObject.put("Message", new JSONObject(readInputStream(connection.getErrorStream())));
+                errorMessageJsonObject.put("Error", response.getStatusLine().getStatusCode());
                 throw new Exception(errorMessageJsonObject.toString());
             }
         }
         finally
         {
-            if (connection != null)
+            if (client != null)
             {
-                connection.disconnect();
+                client.getConnectionManager().shutdown();
             }
         }
         return data;
