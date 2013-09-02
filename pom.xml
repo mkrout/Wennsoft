@@ -153,6 +153,7 @@
 		<!--module>customerBaseSiteExtension</module-->
 		<module>CustomerConnect</module>
 		<module>userManagementExtension</module>
+        <module>InteractionManager</module>
 	</modules>
 
 	<build>

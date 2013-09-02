@@ -1,0 +1,821 @@
+/* jQuery UI alterations */
+.ui-accordion h3.ui-accordion-header
+{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.ui-accordion div.ui-accordion-content
+{
+    padding: 0;
+}
+.ui-autocomplete
+{
+    font-size: 1em;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.ui-autocomplete .ui-menu-item a
+{
+    min-height: 15px;
+    padding: 2px 2px;
+}
+.ui-spinner
+{
+    height: 100%;
+    position: relative;
+    display: inline-block;
+}
+.ui-spinner .ui-spinner-button
+{
+    position: absolute;
+    margin-left: -1px;
+    padding: 0;
+}
+.ui-spinner input.ui-spinner-input
+{
+    border: 0;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+div > .ui-state-disabled, span > .ui-state-disabled, td > .ui-state-disabled
+{
+    cursor: not-allowed !important;
+}
+.ui-toolbar-multi
+{
+	overflow: hidden;
+}
+.ui-tabs .ui-tabs-panel
+{
+    padding: 0 !important;
+}
+.ui-widget input
+{
+    line-height: 100%;
+    margin: 0;
+    padding: 0.2em 0 0 0;
+    text-indent: 0.4em;
+    vertical-align: middle;
+}
+
+/* Custom widgets */
+.ui-combobox
+{
+    height: 100%;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+.ui-combobox a.ui-combobox-toggle
+{
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    position: absolute;
+    right: -1px;
+    top: 0;
+    width: 16px;
+}
+.ui-combobox input.ui-combobox-input
+{
+    border: 0;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+.ui-combobox input.ui-combobox-unselectable
+{
+    cursor: auto;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
+
+.hasDatepicker
+{
+    border: 0;
+    height: 100%;
+    width: 100%;
+}
+.ui-datetimepicker
+{
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+.ui-datetimepicker .ui-datepicker-trigger
+{
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    position: absolute;
+    right: -1px;
+    top: 0;
+    width: 16px;
+}
+
+/* Custom DataTables Features */
+
+
+/* interaction-manager */
+div.interaction-manager
+{
+    margin-bottom: 10px;
+    position: relative; 
+}
+div.interaction-manager *
+{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: Verdana,Arial,sans-serif !important;
+    font-size: 1em;
+}
+.interaction-manager label
+{
+    margin: 0;
+}
+.interaction-manager .ui-widget-content input[disabled], .ui-widget-content input[readonly]
+{
+    cursor: auto;
+    background: inherit;
+}
+.interaction-manager .ui-widget input[type="text"]
+{
+    color: inherit;
+    -moz-box-sizing: inherit;
+    border-radius: inherit;
+}
+div.view-overlay
+{
+    background-color: rgba( 255, 255, 255, 0.7);
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 20001;
+}
+div.ui-toolbar-title
+{
+    height: 32px;
+    font-size: 1.3em;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+}
+table.display > tbody > tr
+{
+    height: 35px;
+}
+table.display td
+{
+    vertical-align: middle;
+}
+table.display td.center
+{
+    text-align: center;
+}
+table.display td > input:not([type="checkbox"])
+{
+    height: 100%;
+    width: 100%;
+}
+.detail-column
+{
+    display: inline-block;
+    float: left;
+}
+.detail-column-hidden
+{
+    display: none;
+}
+.im-detail-row
+{
+    display: inline-block;
+    height: 2em;
+    margin: 0.25em 0 0.25em 0;
+    padding: 0 0.5em 0 0.5em;
+    vertical-align: middle;
+    width: 100%;
+}
+.im-detail-row > *
+{
+    float: left;
+    height: 100%;
+    line-height: 2em;
+    margin: 0;
+    width: 50%;
+}
+.im-detail-row-label
+{
+    font-weight: bold;
+}
+a:link.im-link { color: #003b6f; text-decoration: underline; }
+a:visited.im-link { color: #551076; text-decoration: underline; }
+a:hover.im-link { color: #003b6f; text-decoration: none; }
+a:active.im-link { color: #FF0000; text-decoration: none; }
+div.error-message-icon
+{
+    display: inline-block;
+    margin-right: 3px;
+    vertical-align: middle;
+}
+div.error-message-text
+{
+    vertical-align: middle;
+}
+
+/* Generic Error */
+.im-error-icon
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+.im-error-text
+{
+    padding: 3px 10px;
+}
+
+/* Request Edit */
+input.default-control
+{
+	width: 100px;
+}
+
+/* DataDisplay Edit */
+div.edit-overlay
+{
+    background-color: rgba(255, 255, 255, 0.7);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute; 
+    top: 0; 
+    width: 100%;
+    z-index: 20001;
+}
+#entityPreferences
+{
+    padding: 0;
+}
+#fieldPreferences
+{
+    overflow: hidden;
+    padding: 0;
+}
+div#availableFields_wrapper, div#visibleFields_wrapper
+{
+    width: 95%;
+}
+div#availableFields_wrapper
+{
+    float: left;
+}
+div#visibleFields_wrapper
+{
+    float: right;
+}
+div.dual-table-control
+{
+    display: inline-block;
+    height: 220px;
+    width: 4%;
+}
+button.dual-table-control-button
+{
+    height: 100%;
+    width: 100%;
+}
+span.field-type
+{
+    font-size: 80%;
+    padding-left: 3px;
+}
+td > button.row-button
+{
+    padding: 4px 0;
+    width: 25px;
+}
+td > span.sort-control
+{
+    border: none;
+    display: inline-block;
+    overflow: hidden;
+}
+.sort-control .sort-control-direction
+{
+    margin-left: 10px;
+    width: 40px;
+}
+.sort-control .sort-control-enabled, .sort-control .sort-control-direction
+{
+    background: none;
+    float: left;
+    height: 26px;
+}
+div.row-overlay
+{
+    position: absolute;
+    z-index: 20001;
+}
+div.row-overlay > tr
+{
+    width: 100%;
+}
+
+/* DataDisplay View Detail  */
+.detail-content
+{
+    overflow: hidden;
+}
+.required-field
+{
+    font-weight: bold;
+}
+div.action-buttons
+{
+    float: right;
+}
+
+div.DTTT_container
+{
+    padding: 5px;
+	position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 90px;
+}
+div.DTTT_container a.DTTT_button
+{
+    height: 20px;
+    margin: 0;
+    padding: 2px 6px;
+    width: 50%;
+}
+
+/* Connect Settings View */
+div#connectSettings
+{
+    min-width: 800px;
+}
+
+/*
+ * DataTables jQuery UI styling
+ */
+.paging_two_button .ui-button {
+	float: left;
+	cursor: pointer;
+	* cursor: hand;
+}
+
+.paging_full_numbers .ui-button {
+	padding: 2px 6px;
+	margin: 0;
+	cursor: pointer;
+	* cursor: hand;
+}
+
+.dataTables_paginate .ui-button {
+	margin-right: -0.1em !important;
+}
+
+.ui-toolbar
+{
+	padding: 5px;
+}
+
+.dataTables_paginate {
+	width: auto;
+}
+
+.dataTables_info {
+    float: left;
+    margin-left: 7px;
+	padding-top: 3px;
+    width: 40%;
+}
+
+table.display thead th {
+	padding: 3px 0px 3px 10px;
+	cursor: pointer;
+	* cursor: hand;
+}
+
+div.dataTables_wrapper .ui-widget-header {
+	font-weight: normal;
+}
+
+
+/*
+ * Sort arrow icon positioning
+ */
+table.display thead th div.DataTables_sort_wrapper {
+	position: relative;
+	padding-right: 20px;
+}
+
+table.display thead th div.DataTables_sort_wrapper span {
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	right: 0;
+}
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Everything below this line is the same as demo_table.css. This file is
+ * required for 'cleanliness' of the markup
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+
+.dataTables_wrapper {
+	position: relative;
+}
+
+.dataTables_processing {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+    padding: 2px 0;
+}
+
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_filter {
+	width: 50%;
+	float: left;
+	text-align: left;
+}
+
+.dataTables_filter input {
+    width: 50%;
+}
+
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables display
+ */
+table.display {
+	margin: 0 auto;
+	width: 100%;
+	clear: both;
+	border-collapse: collapse;
+}
+
+table.display tfoot th {
+	padding: 3px 0px 3px 10px;
+	font-weight: bold;
+	font-weight: normal;
+}
+
+table.display tr.heading2 td {
+	border-bottom: 1px solid #aaa;
+}
+
+table.display td {
+	padding: 3px 10px;
+}
+
+td.entity-preference-label {
+    width: 40%;
+}
+
+table.display td.center {
+	text-align: center;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables row classes
+ */
+table.display tr.odd.gradeA {
+	background-color: #ddffdd;
+}
+
+table.display tr.even.gradeA {
+	background-color: #eeffee;
+}
+
+
+
+
+table.display tr.odd.gradeA {
+	background-color: #ddffdd;
+}
+
+table.display tr.even.gradeA {
+	background-color: #eeffee;
+}
+
+table.display tr.odd.gradeC {
+	background-color: #ddddff;
+}
+
+table.display tr.even.gradeC {
+	background-color: #eeeeff;
+}
+
+table.display tr.odd.gradeX {
+	background-color: #ffdddd;
+}
+
+table.display tr.even.gradeX {
+	background-color: #ffeeee;
+}
+
+table.display tr.odd.gradeU {
+	background-color: #ddd;
+}
+
+table.display tr.even.gradeU {
+	background-color: #eee;
+}
+
+
+tr.odd {
+	background-color: #E2E4FF;
+}
+
+tr.even {
+	background-color: white;
+}
+
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Misc
+ */
+.dataTables_scroll {
+	clear: both;
+}
+
+.dataTables_scrollBody {
+	-webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+}
+
+.top, .bottom {
+	padding: 15px;
+	background-color: #F5F5F5;
+	border: 1px solid #CCCCCC;
+}
+
+.top .dataTables_info {
+	float: none;
+}
+
+.clear {
+	clear: both;
+}
+
+.dataTables_empty {
+	text-align: center;
+}
+
+tfoot input {
+	margin: 0.5em 0;
+	width: 100%;
+	color: #444;
+}
+
+tfoot input.search_init {
+	color: #999;
+}
+
+td.group {
+	background-color: #d1cfd0;
+	border-bottom: 2px solid #A19B9E;
+	border-top: 2px solid #A19B9E;
+}
+
+td.details {
+	background-color: #d1cfd0;
+	border: 2px solid #A19B9E;
+}
+
+.paging_full_numbers a.paginate_button,
+ 	.paging_full_numbers a.paginate_active {
+	border: 1px solid #aaa;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding: 2px 5px;
+	margin: 0 3px;
+	cursor: pointer;
+	*cursor: hand;
+	color: #333 !important;
+}
+
+.paging_full_numbers a.paginate_button {
+	background-color: #ddd;
+}
+
+.paging_full_numbers a.paginate_button:hover {
+	background-color: #ccc;
+	text-decoration: none !important;
+}
+
+.paging_full_numbers a.paginate_active {
+	background-color: #99B3FF;
+}
+
+table.display tr.even.row_selected td {
+	background-color: #B0BED9;
+}
+
+table.display tr.odd.row_selected td {
+	background-color: #9FAFD1;
+}
+
+/*
+ * Sorting classes for columns
+ */
+/* For the standard odd/even */
+tr.odd td.sorting_1 {
+	background-color: #D3D6FF;
+}
+
+tr.odd td.sorting_2 {
+	background-color: #DADCFF;
+}
+
+tr.odd td.sorting_3 {
+	background-color: #E0E2FF;
+}
+
+tr.even td.sorting_1 {
+	background-color: #EAEBFF;
+}
+
+tr.even td.sorting_2 {
+	background-color: #F2F3FF;
+}
+
+tr.even td.sorting_3 {
+	background-color: #F9F9FF;
+}
+
+
+/* For the Conditional-CSS grading rows */
+/*
+ 	Colour calculations (based off the main row colours)
+  Level 1:
+		dd > c4
+		ee > d5
+	Level 2:
+	  dd > d1
+	  ee > e2
+ */
+tr.odd.gradeA td.sorting_1 {
+	background-color: #c4ffc4;
+}
+
+tr.odd.gradeA td.sorting_2 {
+	background-color: #d1ffd1;
+}
+
+tr.odd.gradeA td.sorting_3 {
+	background-color: #d1ffd1;
+}
+
+tr.even.gradeA td.sorting_1 {
+	background-color: #d5ffd5;
+}
+
+tr.even.gradeA td.sorting_2 {
+	background-color: #e2ffe2;
+}
+
+tr.even.gradeA td.sorting_3 {
+	background-color: #e2ffe2;
+}
+
+tr.odd.gradeC td.sorting_1 {
+	background-color: #c4c4ff;
+}
+
+tr.odd.gradeC td.sorting_2 {
+	background-color: #d1d1ff;
+}
+
+tr.odd.gradeC td.sorting_3 {
+	background-color: #d1d1ff;
+}
+
+tr.even.gradeC td.sorting_1 {
+	background-color: #d5d5ff;
+}
+
+tr.even.gradeC td.sorting_2 {
+	background-color: #e2e2ff;
+}
+
+tr.even.gradeC td.sorting_3 {
+	background-color: #e2e2ff;
+}
+
+tr.odd.gradeX td.sorting_1 {
+	background-color: #ffc4c4;
+}
+
+tr.odd.gradeX td.sorting_2 {
+	background-color: #ffd1d1;
+}
+
+tr.odd.gradeX td.sorting_3 {
+	background-color: #ffd1d1;
+}
+
+tr.even.gradeX td.sorting_1 {
+	background-color: #ffd5d5;
+}
+
+tr.even.gradeX td.sorting_2 {
+	background-color: #ffe2e2;
+}
+
+tr.even.gradeX td.sorting_3 {
+	background-color: #ffe2e2;
+}
+
+tr.odd.gradeU td.sorting_1 {
+	background-color: #c4c4c4;
+}
+
+tr.odd.gradeU td.sorting_2 {
+	background-color: #d1d1d1;
+}
+
+tr.odd.gradeU td.sorting_3 {
+	background-color: #d1d1d1;
+}
+
+tr.even.gradeU td.sorting_1 {
+	background-color: #d5d5d5;
+}
+
+tr.even.gradeU td.sorting_2 {
+	background-color: #e2e2e2;
+}
+
+tr.even.gradeU td.sorting_3 {
+	background-color: #e2e2e2;
+}
+
+
+/*
+ * Row highlighting example
+ */
+.ex_highlight #example tbody tr.even:hover, #example tbody tr.even td.highlighted {
+	background-color: #ECFFB3;
+}
+
+.ex_highlight #example tbody tr.odd:hover, #example tbody tr.odd td.highlighted {
+	background-color: #E6FF99;
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle>
+    <userManagement>
+        <forget>
+            <emailAccount>E-mail</emailAccount>
+            <emailHeader>You have submitted a request for a new password.</emailHeader>
+            <emailFooter>Thank you for contacting our support</emailFooter>
+            <emailSubject>Reset password</emailSubject>
+            <forgetPassword>Forget password</forgetPassword>
+            <send>Send</send>
+            <emailError>No user with this Email</emailError>
+            <yourNewPassword>Your new password is: </yourNewPassword>
+        </forget>
+        <change>
+            <changePassword>Change password</changePassword>
+            <newPassword>New password</newPassword>
+            <newPasswordError>Invalid new password</newPasswordError>
+            <reNewPassword>Validate new password</reNewPassword>
+            <send>Send</send>
+        </change>
+    </userManagement>
+</bundle>

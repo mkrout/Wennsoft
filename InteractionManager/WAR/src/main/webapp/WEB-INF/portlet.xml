@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app version="2.0"
+             xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet portlet-app_2_0.xsd">
+    <portlet>
+        <description>Connect Settings</description>
+        <portlet-name>connect-settings</portlet-name>
+        <display-name>Connect Settings</display-name>
+
+        <portlet-class>com.wennsoft.portlet.ConnectSettings</portlet-class>
+
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+        </supports>
+
+        <portlet-info>
+            <title>Connect Settings</title>
+            <short-title>Connect Settings</short-title>
+            <keywords>interaction-manager</keywords>
+        </portlet-info>
+
+        <portlet-preferences>
+            <preference>
+                <name>connect</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+        </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>admin</role-link>
+        </security-role-ref>
+    </portlet>
+
+    <portlet>
+        <description>Data Display</description>
+        <portlet-name>data-display</portlet-name>
+        <display-name>Data Display</display-name>
+
+        <portlet-class>com.wennsoft.portlet.DataDisplay</portlet-class>
+
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+
+        <portlet-info>
+            <title>Data Display</title>
+            <short-title>Data Display</short-title>
+            <keywords>WennSoft</keywords>
+        </portlet-info>
+
+        <portlet-preferences>
+            <preference>
+                <name>connect</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>entity</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>display</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>filter</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>pageSize</name>
+                <value>10</value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>exportControl</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>columns</name>
+                <value>1</value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>fields</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+        </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>admin</role-link>
+        </security-role-ref>
+    </portlet>
+
+    <portlet>
+        <description>Navigation</description>
+        <portlet-name>navigation</portlet-name>
+        <display-name>Navigation</display-name>
+
+        <portlet-class>com.wennsoft.portlet.Navigation</portlet-class>
+
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+
+        <portlet-info>
+            <title>Navigation</title>
+            <short-title>Navigation</short-title>
+            <keywords>WennSoft</keywords>
+        </portlet-info>
+
+        <portlet-preferences>
+            <preference>
+                <name>connect</name>
+                <value></value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>formatContainers</name>
+                <value>true</value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>formatNavigation</name>
+                <value>true</value>
+                <read-only>false</read-only>
+            </preference>
+            <preference>
+                <name>userPlatformToolbar</name>
+                <value>false</value>
+                <read-only>false</read-only>
+            </preference>
+        </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>admin</role-link>
+        </security-role-ref>
+    </portlet>
+
+    <portlet>
+        <description>Request</description>
+        <portlet-name>request</portlet-name>
+        <display-name>Request</display-name>
+
+        <portlet-class>com.wennsoft.portlet.Request</portlet-class>
+
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+
+        <portlet-info>
+            <title>Request</title>
+            <short-title>Request</short-title>
+            <keywords>interaction-manager</keywords>
+        </portlet-info>
+
+        <security-role-ref>
+            <role-name>admin</role-name>
+            <role-link>admin</role-link>
+        </security-role-ref>
+    </portlet>
+
+    <portlet>
+        <description xml:lang="EN">Key Entities Management Portlet</description>
+        <portlet-name>keyEntitiesManagementPortlet</portlet-name>
+        <display-name xml:lang="EN">KeyEntitiesManagementPortlet</display-name>
+        <portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
+        <init-param>
+            <name>webui.configuration</name>
+            <value>/WEB-INF/conf/portlet/keyEntitiesManagementPortlet/webui/configuration.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>help</portlet-mode>
+        </supports>
+        <supported-locale>en</supported-locale>
+        <resource-bundle>locale.portlet.userManagement.keyEntitiesManagementPortlet</resource-bundle>
+        <portlet-info>
+            <title>keyEntitiesManagement Portlet</title>
+            <short-title>keyEntitiesManagement Portlet</short-title>
+            <keywords>keyEntitiesManagement</keywords>
+        </portlet-info>
+    </portlet>
+</portlet-app>

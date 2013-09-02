@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>InteractionManager</groupId>
+		<artifactId>InteractionManager-userManagementExtension</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>InteractionManager-userManagementExtension-portlets</artifactId>
+	<name>InteractionManager UserManagement Extension Portlets</name>
+	<packaging>war</packaging>
+
+	<build>
+		<finalName>userManagementPortlets</finalName>
+	</build>
+    <dependencies>
+        <dependency>
+            <groupId>org.gatein.portal</groupId>
+            <artifactId>exo.portal.webui.portal</artifactId>
+            <scope>provided</scope>
+	        <version>3.5.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gatein.portal</groupId>
+            <artifactId>exo.portal.webui.eXo</artifactId>
+            <scope>provided</scope>
+	        <version>3.5.5.Final</version>
+        </dependency>
+    </dependencies>
+</project>
