@@ -81,6 +81,7 @@ public class UIKeyEntitiesAdd extends UIForm
 
     private void update() throws Exception
     {
+        clearSelectedKeys();
         List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
