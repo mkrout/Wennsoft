@@ -1,9 +1,21 @@
 package com.wennsoft.keyEntitiesManagementPortlet;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.core.UriBuilder;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.exoplatform.common.http.client.Cookie;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.RequestLifeCycle;
 import org.exoplatform.services.organization.OrganizationService;
@@ -14,14 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.ws.rs.core.UriBuilder;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.*;
 
-public class Utils 
+
+public class Utils
 {
     private static List<Object> convertJsonArray(JSONArray jsonArray) throws Throwable
     {
@@ -44,7 +51,7 @@ public class Utils
         }
         return jsonArrayList;
     }
-    
+
     private static Map<String, Object> convertJsonObject(JSONObject jsonObject) throws Throwable
     {
         Map<String, Object> jsonObjectMap = new HashMap<String, Object>();
@@ -78,23 +85,6 @@ public class Utils
             }
         }
         return jsonObjectMap;
-    }
-	
-	private static String readInputStream(InputStream inputStream) throws Throwable
-    {
-        StringBuffer output = new StringBuffer();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((inputStream)));
-        char[] charBuffer = new char[4096];
-        int bufferIndex = 0;
-        do
-        {
-            if ((bufferIndex = bufferedReader.read(charBuffer, 0, 4096)) >= 0)
-            {
-                output.append(charBuffer, 0, bufferIndex);
-            }
-        }
-        while (bufferIndex > 0);
-        return output.toString();
     }
 
     public static Map<String, Object> convertJsonString(String json) throws Throwable
@@ -130,7 +120,7 @@ public class Utils
         }
         return jsonMap;
     }
-	
+
     public static String getAttributeUserProfile(String userId, String attribute) throws Exception
     {
         OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
@@ -138,7 +128,7 @@ public class Utils
         UserProfile userProfile = userProfileHandler.findUserProfileByName(userId);
         return userProfile.getAttribute(attribute);
     }
-    
+
     public static String getEntitiesList(String webServiceUri, String controller, String parameters) throws Throwable
     {
         String data = null;
@@ -158,13 +148,21 @@ public class Utils
             UriBuilder builder = UriBuilder.fromUri(new URI(webServiceUri + webServiceUriPathBuffer.toString()));
             HttpGet request = new HttpGet(builder.build());
             request.addHeader("User", PortletRequestContext.getCurrentInstance().getRemoteUser());
+           /* HttpState initialState = new HttpState();
+
+            Cookie mycookie = new Cookie(".foobar.com", "mycookie", "stuff", "/", null, false);
+
+            initialState.addCookie(mycookie);
+            client.setState(initialState);*/
             HttpResponse response = client.execute(request);
             if (response.getStatusLine().getStatusCode() == 200)
-            {   BufferedReader rd = new BufferedReader(
-                new InputStreamReader(response.getEntity().getContent()));
+            {
+                BufferedReader rd = new BufferedReader(
+                        new InputStreamReader(response.getEntity().getContent()));
                 StringBuffer result = new StringBuffer();
                 String line = "";
-                while ((line = rd.readLine()) != null) {
+                while ((line = rd.readLine()) != null)
+                {
                     result.append(line);
                 }
                 data = result.toString();
@@ -188,8 +186,8 @@ public class Utils
 
     public static void setAttributeUserProfile(String userId, String attribute, String attributeValue) throws Exception
     {
-    	RequestLifeCycle.begin(PortalContainer.getInstance());
-    	OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+        RequestLifeCycle.begin(PortalContainer.getInstance());
+        OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
         UserProfileHandler userProfileHandler = organizationService.getUserProfileHandler();
         UserProfile userProfile = userProfileHandler.createUserProfileInstance(userId);
         userProfile.setAttribute(attribute, attributeValue);

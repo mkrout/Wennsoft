@@ -144,11 +144,12 @@ public class UIListUsers extends UISearch
             String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
             uiListUsers.getChild(UIUsersGrid.class).setSelectedUser(userName);
-            UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
-            uiKeyEntitiesForm.setRendered(true);
-            uiKeyEntitiesForm.load(userName);
-            UIListKeyEntities uiListKeyEntities = uiKeyEntitiesForm.getChild(UIListKeyEntities.class);
-            uiListKeyEntities.load(userName);
+            uiListUsers.setRendered(false);
+            UIUserInfo uiUserInfo = uiKeyEntitiesManagementPortlet.getChild(UIUserInfo.class);
+
+            uiUserInfo.setUser(userName);
+            uiUserInfo.setRendered(true);
+
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
         }
     }

@@ -1,5 +1,13 @@
 package com.wennsoft.keyEntitiesManagementPortlet;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.exoplatform.commons.serialization.api.annotations.Serialized;
 import org.exoplatform.commons.utils.SerializablePageList;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -11,25 +19,31 @@ import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.Event.Phase;
 import org.exoplatform.webui.event.EventListener;
-import org.exoplatform.webui.form.*;
-
-import java.util.*;
+import org.exoplatform.webui.form.UIForm;
+import org.exoplatform.webui.form.UIFormInputInfo;
+import org.exoplatform.webui.form.UIFormInputSet;
+import org.exoplatform.webui.form.UIFormPageIterator;
+import org.exoplatform.webui.form.UIFormSelectBox;
+import org.exoplatform.webui.form.input.UICheckBoxInput;
 
 
 /**
  * @author MedAmine Krout
  */
 @ComponentConfig
-(
-    lifecycle = UIFormLifecycle.class, 
-    template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
-    events =
-        {
-            @EventConfig(listeners = UIKeyEntitiesAdd.SaveActionListener.class, phase=Phase.DECODE),
-            @EventConfig(listeners = UIKeyEntitiesAdd.CancelActionListener.class, phase=Phase.DECODE),
-            @EventConfig(listeners = UIKeyEntitiesAdd.ChangeProductActionListener.class, phase=Phase.DECODE)
-        }
-)
+        (
+                lifecycle = UIFormLifecycle.class,
+                template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
+                events =
+                        {
+                                @EventConfig(listeners = UIKeyEntitiesAdd.CancelActionListener.class, phase=Phase.DECODE),
+                                @EventConfig(listeners = UIKeyEntitiesAdd.ChangeProductActionListener.class, phase=Phase.DECODE),
+                                @EventConfig(listeners = UIKeyEntitiesAdd.SaveActionListener.class, phase=Phase.DECODE),
+                                @EventConfig(listeners = UIKeyEntitiesAdd.SelectBoxActionListener.class, phase=Phase.DECODE),
+                                @EventConfig(listeners = UIKeyEntitiesAdd.ShowPageActionListener.class)
+                        }
+        )
+@Serialized
 public class UIKeyEntitiesAdd extends UIForm
 {
     public final static String PRODUCT = "product";
@@ -39,6 +53,17 @@ public class UIKeyEntitiesAdd extends UIForm
     private static String product;
     private static String userName;
     private static String keyEntitiesAttributeValue;
+    private List<String> selectedKeys = new ArrayList<String>();
+
+    private void addSelectedKey(String key)
+    {
+        selectedKeys.add(key);
+    }
+
+    private void clearSelectedKeys()
+    {
+        selectedKeys.clear();
+    }
 
     private void initProductSelectBox(UIFormSelectBox productSelectBox)
     {
@@ -56,13 +81,13 @@ public class UIKeyEntitiesAdd extends UIForm
 
     private void update() throws Exception
     {
-        List<Map<String, String>> customers = new ArrayList<Map<String, String>>();
         List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
-        if (product!=null && product.equals("customer"))
+        UICheckBoxInput uiCheckBoxInput;
+        if (product != null && product.equals("customer"))
         {
-            String[] columnsTable = {"CustomerNumber","CustomerName",INCLUDE};
+            String[] columnsTable = {"CustomerNumber","CustomerName", INCLUDE};
             UIFormInputSet uiFormInputSet;
             removeChild(UIFormTableIteratorInputSet.class);
             uiFormTableInputSet.setName(TABLE_NAME);
@@ -74,40 +99,39 @@ public class UIKeyEntitiesAdd extends UIForm
             String parameters= "?fields=CustomerNumber,CustomerName";
             try
             {
-                data= Utils.getEntitiesList(bridgeUri, controller, parameters);
-                Map<String, Object> entitiesMap =new HashMap<String, Object>(Utils.convertJsonString(data));
+                data = Utils.getEntitiesList(bridgeUri, controller, parameters);
+                Map<String, Object> entitiesMap = new HashMap<String, Object>(Utils.convertJsonString(data));
                 List<Object> entitiesList = (List <Object>) entitiesMap.get("aaData");
                 for (Object entity : entitiesList)
                 {
                     String keyValue = product + "/" ;
                     uiFormInputSet = new UIFormInputSet(columnsTable[0]);
-                    List<String> entity_=  (List<String>) entity;
+                    List<String> entity_ =  (List<String>) entity;
                     Iterator<String> iterator = entity_.iterator();
                     int count = 0;
-                    while (iterator.hasNext()) 
+                    while (iterator.hasNext())
                     {
                         String value = iterator.next();
                         uiFormInputSet.addChild(new UIFormInputInfo(columnsTable[count], null, value));
-                        keyValue=keyValue + columnsTable[count] + ":" + value+ ";";
+                        keyValue = keyValue + columnsTable[count] + ":" + value + ";";
                     }
-                    UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
-                    uiFormCheckBoxInput.setChecked(false);
-                    uiFormCheckBoxInput.setValue(keyValue);
+                    uiCheckBoxInput = new UICheckBoxInput(keyValue, keyValue, false);
+                    uiCheckBoxInput.setOnChange("SelectBox");
                     if (keyEntitiesAttributeValue.contains(keyValue))
                     {
-                        uiFormCheckBoxInput.setDisabled(true);
-                    }  
-                    uiFormInputSet.addChild(uiFormCheckBoxInput);
+                        uiCheckBoxInput.setDisabled(true);
+                    }
+                    uiFormInputSet.addChild(uiCheckBoxInput);
                     uiFormInputSetList.add(uiFormInputSet);
                     uiFormTableInputSet.addChild(uiFormInputSet);
                 }
-            } 
-            catch (Throwable throwable) 
+            }
+            catch (Throwable throwable)
             {
                 throwable.printStackTrace();
             }
         }
-        if (product!=null && product.equals("vendor"))
+        if (product != null && product.equals("vendor"))
         {
             Map<String, String> vendor = new HashMap<String, String>();
             vendor.put("Vendor Number","SAV-1200");
@@ -131,7 +155,7 @@ public class UIKeyEntitiesAdd extends UIForm
             vendors.add(vendor);
             String[] columnsTable = new String [vendor.size()+1];
             int count = 0;
-            for (Map.Entry<String, String> entry : vendor.entrySet()) 
+            for (Map.Entry<String, String> entry : vendor.entrySet())
             {
                 columnsTable[count]= entry.getKey();
                 count++;
@@ -144,28 +168,37 @@ public class UIKeyEntitiesAdd extends UIForm
             addChild(uiFormTableInputSet);
             for( Map<String, String> vendor_ : vendors)
             {
-                String keyValue= product + "/" ;
+                String keyValue = product + "/" ;
                 uiFormInputSet = new UIFormInputSet(columnsTable[0]);
                 for (Map.Entry<String, String> entry : vendor_.entrySet())
                 {
                     uiFormInputSet.addChild(new UIFormInputInfo(entry.getKey(), null, entry.getValue()));
                     keyValue = keyValue + entry.getKey() + ":" + entry.getValue() + ";";
                 }
-                UIFormCheckBoxInput<String> uiFormCheckBoxInput = new UIFormCheckBoxInput<String>(keyValue, keyValue, null);
-                uiFormCheckBoxInput.setChecked(false);
-                uiFormCheckBoxInput.setValue(keyValue);
+                uiCheckBoxInput = new UICheckBoxInput(keyValue, keyValue, false);
+                uiCheckBoxInput.setOnChange("SelectBox");
                 if (keyEntitiesAttributeValue.contains(keyValue))
                 {
-                    uiFormCheckBoxInput.setDisabled(true);
+                    uiCheckBoxInput.setDisabled(true);
                 }
-                uiFormInputSet.addChild(uiFormCheckBoxInput);
+                uiFormInputSet.addChild(uiCheckBoxInput);
                 uiFormInputSetList.add(uiFormInputSet);
                 uiFormTableInputSet.addChild(uiFormInputSet);
             }
         }
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
-        SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class,uiFormInputSetList, 3);
+        SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class, uiFormInputSetList, 3);
         uiIterator.setPageList(pageList);
+    }
+
+    private void removeUnSelectedKey(String key)
+    {
+        selectedKeys.remove(key);
+    }
+
+    private List<String> getSelectedKeys()
+    {
+        return Collections.unmodifiableList(selectedKeys);
     }
 
     public void init(String userName_) throws Exception
@@ -185,6 +218,7 @@ public class UIKeyEntitiesAdd extends UIForm
         public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
         {
             UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
+            uiKeyEntitiesAdd.clearSelectedKeys();
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesAdd.getAncestorOfType(UIKeyEntitiesManagementPortlet.class);
             UIPopupWindow uiPopupWindow = uiKeyEntitiesManagementPortlet.findComponentById(UIKeyEntitiesManagementPortlet.KEY_ENTITIES_ADD_POPUP);
             uiPopupWindow.setShowMask(true);
@@ -209,33 +243,26 @@ public class UIKeyEntitiesAdd extends UIForm
     {
         public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
         {
-             UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
-            List<String> selectedKeys = new ArrayList<String>();
-            List<UIFormCheckBoxInput> listCheckBoxInputs =  new ArrayList<UIFormCheckBoxInput>();
-            uiKeyEntitiesAdd.findComponentOfType(listCheckBoxInputs, UIFormCheckBoxInput.class);
+            UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
             String attributeValue = "";
-            for(UIFormCheckBoxInput uiFormCheckBoxInput : listCheckBoxInputs)
+            for(String key : uiKeyEntitiesAdd.getSelectedKeys())
             {
-                if(uiFormCheckBoxInput.isChecked())
+                if (attributeValue.equals(""))
                 {
-                    selectedKeys.add(uiFormCheckBoxInput.getValue().toString());
-                    if (attributeValue.equals(""))
-                    {
-                        attributeValue = uiFormCheckBoxInput.getValue().toString();
-                    }
-                    else
-                    {
-                        attributeValue = attributeValue + "@" + uiFormCheckBoxInput.getValue();
-
-                    }
+                    attributeValue = key;
+                }
+                else
+                {
+                    attributeValue = attributeValue + "@" + key;
                 }
             }
-            if(selectedKeys.size() == 0)
+            if(uiKeyEntitiesAdd.getSelectedKeys().size() == 0)
             {
                 UIApplication uiApplication = uiKeyEntitiesAdd.getAncestorOfType(UIApplication.class);
                 uiApplication.addMessage(new ApplicationMessage("UIKeyEntitiesAdd.msg.noKeyEntitiesSelected", null));
                 return;
             }
+            uiKeyEntitiesAdd.clearSelectedKeys();
             Utils.setAttributeUserProfile(userName, "keyEntities", keyEntitiesAttributeValue + attributeValue);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesAdd.getAncestorOfType(UIKeyEntitiesManagementPortlet.class);
             UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
@@ -245,6 +272,58 @@ public class UIKeyEntitiesAdd extends UIForm
             UIPopupWindow uiPopupWindow = uiKeyEntitiesManagementPortlet.findComponentById(UIKeyEntitiesManagementPortlet.KEY_ENTITIES_ADD_POPUP);
             uiPopupWindow.setShowMask(true);
             uiPopupWindow.setRendered(false);
+        }
+    }
+
+    static public class SelectBoxActionListener extends EventListener<UIKeyEntitiesAdd>
+    {
+        @Override
+        public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
+        {
+            UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
+            UIFormTableIteratorInputSet uiFormTableIteratorInputSet = uiKeyEntitiesAdd.getChild(UIFormTableIteratorInputSet.class);
+            UIFormPageIterator uiIterator = uiFormTableIteratorInputSet.getChild(UIFormPageIterator.class);
+            List<UIFormInputSet> uiFormInputSetList = uiIterator.getCurrentPageData();
+            List<UICheckBoxInput> listCheckBoxInputs =  new ArrayList<UICheckBoxInput>();
+            for (UIFormInputSet uiFormInputSet : uiFormInputSetList)
+            {
+                listCheckBoxInputs.add(uiFormInputSet.getChild(UICheckBoxInput.class));
+            }
+            for (UICheckBoxInput uiCheckBoxInput : listCheckBoxInputs)
+            {
+                if (uiCheckBoxInput != null)
+                {
+                    if (uiCheckBoxInput.isChecked())
+                    {
+                        if (!uiKeyEntitiesAdd.getSelectedKeys().contains(uiCheckBoxInput.getName()))
+                        {
+                            uiKeyEntitiesAdd.addSelectedKey(uiCheckBoxInput.getName());
+                        }
+                    }
+                    else
+                    {
+                        if (uiKeyEntitiesAdd.getSelectedKeys().contains(uiCheckBoxInput.getName()))
+                        {
+                            uiKeyEntitiesAdd.removeUnSelectedKey(uiCheckBoxInput.getName());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static class ShowPageActionListener extends EventListener<UIKeyEntitiesAdd>
+    {
+        public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
+        {
+            UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
+            UICheckBoxInput uiCheckBoxInput;
+            for (String key : uiKeyEntitiesAdd.getSelectedKeys())
+            {
+                uiCheckBoxInput = uiKeyEntitiesAdd.getUIInput(key);
+                uiCheckBoxInput.setChecked(true);
+            }
+            event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesAdd);
         }
     }
 }
