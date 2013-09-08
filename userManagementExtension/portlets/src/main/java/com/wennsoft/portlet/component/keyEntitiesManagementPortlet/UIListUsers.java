@@ -44,7 +44,6 @@ public class UIListUsers extends UISearch
             );
     
     private Query lastQuery_;
-    private String userSelected_;
     private UIUsersGrid grid_;
 
     public UIListUsers() throws Exception 
@@ -54,10 +53,6 @@ public class UIListUsers extends UISearch
         grid_.configure(USER_NAME, USER_BEAN_FIELD, USER_ACTION);
         grid_.getUIPageIterator().setId("UIListUsersIterator");
         grid_.getUIPageIterator().setParent(this);
-    }
-    
-    public String getUserSelected() {
-        return userSelected_;
     }
     
     public void advancedSearch(UIFormInputSet advancedSearchInput) 
@@ -124,11 +119,6 @@ public class UIListUsers extends UISearch
         }
     }
 
-    public void setUserSelected(String userName) 
-    {
-        userSelected_ = userName;
-    }
-    
     public void search(Query query) 
     {
         lastQuery_ = query;
@@ -143,11 +133,10 @@ public class UIListUsers extends UISearch
             String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
             uiListUsers.getChild(UIUsersGrid.class).setSelectedUser(userName);
-            UIKeyEntitiesForm uiKeyEntitiesForm = uiKeyEntitiesManagementPortlet.getChild(UIKeyEntitiesForm.class);
-            uiKeyEntitiesForm.setRendered(true);
-            uiKeyEntitiesForm.load(userName);
-            UIListKeyEntities uiListKeyEntities = uiKeyEntitiesForm.getChild(UIListKeyEntities.class);
-            uiListKeyEntities.load(userName);
+            uiListUsers.setRendered(false);
+            UIUserInfo uiUserInfo = uiKeyEntitiesManagementPortlet.getChild(UIUserInfo.class);
+            uiUserInfo.setUser(userName);
+            uiUserInfo.setRendered(true);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
         }
     }

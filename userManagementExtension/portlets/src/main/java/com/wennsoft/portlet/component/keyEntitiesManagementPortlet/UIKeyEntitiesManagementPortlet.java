@@ -19,7 +19,7 @@ public class UIKeyEntitiesManagementPortlet extends UIPortletApplication
     public UIKeyEntitiesManagementPortlet() throws Exception 
     {
         addChild(UIListUsers.class, null, null).setRendered(true);
-        addChild(UIKeyEntitiesForm.class, null, null).setRendered(false);
+        addChild(UIUserInfo.class, null, null).setRendered(false);
     }
 
     public void setAddPopup(String userName_) throws Exception
