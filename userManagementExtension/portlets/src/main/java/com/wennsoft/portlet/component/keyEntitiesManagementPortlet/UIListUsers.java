@@ -12,6 +12,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIApplication;
+import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.core.UISearch;
 import org.exoplatform.webui.core.lifecycle.UIContainerLifecycle;
 import org.exoplatform.webui.core.model.SelectItemOption;
@@ -44,12 +45,12 @@ public class UIListUsers extends UISearch
             );
     
     private Query lastQuery_;
-    private UIUsersGrid grid_;
+    private UIGrid grid_;
 
     public UIListUsers() throws Exception 
     {
         super(OPTIONS_);
-        grid_ = addChild(UIUsersGrid.class, null, "UIListUsersGird");
+        grid_ = addChild(UIGrid.class, null, "UIListUsersGird");
         grid_.configure(USER_NAME, USER_BEAN_FIELD, USER_ACTION);
         grid_.getUIPageIterator().setId("UIListUsersIterator");
         grid_.getUIPageIterator().setParent(this);
@@ -112,7 +113,7 @@ public class UIListUsers extends UISearch
             }    
         }
         search(query);
-        if (getChild(UIUsersGrid.class).getUIPageIterator().getAvailable() == 0)
+        if (getChild(UIGrid.class).getUIPageIterator().getAvailable() == 0)
         {
             UIApplication uiApp = Util.getPortalRequestContext().getUIApplication();
             uiApp.addMessage(new ApplicationMessage("UISearchForm.msg.empty", null));
@@ -132,7 +133,6 @@ public class UIListUsers extends UISearch
             UIListUsers uiListUsers = event.getSource();
             String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
-            uiListUsers.getChild(UIUsersGrid.class).setSelectedUser(userName);
             uiListUsers.setRendered(false);
             UIUserInfo uiUserInfo = uiKeyEntitiesManagementPortlet.getChild(UIUserInfo.class);
             uiUserInfo.setUser(userName);
