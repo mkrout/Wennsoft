@@ -86,7 +86,7 @@ public class UIUserInfo extends UIForm {
         User user = service.getUserHandler().findUserByName(userName);
 
         getChild(UIAccountEditInputSet.class).setValue(user);
-        getChild(UIListKeyEntities.class).load(username_);
+        getChild(UIListKeyEntities.class).init(username_);
 
         // getChild(UIUserProfileInputSet.class).setUserProfile(userName);
 
