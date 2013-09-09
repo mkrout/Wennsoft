@@ -13,7 +13,6 @@ import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.core.UIGrid;
-import org.exoplatform.webui.core.UISearch;
 import org.exoplatform.webui.core.lifecycle.UIContainerLifecycle;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
@@ -133,7 +132,8 @@ public class UIListUsers extends UISearch
             UIListUsers uiListUsers = event.getSource();
             String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
-            uiListUsers.setRendered(false);
+            //uiListUsers.getChild(UISearchForm.class).setRendered(false);
+            uiListUsers.getChild(UIGrid.class).setRendered(false);
             UIListKeyEntities uiListKeyEntities = uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class);
             uiListKeyEntities.init(userName, null);
             uiListKeyEntities.setRendered(true);

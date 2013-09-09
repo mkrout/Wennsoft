@@ -3,12 +3,14 @@ package com.wennsoft.portlet.component.keyEntitiesManagementPortlet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.exoplatform.commons.serialization.api.annotations.Serialized;
 import org.exoplatform.commons.utils.SerializablePageList;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIGrid;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.Event.Phase;
@@ -149,9 +151,12 @@ public class UIListKeyEntities extends UIForm
             listKeyEntities.clear();
             //UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
             //UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
-            uiListKeyEntities.setRenderSibling(UIListUsers.class);
+            uiListKeyEntities.setRendered(false);
             //accountInput.reset();
             // userProfile.reset();
+            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
+            UIListUsers uiListUsers = uiKeyEntitiesManagementPortlet.getChild(UIListUsers.class);
+            uiListUsers.getChild(UIGrid.class).setRendered(true);
             event.getRequestContext().setProcessRender(true);
         }
     }
@@ -188,9 +193,12 @@ public class UIListKeyEntities extends UIForm
         	}
         	uiListKeyEntities.clearSelectedKeys();
         	listKeyEntities.clear();
+        	UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
+            UIListUsers uiListUsers = uiKeyEntitiesManagementPortlet.getChild(UIListUsers.class);
+            uiListUsers.getChild(UIGrid.class).setRendered(true);
+        	uiListKeyEntities.setRendered(false);
         	Utils.setAttributeUserProfile(userName, "keyEntities", !keyEntities.equals("")?keyEntities.substring(1):keyEntities);
-        	uiListKeyEntities.init(userName, null);
-        	event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
+        	//event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
         }
     }
     
