@@ -72,8 +72,6 @@ public class UIKeyEntitiesAdd extends UIForm
         selectItemOption = new SelectItemOption<String>("Customer Connect", "customer");
         String defaultSelectItemOption = selectItemOption.getValue();
         lisSelectItemOptions.add(selectItemOption);
-        selectItemOption = new SelectItemOption<String>("Vendor Connect", "vendor");
-        lisSelectItemOptions.add(selectItemOption);
         productSelectBox.setOptions(lisSelectItemOptions);
         productSelectBox.setValue(defaultSelectItemOption);
         product = productSelectBox.getValue();
@@ -82,7 +80,6 @@ public class UIKeyEntitiesAdd extends UIForm
     private void update() throws Exception
     {
         clearSelectedKeys();
-        List<Map<String, String>> vendors = new ArrayList<Map<String, String>>();
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         UICheckBoxInput uiCheckBoxInput;
@@ -132,61 +129,7 @@ public class UIKeyEntitiesAdd extends UIForm
                 throwable.printStackTrace();
             }
         }
-        if (product != null && product.equals("vendor"))
-        {
-            Map<String, String> vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1200");
-            vendor.put("Vendor Branch","MKE");
-            vendor.put("Vendor Name","Gloves");
-            vendors.add(vendor);
-            vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1201");
-            vendor.put("Vendor Branch", "AAA");
-            vendor.put("Vendor Name","eXoplatform1");
-            vendors.add(vendor);
-            vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1202");
-            vendor.put("Vendor Branch","FFF");
-            vendor.put("Vendor Name","Capgemini1");
-            vendors.add(vendor);
-            vendor = new HashMap<String, String>();
-            vendor.put("Vendor Number","SAV-1203");
-            vendor.put("Vendor Branch","ZZZ");
-            vendor.put("Vendor Name","Han & dy");
-            vendors.add(vendor);
-            String[] columnsTable = new String [vendor.size()+1];
-            int count = 0;
-            for (Map.Entry<String, String> entry : vendor.entrySet()) 
-            {
-                columnsTable[count]= entry.getKey();
-                count++;
-            }
-            columnsTable[vendor.size()] = INCLUDE;
-            UIFormInputSet uiFormInputSet;
-            removeChild(UIFormTableIteratorInputSet.class);
-            uiFormTableInputSet.setName(TABLE_NAME);
-            uiFormTableInputSet.setColumns(columnsTable);
-            addChild(uiFormTableInputSet);
-            for( Map<String, String> vendor_ : vendors)
-            {
-                String keyValue = product + "/" ;
-                uiFormInputSet = new UIFormInputSet(columnsTable[0]);
-                for (Map.Entry<String, String> entry : vendor_.entrySet())
-                {
-                    uiFormInputSet.addChild(new UIFormInputInfo(entry.getKey(), null, entry.getValue()));
-                    keyValue = keyValue + entry.getKey() + ":" + entry.getValue() + ";";
-                }
-                uiCheckBoxInput = new UICheckBoxInput(keyValue, keyValue, false);
-                uiCheckBoxInput.setOnChange("SelectBox");
-                if (keyEntitiesAttributeValue.contains(keyValue))
-                {
-                	uiCheckBoxInput.setDisabled(true);
-                }
-                uiFormInputSet.addChild(uiCheckBoxInput);
-                uiFormInputSetList.add(uiFormInputSet);
-                uiFormTableInputSet.addChild(uiFormInputSet);
-            }
-        }
+
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
         SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class, uiFormInputSetList, 3);
         uiIterator.setPageList(pageList);
@@ -266,8 +209,7 @@ public class UIKeyEntitiesAdd extends UIForm
             uiKeyEntitiesAdd.clearSelectedKeys();
             Utils.setAttributeUserProfile(userName, "keyEntities", keyEntitiesAttributeValue + attributeValue);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesAdd.getAncestorOfType(UIKeyEntitiesManagementPortlet.class);
-            UIUserInfo uiUserInfo = uiKeyEntitiesManagementPortlet.getChild(UIUserInfo.class);
-            UIListKeyEntities uiListKeyEntities = uiUserInfo.getChild(UIListKeyEntities.class);
+            UIListKeyEntities uiListKeyEntities = uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class);
             uiListKeyEntities.init(userName);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
             UIPopupWindow uiPopupWindow = uiKeyEntitiesManagementPortlet.findComponentById(UIKeyEntitiesManagementPortlet.KEY_ENTITIES_ADD_POPUP);

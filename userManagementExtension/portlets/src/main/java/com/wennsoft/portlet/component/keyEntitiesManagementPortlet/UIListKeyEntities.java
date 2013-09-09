@@ -6,6 +6,8 @@ import java.util.List;
 import org.exoplatform.commons.serialization.api.annotations.Serialized;
 import org.exoplatform.commons.utils.SerializablePageList;
 import org.exoplatform.portal.webui.container.UIContainer;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.User;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.lifecycle.UIContainerLifecycle;
@@ -25,16 +27,19 @@ import org.exoplatform.webui.form.input.UICheckBoxInput;
  */
 @ComponentConfig
         (
-                lifecycle = UIContainerLifecycle.class,
-               // template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIKeyEntitiesAdd.gtmpl",
+                lifecycle = UIFormLifecycle.class,
+                template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIListKeyEntities.gtmpl",
                 events =
                         {
                                 @EventConfig(listeners = UIListKeyEntities.SelectBoxActionListener.class, phase=Phase.DECODE),
-                                @EventConfig(listeners = UIListKeyEntities.ShowPageActionListener.class)
+                                @EventConfig(listeners = UIListKeyEntities.ShowPageActionListener.class),
+                @EventConfig(listeners = UIListKeyEntities.SaveActionListener.class),
+                                @EventConfig(listeners = UIListKeyEntities.BackActionListener.class, phase = Phase.ANY),
+                @EventConfig(listeners = UIListKeyEntities.AddKeyEntitiesActionListener.class, phase = Phase.DECODE)
                         }
         )
 @Serialized
-public class UIListKeyEntities extends UIContainer
+public class UIListKeyEntities extends UIForm
 {
     public final static String TABLE_NAME =  "UIListKeyEntities";
     public final static String DELETE = "delete";
@@ -60,8 +65,22 @@ public class UIListKeyEntities extends UIContainer
     public void init(String userName_) throws Exception
     {
         userName = userName_;
+
+        UIFormInputSet accountInputSet = getChild(UIFormInputSet.class);
+
+        if (accountInputSet != null)
+        {
+            removeChild(UIFormInputSet.class);
+        }
+
+        addChild(new UIAccountEditInputSet("UIAccountEditInputSet"));
+        OrganizationService service = getApplicationComponent(OrganizationService.class);
+        User user = service.getUserHandler().findUserByName(userName);
+
+        getChild(UIAccountEditInputSet.class).setValue(user);
+
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
-        //setActions(new String[] {}) ;
+
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         UICheckBoxInput uiCheckBoxInput;
         String[] columnsTable = {"connectId","key", DELETE};
@@ -102,6 +121,7 @@ public class UIListKeyEntities extends UIContainer
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
         SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class, uiFormInputSetList, 3);
         uiIterator.setPageList(pageList);
+        setActions(new String[] { "AddKeyEntities", "Save", "Back" });
     }
 
     static public class SelectBoxActionListener extends EventListener<UIListKeyEntities>
@@ -155,4 +175,47 @@ public class UIListKeyEntities extends UIContainer
             event.getRequestContext().addUIComponentToUpdateByAjax(UIListKeyEntities);
         }
     }
+
+    public static class SaveActionListener extends EventListener<UIListKeyEntities> {
+        public void execute(Event<UIListKeyEntities> event) throws Exception {
+            System.out.println("Save action");
+        /*    UIListKeyEntities uiListKeyEntities = event.getSource();
+            OrganizationService service = uiListKeyEntities.getApplicationComponent(OrganizationService.class);
+            boolean save = uiListKeyEntities.getChild(UIAccountEditInputSet.class).save(service);
+            if (!save) {
+                return;
+            }
+
+            UIAccountEditInputSet accountInput = uiUserInfo.getChild(UIAccountEditInputSet.class);
+            //UIUserProfileInputSet userProfile = uiUserInfo.getChild(UIUserProfileInputSet.class);
+            uiUserInfo.setRenderSibling(UIListUsers.class);
+            accountInput.reset();
+            //userProfile.reset();
+            event.getRequestContext().setProcessRender(true); */
+        }
+    }
+
+    public static class BackActionListener extends EventListener<UIListKeyEntities> {
+        public void execute(Event<UIListKeyEntities> event) throws Exception {
+            UIListKeyEntities uiListKeyEntities = event.getSource();
+            UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
+            //UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
+            uiListKeyEntities.setRenderSibling(UIListUsers.class);
+            accountInput.reset();
+            // userProfile.reset();
+            event.getRequestContext().setProcessRender(true);
+
+        }
+    }
+
+    public static class AddKeyEntitiesActionListener extends EventListener<UIListKeyEntities>
+    {
+        public void execute(Event<UIListKeyEntities> event) throws Exception
+        {
+            UIListKeyEntities uiListKeyEntities = event.getSource();
+            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
+            uiKeyEntitiesManagementPortlet.setAddPopup(userName);
+        }
+    }
+
 }
