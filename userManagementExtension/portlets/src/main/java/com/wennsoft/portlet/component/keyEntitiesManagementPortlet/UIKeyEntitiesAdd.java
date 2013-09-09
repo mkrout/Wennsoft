@@ -52,7 +52,7 @@ public class UIKeyEntitiesAdd extends UIForm
     public final static String INCLUDE = "include";
     private static String product;
     private static String userName;
-    private static String keyEntitiesAttributeValue;
+    private static List<KeyEntity> listKeyEntities_;
     private List<String> selectedKeys = new ArrayList<String>();
     
     private void addSelectedKey(String key) 
@@ -77,9 +77,10 @@ public class UIKeyEntitiesAdd extends UIForm
         product = productSelectBox.getValue();
     }
 
-    private void update() throws Exception
+    private void update(List<KeyEntity> listKeyEntities) throws Exception
     {
-        clearSelectedKeys();
+    	listKeyEntities_ = listKeyEntities;
+    	clearSelectedKeys();
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         UICheckBoxInput uiCheckBoxInput;
@@ -112,12 +113,17 @@ public class UIKeyEntitiesAdd extends UIForm
                         String value = iterator.next();
                         uiFormInputSet.addChild(new UIFormInputInfo(columnsTable[count], null, value));
                         keyValue = keyValue + columnsTable[count] + ":" + value + ";";
+                        count ++;
                     }
                     uiCheckBoxInput = new UICheckBoxInput(keyValue, keyValue, false);
-                    uiCheckBoxInput.setOnChange("SelectBox"); 
-                    if (keyEntitiesAttributeValue.contains(keyValue))
+                    uiCheckBoxInput.setOnChange("SelectBox");
+                    for (KeyEntity keyEntity : listKeyEntities)
                     {
-                    	uiCheckBoxInput.setDisabled(true);
+                    	if (keyValue.equals(keyEntity.getConnectId() + "/" + keyEntity.getKey()))
+                    	{
+                    		uiCheckBoxInput.setDisabled(true);
+                    		break;
+                    	}
                     }
                     uiFormInputSet.addChild(uiCheckBoxInput);
                     uiFormInputSetList.add(uiFormInputSet);
@@ -145,16 +151,15 @@ public class UIKeyEntitiesAdd extends UIForm
         return Collections.unmodifiableList(selectedKeys);
     }
     
-    public void init(String userName_) throws Exception
+    public void init(String userName_, List<KeyEntity> listKeyEntities) throws Exception
     {
         userName = userName_;
-        keyEntitiesAttributeValue = Utils.getAttributeUserProfile(userName, "keyEntities") != null && !Utils.getAttributeUserProfile(userName, "keyEntities").equals("")?Utils.getAttributeUserProfile(userName, "keyEntities") + "@":"";
         UIFormSelectBox uiFormProductSelectBox = new UIFormSelectBox(PRODUCT, null, null);
         initProductSelectBox(uiFormProductSelectBox);
         uiFormProductSelectBox.setOnChange(PRODUCTS_ONCHANGE);
         setActions(new String[] {"Save", "Cancel"}) ;
         addUIFormInput(uiFormProductSelectBox) ;
-        update();
+        update(listKeyEntities);
     }
 
     static public class CancelActionListener extends EventListener<UIKeyEntitiesAdd>
@@ -178,7 +183,7 @@ public class UIKeyEntitiesAdd extends UIForm
             UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource() ;
             UIFormSelectBox productSelection = uiKeyEntitiesAdd.getUIFormSelectBox(PRODUCT);
             product = productSelection.getValue();
-            uiKeyEntitiesAdd.update();
+            uiKeyEntitiesAdd.update(listKeyEntities_);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesAdd);
         }
     }
@@ -188,17 +193,10 @@ public class UIKeyEntitiesAdd extends UIForm
         public void execute(Event<UIKeyEntitiesAdd> event) throws Exception
         {
             UIKeyEntitiesAdd uiKeyEntitiesAdd = event.getSource();
-            String attributeValue = "";
+            List<KeyEntity> listSelectedKeyEntities = new ArrayList<KeyEntity>();
             for(String key : uiKeyEntitiesAdd.getSelectedKeys())
             {
-                if (attributeValue.equals(""))
-                {
-                    attributeValue = key;
-                }
-                else
-                {
-                    attributeValue = attributeValue + "@" + key;
-                }
+                listSelectedKeyEntities.add(new KeyEntity(key.split("/")[0], key.split("/")[1]));
             }
             if(uiKeyEntitiesAdd.getSelectedKeys().size() == 0)
             {
@@ -207,10 +205,10 @@ public class UIKeyEntitiesAdd extends UIForm
                 return;
             }
             uiKeyEntitiesAdd.clearSelectedKeys();
-            Utils.setAttributeUserProfile(userName, "keyEntities", keyEntitiesAttributeValue + attributeValue);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiKeyEntitiesAdd.getAncestorOfType(UIKeyEntitiesManagementPortlet.class);
             UIListKeyEntities uiListKeyEntities = uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class);
-            uiListKeyEntities.init(userName);
+            uiListKeyEntities.addAllListKeyEntities(listSelectedKeyEntities);
+            uiListKeyEntities.init(userName, listSelectedKeyEntities);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
             UIPopupWindow uiPopupWindow = uiKeyEntitiesManagementPortlet.findComponentById(UIKeyEntitiesManagementPortlet.KEY_ENTITIES_ADD_POPUP);
             uiPopupWindow.setShowMask(true);

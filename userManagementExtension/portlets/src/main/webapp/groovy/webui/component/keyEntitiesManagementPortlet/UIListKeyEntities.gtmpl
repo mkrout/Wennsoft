@@ -17,14 +17,19 @@
 		    String actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + addKeyEntitiesAction);
 		    String link = uicomponent.event(addKeyEntitiesAction);
 	    %>
-                 <a href="$link" class="actionIcon" title="$actionLabel"><i class="uiIconPlus uiIconLightGray"></i></a>
-                 
-    </div>  
+        <a href="$link" class="actionIcon" title="$actionLabel"><i class="uiIconPlus uiIconLightGray"></i></a>
+        <% 
+	        String deleteAction = "DeleteKeyEntities"; 
+		    actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + deleteAction);
+		    link = uicomponent.event(deleteAction);
+	    %>
+	    <a href="$link" class="actionIcon" title="$actionLabel"><i class="uiIconDelete uiIconLightGray"></i></a>
+    </div> 
     <div class="uiAction uiActionBorder">
         <%
             for(String action : uicomponent.getActions())
             {
-                if (!action.equals("AddKeyEntities"))
+                if (!action.equals(addKeyEntitiesAction) && !action.equals(deleteAction))
                 {
                 	actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + action) ;
                     link = uicomponent.event(action);

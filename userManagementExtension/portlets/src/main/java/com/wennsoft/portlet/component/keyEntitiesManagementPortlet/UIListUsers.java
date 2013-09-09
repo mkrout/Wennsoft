@@ -135,7 +135,7 @@ public class UIListUsers extends UISearch
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
             uiListUsers.setRendered(false);
             UIListKeyEntities uiListKeyEntities = uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class);
-            uiListKeyEntities.init(userName);
+            uiListKeyEntities.init(userName, null);
             uiListKeyEntities.setRendered(true);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
         }

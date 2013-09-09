@@ -5,12 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import org.exoplatform.commons.serialization.api.annotations.Serialized;
 import org.exoplatform.commons.utils.SerializablePageList;
-import org.exoplatform.portal.webui.container.UIContainer;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
-import org.exoplatform.webui.core.lifecycle.UIContainerLifecycle;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.Event.Phase;
@@ -26,18 +24,20 @@ import org.exoplatform.webui.form.input.UICheckBoxInput;
  * @author MedAmine Krout
  */
 @ComponentConfig
-        (
-                lifecycle = UIFormLifecycle.class,
-                template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIListKeyEntities.gtmpl",
-                events =
-                        {
-                                @EventConfig(listeners = UIListKeyEntities.SelectBoxActionListener.class, phase=Phase.DECODE),
-                                @EventConfig(listeners = UIListKeyEntities.ShowPageActionListener.class),
-                @EventConfig(listeners = UIListKeyEntities.SaveActionListener.class),
-                                @EventConfig(listeners = UIListKeyEntities.BackActionListener.class, phase = Phase.ANY),
-                @EventConfig(listeners = UIListKeyEntities.AddKeyEntitiesActionListener.class, phase = Phase.DECODE)
-                        }
-        )
+    (
+        lifecycle = UIFormLifecycle.class,
+        template =  "app:/groovy/webui/component/keyEntitiesManagementPortlet/UIListKeyEntities.gtmpl",
+        events =
+            {
+        	    @EventConfig(listeners = UIListKeyEntities.AddKeyEntitiesActionListener.class, phase = Phase.DECODE),
+        	    @EventConfig(listeners = UIListKeyEntities.BackActionListener.class, phase = Phase.ANY),
+        	    @EventConfig(listeners = UIListKeyEntities.DeleteKeyEntitiesActionListener.class, phase = Phase.DECODE),
+        	    @EventConfig(listeners = UIListKeyEntities.SaveActionListener.class),
+                @EventConfig(listeners = UIListKeyEntities.SelectBoxActionListener.class, phase=Phase.DECODE),
+                @EventConfig(listeners = UIListKeyEntities.ShowPageActionListener.class),
+                
+            }
+    )
 @Serialized
 public class UIListKeyEntities extends UIForm
 {
@@ -45,42 +45,51 @@ public class UIListKeyEntities extends UIForm
     public final static String DELETE = "delete";
     private static String userName;
     private List<String> selectedKeys = new ArrayList<String>();
-    private void addSelectedKey(String key)
-    {
-        selectedKeys.add(key);
-    }
-    private void clearSelectedKeys()
-    {
-        selectedKeys.clear();
-    }
-    private void removeUnSelectedKey(String key)
-    {
-        selectedKeys.remove(key);
-    }
+    private static List<KeyEntity> listKeyEntities = new ArrayList<KeyEntity>();
+    
     private List<String> getSelectedKeys()
     {
         return Collections.unmodifiableList(selectedKeys);
     }
-
-    public void init(String userName_) throws Exception
+    
+    private void addSelectedKey(String key)
+    {
+        selectedKeys.add(key);
+    }
+    
+    private void clearSelectedKeys()
+    {
+        selectedKeys.clear();
+    }
+    
+    private void removeUnSelectedKey(String key)
+    {
+        selectedKeys.remove(key);
+    }
+    
+    public void addAllListKeyEntities(List<KeyEntity> listKeyEntities_)
+    {
+    	listKeyEntities.addAll(listKeyEntities_);
+    }
+    
+    public List<KeyEntity> getListKeyEntities()
+    {
+        return listKeyEntities;
+    }
+    
+    public void init(String userName_, List<KeyEntity> listSelectedKeyEntities) throws Exception
     {
         userName = userName_;
-
         UIFormInputSet accountInputSet = getChild(UIFormInputSet.class);
-
         if (accountInputSet != null)
         {
             removeChild(UIFormInputSet.class);
         }
-
         addChild(new UIAccountEditInputSet("UIAccountEditInputSet"));
         OrganizationService service = getApplicationComponent(OrganizationService.class);
         User user = service.getUserHandler().findUserByName(userName);
-
         getChild(UIAccountEditInputSet.class).setValue(user);
-
         UIFormTableIteratorInputSet uiFormTableInputSet = createUIComponent(UIFormTableIteratorInputSet.class, null, TABLE_NAME);
-
         List<UIFormInputSet> uiFormInputSetList = new ArrayList<UIFormInputSet>();
         UICheckBoxInput uiCheckBoxInput;
         String[] columnsTable = {"connectId","key", DELETE};
@@ -89,24 +98,23 @@ public class UIListKeyEntities extends UIForm
         uiFormTableInputSet.setName(TABLE_NAME);
         uiFormTableInputSet.setColumns(columnsTable);
         addChild(uiFormTableInputSet);
-        List<KeyEntity> listKeyEntities = new ArrayList<KeyEntity>();
-        String keyEntities = Utils.getAttributeUserProfile(userName, "keyEntities");
-        KeyEntity keyEntity;
-        if (keyEntities != null)
-        {
-            String[] splittedKeyEntities = keyEntities.split("@");
-            int count = 0;
-            for (String splittedKeyEntity : splittedKeyEntities)
+        if (listSelectedKeyEntities == null)
+        {	
+            String keyEntities = Utils.getAttributeUserProfile(userName, "keyEntities");
+            KeyEntity keyEntity;
+            if (keyEntities != null)
             {
-                if (!splittedKeyEntity.equals(""))
+                String[] splittedKeyEntities = keyEntities.split("@");
+                for (String splittedKeyEntity : splittedKeyEntities)
                 {
-                    keyEntity = new KeyEntity(String.valueOf(count), splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
-                    listKeyEntities.add(keyEntity);
-                    count++;
+                    if (!splittedKeyEntity.equals(""))
+                    {
+                        keyEntity = new KeyEntity(splittedKeyEntity.split("/")[0], splittedKeyEntity.split("/")[1]);
+                        listKeyEntities.add(keyEntity);
+                    }
                 }
             }
         }
-
         for (KeyEntity keyEntity_ : listKeyEntities)
         {
             uiFormInputSet = new UIFormInputSet(columnsTable[0]);
@@ -124,13 +132,75 @@ public class UIListKeyEntities extends UIForm
         setActions(new String[] { "AddKeyEntities", "Save", "Back" });
     }
 
+    public static class AddKeyEntitiesActionListener extends EventListener<UIListKeyEntities>
+    {
+        public void execute(Event<UIListKeyEntities> event) throws Exception
+        {
+            UIListKeyEntities uiListKeyEntities = event.getSource();
+            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
+            uiKeyEntitiesManagementPortlet.setAddPopup(userName, listKeyEntities);
+        }
+    }
+    
+    public static class BackActionListener extends EventListener<UIListKeyEntities> {
+        public void execute(Event<UIListKeyEntities> event) throws Exception {
+            UIListKeyEntities uiListKeyEntities = event.getSource();
+            uiListKeyEntities.clearSelectedKeys();
+            listKeyEntities.clear();
+            //UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
+            //UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
+            uiListKeyEntities.setRenderSibling(UIListUsers.class);
+            //accountInput.reset();
+            // userProfile.reset();
+            event.getRequestContext().setProcessRender(true);
+        }
+    }
+    
+    public static class DeleteKeyEntitiesActionListener extends EventListener<UIListKeyEntities> {
+        public void execute(Event<UIListKeyEntities> event) throws Exception {
+        	UIListKeyEntities uiListKeyEntities = event.getSource();
+        	List<KeyEntity> listSelectedKeyEntities = new ArrayList<KeyEntity>();
+        	for (KeyEntity keyEntity : listKeyEntities)
+        	{
+                for (String selectedKeyEntity : uiListKeyEntities.getSelectedKeys())
+        		{
+        		    if (keyEntity.getKey().equals(selectedKeyEntity))
+        		    {
+        		        listSelectedKeyEntities.add(keyEntity);
+        		    	break;
+        		    }
+        		}
+        	}
+        	listKeyEntities.removeAll(listSelectedKeyEntities);
+        	uiListKeyEntities.init(userName, listSelectedKeyEntities);
+        	uiListKeyEntities.clearSelectedKeys();
+        	event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
+        }
+    }
+    
+    public static class SaveActionListener extends EventListener<UIListKeyEntities> {
+        public void execute(Event<UIListKeyEntities> event) throws Exception {
+        	UIListKeyEntities uiListKeyEntities = event.getSource();
+        	String keyEntities = new String();
+        	for (KeyEntity keyEntity : listKeyEntities)
+        	{
+        		keyEntities += "@" + keyEntity.getConnectId() + "/" + keyEntity.getKey();
+        	}
+        	uiListKeyEntities.clearSelectedKeys();
+        	listKeyEntities.clear();
+        	Utils.setAttributeUserProfile(userName, "keyEntities", !keyEntities.equals("")?keyEntities.substring(1):keyEntities);
+        	uiListKeyEntities.init(userName, null);
+        	event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
+        }
+    }
+    
     static public class SelectBoxActionListener extends EventListener<UIListKeyEntities>
     {
         @Override
         public void execute(Event<UIListKeyEntities> event) throws Exception
         {
-            UIListKeyEntities UIListKeyEntities = event.getSource();
-            UIFormTableIteratorInputSet uiFormTableIteratorInputSet = UIListKeyEntities.getChild(UIFormTableIteratorInputSet.class);
+            UIListKeyEntities uiListKeyEntities = event.getSource();
+            UIFormTableIteratorInputSet uiFormTableIteratorInputSet = uiListKeyEntities.getChild(UIFormTableIteratorInputSet.class);
             UIFormPageIterator uiIterator = uiFormTableIteratorInputSet.getChild(UIFormPageIterator.class);
             List<UIFormInputSet> uiFormInputSetList = uiIterator.getCurrentPageData();
             List<UICheckBoxInput> listCheckBoxInputs =  new ArrayList<UICheckBoxInput>();
@@ -144,78 +214,35 @@ public class UIListKeyEntities extends UIForm
                 {
                     if (uiCheckBoxInput.isChecked())
                     {
-                        if (!UIListKeyEntities.getSelectedKeys().contains(uiCheckBoxInput.getName()))
+                        if (!uiListKeyEntities.getSelectedKeys().contains(uiCheckBoxInput.getName()))
                         {
-                            UIListKeyEntities.addSelectedKey(uiCheckBoxInput.getName());
+                        	uiListKeyEntities.addSelectedKey(uiCheckBoxInput.getName());
                         }
                     }
                     else
                     {
-                        if (UIListKeyEntities.getSelectedKeys().contains(uiCheckBoxInput.getName()))
+                        if (uiListKeyEntities.getSelectedKeys().contains(uiCheckBoxInput.getName()))
                         {
-                            UIListKeyEntities.removeUnSelectedKey(uiCheckBoxInput.getName());
+                        	uiListKeyEntities.removeUnSelectedKey(uiCheckBoxInput.getName());
                         }
                     }
                 }
             }
         }
     }
-
+    
     public static class ShowPageActionListener extends EventListener<UIListKeyEntities>
     {
         public void execute(Event<UIListKeyEntities> event) throws Exception
         {
-            UIListKeyEntities UIListKeyEntities = event.getSource();
+            UIListKeyEntities uiListKeyEntities = event.getSource();
             UICheckBoxInput uiCheckBoxInput;
-            for (String key : UIListKeyEntities.getSelectedKeys())
+            for (String key : uiListKeyEntities.getSelectedKeys())
             {
-                uiCheckBoxInput = UIListKeyEntities.findComponentById(key);
+                uiCheckBoxInput = uiListKeyEntities.findComponentById(key);
                 uiCheckBoxInput.setChecked(true);
             }
-            event.getRequestContext().addUIComponentToUpdateByAjax(UIListKeyEntities);
+            event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
         }
     }
-
-    public static class SaveActionListener extends EventListener<UIListKeyEntities> {
-        public void execute(Event<UIListKeyEntities> event) throws Exception {
-            System.out.println("Save action");
-        /*    UIListKeyEntities uiListKeyEntities = event.getSource();
-            OrganizationService service = uiListKeyEntities.getApplicationComponent(OrganizationService.class);
-            boolean save = uiListKeyEntities.getChild(UIAccountEditInputSet.class).save(service);
-            if (!save) {
-                return;
-            }
-
-            UIAccountEditInputSet accountInput = uiUserInfo.getChild(UIAccountEditInputSet.class);
-            //UIUserProfileInputSet userProfile = uiUserInfo.getChild(UIUserProfileInputSet.class);
-            uiUserInfo.setRenderSibling(UIListUsers.class);
-            accountInput.reset();
-            //userProfile.reset();
-            event.getRequestContext().setProcessRender(true); */
-        }
-    }
-
-    public static class BackActionListener extends EventListener<UIListKeyEntities> {
-        public void execute(Event<UIListKeyEntities> event) throws Exception {
-            UIListKeyEntities uiListKeyEntities = event.getSource();
-            UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
-            //UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
-            uiListKeyEntities.setRenderSibling(UIListUsers.class);
-            accountInput.reset();
-            // userProfile.reset();
-            event.getRequestContext().setProcessRender(true);
-
-        }
-    }
-
-    public static class AddKeyEntitiesActionListener extends EventListener<UIListKeyEntities>
-    {
-        public void execute(Event<UIListKeyEntities> event) throws Exception
-        {
-            UIListKeyEntities uiListKeyEntities = event.getSource();
-            UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
-            uiKeyEntitiesManagementPortlet.setAddPopup(userName);
-        }
-    }
-
 }
