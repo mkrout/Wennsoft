@@ -43,11 +43,11 @@ import org.exoplatform.webui.form.input.UICheckBoxInput;
 @Serialized
 public class UIListKeyEntities extends UIForm
 {
-    public final static String TABLE_NAME =  "UIListKeyEntities";
-    public final static String DELETE = "delete";
-    private static String userName;
-    private List<String> selectedKeys = new ArrayList<String>();
+	public final static String DELETE = "delete";
+	public final static String TABLE_NAME =  "UIListKeyEntities";
+	private List<String> selectedKeys = new ArrayList<String>();
     private static List<KeyEntity> listKeyEntities = new ArrayList<KeyEntity>();
+    private static String userName;
     
     private List<String> getSelectedKeys()
     {
@@ -149,11 +149,7 @@ public class UIListKeyEntities extends UIForm
             UIListKeyEntities uiListKeyEntities = event.getSource();
             uiListKeyEntities.clearSelectedKeys();
             listKeyEntities.clear();
-            //UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
-            //UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
             uiListKeyEntities.setRendered(false);
-            //accountInput.reset();
-            // userProfile.reset();
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListKeyEntities.getParent();
             UIListUsers uiListUsers = uiKeyEntitiesManagementPortlet.getChild(UIListUsers.class);
             uiListUsers.getChild(UIGrid.class).setRendered(true);
@@ -198,7 +194,6 @@ public class UIListKeyEntities extends UIForm
             uiListUsers.getChild(UIGrid.class).setRendered(true);
         	uiListKeyEntities.setRendered(false);
         	Utils.setAttributeUserProfile(userName, "keyEntities", !keyEntities.equals("")?keyEntities.substring(1):keyEntities);
-        	//event.getRequestContext().addUIComponentToUpdateByAjax(uiListKeyEntities);
         }
     }
     

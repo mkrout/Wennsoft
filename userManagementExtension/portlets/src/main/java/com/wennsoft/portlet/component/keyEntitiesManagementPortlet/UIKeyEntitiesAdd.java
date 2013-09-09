@@ -135,7 +135,6 @@ public class UIKeyEntitiesAdd extends UIForm
                 throwable.printStackTrace();
             }
         }
-
         UIFormPageIterator uiIterator = uiFormTableInputSet.getChild(UIFormPageIterator.class);
         SerializablePageList<UIFormInputSet> pageList = new SerializablePageList<UIFormInputSet>(UIFormInputSet.class, uiFormInputSetList, 3);
         uiIterator.setPageList(pageList);

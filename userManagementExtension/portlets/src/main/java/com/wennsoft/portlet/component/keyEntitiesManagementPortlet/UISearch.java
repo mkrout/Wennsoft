@@ -10,14 +10,16 @@ import org.exoplatform.webui.form.UIFormInputSet;
 
 @Serialized
 @ComponentConfig()
-public abstract class UISearch extends UIContainer {
-
-    public UISearch(List<SelectItemOption<String>> searchOption) throws Exception {
+public abstract class UISearch extends UIContainer 
+{
+    public UISearch(List<SelectItemOption<String>> searchOption) throws Exception 
+    {
         UISearchForm uiForm = addChild(UISearchForm.class, null, null);
         uiForm.setOptions(searchOption);
     }
 
-    public UISearchForm getUISearchForm() {
+    public UISearchForm getUISearchForm() 
+    {
         return (UISearchForm) getChild(0);
     }
 

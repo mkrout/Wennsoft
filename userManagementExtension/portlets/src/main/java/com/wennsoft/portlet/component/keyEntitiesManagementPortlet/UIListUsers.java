@@ -132,7 +132,6 @@ public class UIListUsers extends UISearch
             UIListUsers uiListUsers = event.getSource();
             String userName = event.getRequestContext().getRequestParameter(OBJECTID);
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
-            //uiListUsers.getChild(UISearchForm.class).setRendered(false);
             uiListUsers.getChild(UIGrid.class).setRendered(false);
             UIListKeyEntities uiListKeyEntities = uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class);
             uiListKeyEntities.init(userName, null);

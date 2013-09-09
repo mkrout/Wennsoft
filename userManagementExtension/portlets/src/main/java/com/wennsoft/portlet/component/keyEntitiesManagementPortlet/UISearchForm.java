@@ -20,17 +20,12 @@ import org.exoplatform.webui.form.UIFormStringInput;
 @ComponentConfig(lifecycle = UIFormLifecycle.class, template = "system:/groovy/webui/form/UISearchForm.gtmpl", events = @EventConfig(listeners = UISearchForm.QuickSearchActionListener.class))
 @Serialized
 public class UISearchForm extends UIForm {
-    /**
-     * The name of the quick search set
-     */
-    public static final String QUICK_SEARCH_SET = "QuickSearchSet";
+	
+	public static final String ADVANCED_SEARCH_SET = "AdvancedSearchSet";
+	public static final String QUICK_SEARCH_SET = "QuickSearchSet";
 
-    /**
-     * The name of the advanced search set
-     */
-    public static final String ADVANCED_SEARCH_SET = "AdvancedSearchSet";
-
-    public UISearchForm() {
+    public UISearchForm() 
+    {
         UIFormInputSet uiQuickSearchSet = new UIFormInputSet(QUICK_SEARCH_SET);
         uiQuickSearchSet.addUIFormInput(new UIFormStringInput("searchTerm", null, null));
         uiQuickSearchSet.addUIFormInput(new UIFormSelectBox("searchOption", null, null));
@@ -40,25 +35,31 @@ public class UISearchForm extends UIForm {
         uiAdvancedSearchSet.setRendered(false);
     }
 
-    public void setOptions(List<SelectItemOption<String>> options) {
+    public void setOptions(List<SelectItemOption<String>> options) 
+    {
         UIFormSelectBox uiSelect = (UIFormSelectBox) getQuickSearchInputSet().getChild(1);
         uiSelect.setOptions(options);
     }
 
-    public UIFormInputSet getQuickSearchInputSet() {
+    public UIFormInputSet getQuickSearchInputSet() 
+    {
         return (UIFormInputSet) getChild(0);
     }
 
-    public UIFormInputSet getAdvancedSearchInputSet() {
+    public UIFormInputSet getAdvancedSearchInputSet() 
+    {
         return (UIFormInputSet) getChild(1);
     }
 
-    public void addAdvancedSearchInput(UIFormInput input) {
+    public void addAdvancedSearchInput(UIFormInput input) 
+    {
         getAdvancedSearchInputSet().addUIFormInput(input);
     }
 
-    public static class QuickSearchActionListener extends EventListener<UISearchForm> {
-        public void execute(Event<UISearchForm> event) throws Exception {
+    public static class QuickSearchActionListener extends EventListener<UISearchForm> 
+    {
+        public void execute(Event<UISearchForm> event) throws Exception 
+        {
             UISearchForm uiForm = event.getSource();
             UIListUsers uiListUsers = uiForm.getParent();
             uiListUsers.quickSearch(uiForm.getQuickSearchInputSet());
@@ -66,23 +67,23 @@ public class UISearchForm extends UIForm {
             UIKeyEntitiesManagementPortlet uiKeyEntitiesManagementPortlet = uiListUsers.getParent();
             uiKeyEntitiesManagementPortlet.getChild(UIListKeyEntities.class).setRendered(false);
             event.getRequestContext().addUIComponentToUpdateByAjax(uiKeyEntitiesManagementPortlet);
-            /*
-             * for (UIComponent child : uiSearch.getChildren()) { if (child.isRendered())
-             * event.getRequestContext().addUIComponentToUpdateByAjax(child); }
-             */
         }
     }
 
-    public static class ShowAdvancedSearchActionListener extends EventListener<UISearchForm> {
-        public void execute(Event<UISearchForm> event) throws Exception {
+    public static class ShowAdvancedSearchActionListener extends EventListener<UISearchForm> 
+    {
+        public void execute(Event<UISearchForm> event) throws Exception 
+        {
             UISearchForm uiForm = event.getSource();
             UISearch uiSearch = uiForm.getParent();
             event.getRequestContext().addUIComponentToUpdateByAjax(uiSearch);
         }
     }
 
-    public static class CancelAdvancedSearchActionListener extends EventListener<UISearchForm> {
-        public void execute(Event<UISearchForm> event) throws Exception {
+    public static class CancelAdvancedSearchActionListener extends EventListener<UISearchForm> 
+    {
+        public void execute(Event<UISearchForm> event) throws Exception 
+        {
             UISearchForm uiForm = event.getSource();
             UISearch uiSearch = uiForm.getParent();
             event.getRequestContext().addUIComponentToUpdateByAjax(uiSearch);

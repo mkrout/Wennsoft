@@ -22,7 +22,6 @@ public class UIKeyEntitiesManagementPortlet extends UIPortletApplication
     {
         addChild(UIListUsers.class, null, null).setRendered(true);
         UIListKeyEntities uiListKeyEntities = getChild(UIListKeyEntities.class);
-
         if (uiListKeyEntities != null)
         {
             removeChild(UIListKeyEntities.class);

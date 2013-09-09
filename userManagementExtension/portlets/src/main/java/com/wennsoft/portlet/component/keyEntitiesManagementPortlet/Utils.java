@@ -148,11 +148,11 @@ public class Utils
             HttpResponse response = client.execute(request);
             if (response.getStatusLine().getStatusCode() == 200)
             {   
-                BufferedReader rd = new BufferedReader(
+                BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
                 StringBuffer result = new StringBuffer();
                 String line = "";
-                while ((line = rd.readLine()) != null) 
+                while ((line = bufferedReader.readLine()) != null) 
                 {
                     result.append(line);
                 }
