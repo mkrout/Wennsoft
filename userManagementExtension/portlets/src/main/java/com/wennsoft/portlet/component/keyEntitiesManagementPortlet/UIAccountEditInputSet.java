@@ -102,11 +102,11 @@ public class UIAccountEditInputSet extends UIFormInputSet {
         User user = service.getUserHandler().findUserByName(username);
         if (user == null) {
             uiApp.addMessage(new ApplicationMessage("UIAccountInputSet.msg.user-is-deleted", null, ApplicationMessage.WARNING));
-            UIUserInfo userInfo = getParent();
-            if (userInfo != null) {
-                UIAccountEditInputSet accountInput = userInfo.getChild(UIAccountEditInputSet.class);
-                UIUserProfileInputSet userProfile = userInfo.getChild(UIUserProfileInputSet.class);
-                userInfo.setRenderSibling(UIListUsers.class);
+            UIListKeyEntities uiListKeyEntities = getParent();
+            if (uiListKeyEntities != null) {
+                UIAccountEditInputSet accountInput = uiListKeyEntities.getChild(UIAccountEditInputSet.class);
+                UIUserProfileInputSet userProfile = uiListKeyEntities.getChild(UIUserProfileInputSet.class);
+                uiListKeyEntities.setRenderSibling(UIListUsers.class);
                 accountInput.reset();
                 userProfile.reset();
                 context.setProcessRender(true);
