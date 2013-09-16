@@ -1,7 +1,26 @@
+<%
+  import com.wennsoft.portlet.component.keyEntitiesManagementPortlet.KeyEntity;
+%>  
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/globalize-4.0.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery-2.0.3-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables-1.9.4-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.customizations-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.feature.filter-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.datatables.rowreordering-1.0.0-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.tabletools-2.1.5-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.globalize.customizations-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui-1.10.3-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.combobox-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.customizations-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.datetimepicker-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.spinner-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.timepicker-1.3.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.maskedinput-1.3.1-custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/spin-1.3-custom.js"></script>
 <div>
-<h5>
-    <%= _ctx.appRes("UIListKeyEntities.header.title");%>
-</h5>
+    <h5>
+        <%= _ctx.appRes("UIListKeyEntities.header.title");%>
+    </h5>
 </div>
 <div class="UIForm $uicomponent.id">
     <%uiform.begin()%>
@@ -10,9 +29,102 @@
         {
             uicomponent.renderChild(uiChild);
         }
+        def listKeyEntities = uicomponent.getListKeyEntities();
+        def keyEntities = new String();
+    	for (def keyEntity : listKeyEntities)
+    	{
+    	    keyEntities += "@" + keyEntity.getConnectId() + "/" + keyEntity.getKey();
+    	}
+    	if (!keyEntities.equals(""))
+    	{
+    	    keyEntities = keyEntities.substring(1);
+    	}
     %>
+	<script>
+    var j = jQuery.noConflict();
+    var oTable; 
+    var selected = "";
+    var splittedRowdata;
+    var keyEntities = new String("$keyEntities");
+    entityKeyList = new Array();
+    if (keyEntities != "")
+    {	
+        var splittedKeyEntities = keyEntities.split("@");
+        for (i = 0; i < splittedKeyEntities.length; i++)
+        { 
+            entity = new Array();
+            entity[0] = splittedKeyEntities[i].split("/")[0];
+            entity[1] = splittedKeyEntities[i].split("/")[1];
+            entity[2] = "";  
+            entityKeyList.push(entity);
+        }
+    }    
+    j(document).ready(function() 
+    {
+        oTable = j("#listKeyEntities").dataTable
+        ({
+            "bJQueryUI" : true,
+            "bProcessing": true,
+            sPaginationType: "full_numbers",
+            "aaData": entityKeyList,
+            "oLanguage": 
+            {
+                "sUrl": "/userManagementPortlets/dataTable_locale/dataTable_"+eXo.env.portal.language+".txt"
+            },
+            "aoColumns": 
+            [
+                { "sTitle": "Connect" }, 
+                { "sTitle": "Key" },
+                {"sTitle": "Delete","mRender": 
+                    function (data, type, row) 
+                    {
+                        return "<input type='checkbox'>";
+                    }
+                }
+            ]
+        });
+    });
+    
+    
+   j("#listKeyEntities").on("click", "tbody tr td input", function () 
+   {
+   	   rowIndex = oTable.fnGetPosition( j(this).closest("tr")[0] );
+   	   rowdata = oTable.fnGetData(rowIndex); 
+       list = rowdata[0] + "/" + rowdata[1];
+       if (selected.indexOf(list) == -1)
+       {
+           selected = selected + "@" + list;
+       }
+       else
+       {
+       	   selected = selected.split("@" + list)[0] + selected.split("@" + list)[1];
+       }
+   });
+   
+   function get()
+   {  
+       selectedKeys = document.getElementById("selectedKeysRemove");
+   	   selectedKeys.value = selected;
+   }
+    </script>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="listKeyEntities">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+			    <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+			    <td></td>
+            </tr>
+        </tbody>
+    </table>
     <div>
-        <% 
+	    <% 
 	        String addKeyEntitiesAction = "AddKeyEntities"; 
 		    String actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + addKeyEntitiesAction);
 		    String link = uicomponent.event(addKeyEntitiesAction);
@@ -21,17 +133,17 @@
         <% 
 	        String deleteAction = "DeleteKeyEntities"; 
 		    actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + deleteAction);
-		    link = uicomponent.event(deleteAction);
+		    link = "javascript:get();" + uicomponent.event(deleteAction).split("javascript:")[1];
 	    %>
 	    <a href="$link" class="actionIcon" title="$actionLabel"><i class="uiIconDelete uiIconLightGray"></i></a>
-    </div> 
-    <div class="uiAction uiActionBorder">
+	</div>    
+    <div class="uiAction uiActionBorder">	    
         <%
             for(String action : uicomponent.getActions())
             {
                 if (!action.equals(addKeyEntitiesAction) && !action.equals(deleteAction))
                 {
-                	actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + action) ;
+                    actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + action) ;
                     link = uicomponent.event(action);
          %>
                     <a href="$link" class="btn">$actionLabel</a>
