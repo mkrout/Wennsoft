@@ -1,57 +1,53 @@
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/globalize-4.0.1.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery-2.0.3-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables-1.9.4-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.customizations-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.feature.filter-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.datatables.rowreordering-1.0.0-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.tabletools-2.1.5-min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.globalize.customizations-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui-1.10.3-min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.combobox-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.customizations-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.datetimepicker-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.spinner-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.timepicker-1.3.1.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.maskedinput-1.3.1-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/spin-1.3-custom.js"></script>
 <%
     def keyEntities = uicomponent.getKeyEntities();
 %>
 <script>
-var j = jQuery.noConflict();
-var oTable;
-var selected = "";
-var keyEntities = new String("$keyEntities");
-var splittedRowdata;
-
-j(document).ready(function() 
-{
-    oTable = j("#addKeyEntities").dataTable
-    ({
-        "bJQueryUI" : true,
-        "bProcessing": true,
-        "bServerSide": true,
-        sPaginationType: "full_numbers",
-        "oLanguage": 
-        {
-            "sUrl": "/userManagementPortlets/dataTable_locale/dataTable_"+eXo.env.portal.language+".txt"
-        },
-        "sAjaxSource": "/interaction-manager/service/bridge/customer-connect/Customers?fields=CustomerNumber,CustomerName",
-        "aoColumns": 
-        [
-            { "sTitle": "CustomerNumber" }, 
-            { "sTitle": "CustomerName" },
-            {"sTitle": "Include","mRender": 
-                function (data, type, row) 
-                {
-        	        splittedRowdata = row[0] + "," + row[1];
-        	        list = "CustomerNumber:" + row[0] + ";CustomerName:" + row[1];
-                    if (keyEntities.indexOf(splittedRowdata) != -1)
-                    { 
-        	            return "<input type='checkbox' disabled='disabled'>";
-                    }
-                    else
+    var j = jQuery.noConflict();
+    var oTable;
+    var selected = "";
+    var keyEntities = new String("$keyEntities");
+    entityList = new Array();
+    var splittedKeys = keyEntities.split(";");
+    for (i = 0; i < splittedKeys.length; i++)
+    { 
+       entitySel = new Array();
+       entitySel[0] = "CustomerNumber";
+       entitySel[1] = "!=";  
+       entitySel[2] = splittedKeys[i].split(",")[0];
+       entityList.push(entitySel);
+       entitySel = new Array();
+       entitySel[0] = "CustomerName";
+       entitySel[1] = "!=";  
+       entitySel[2] = splittedKeys[i].split(",")[1];
+       entityList.push(entitySel);
+    }
+    j(document).ready(function() 
+    {
+        oTable = j("#addKeyEntities").dataTable
+        ({
+            "bJQueryUI" : true,
+            "bProcessing": true,
+            "bServerSide": true,
+            sPaginationType: "full_numbers",
+            "oLanguage": 
+            {
+                "sUrl": "/userManagementPortlets/dataTable_locale/dataTable_"+eXo.env.portal.language+".txt"
+            },
+            "sAjaxSource": "/interaction-manager/service/bridge/customer-connect/Customers?fields=CustomerNumber,CustomerName",
+            "aoColumns": 
+            [
+                { "sTitle": "CustomerNumber" }, 
+                { "sTitle": "CustomerName" },
+                {"sTitle": "Include","mRender": 
+                    function (data, type, row) 
                     {
+        	            list = "CustomerNumber:" + row[0] + ";CustomerName:" + row[1];
                         if (selected.indexOf(list) == -1)
                         {	
             	            return "<input type='checkbox'>";
@@ -60,34 +56,45 @@ j(document).ready(function()
                         {
                             return "<input type='checkbox' checked='checked'>";
                         }
-                    }	
+                    }
                 }
+            ],
+            fnServerParams: function(data)
+            {
+                var filters =
+                {
+                    op: "&&",
+                    conds:entityList,
+                };
+                data.push(
+                {
+                    name: "Filters",
+                    value: JSON.stringify(filters),
+                });
             }
-        ]
+        });
     });
-});
 
-
-j("#addKeyEntities").on("click", "tbody tr td input", function () 
-{
-	rowIndex = oTable.fnGetPosition( j(this).closest("tr")[0] );
-	rowdata = oTable.fnGetData(rowIndex);
-    list = "CustomerNumber:" + rowdata[0] + ";CustomerName:" + rowdata[1];
-    if (selected.indexOf(list) == -1)
+    j("#addKeyEntities").on("click", "tbody tr td input", function ()
     {
-        selected = selected + "@Customer/" + list;
-    }
-    else
-    {
-    	selected = selected.split("@Customer/" + list)[0] + selected.split("Customer/" + list)[1];
-    }
-});
+	    rowIndex = oTable.fnGetPosition( j(this).closest("tr")[0] );
+	    rowdata = oTable.fnGetData(rowIndex);
+        list = "CustomerNumber:" + rowdata[0] + ";CustomerName:" + rowdata[1];
+        if (selected.indexOf(list) == -1)
+        {
+            selected = selected + "@Customer/" + list;
+        }
+        else
+        {
+    	    selected = selected.split("@Customer/" + list)[0] + selected.split("Customer/" + list)[1];
+        }
+    });
 
-function get()
-{  
-    selectedKeys = document.getElementById("selectedKeys");
-    selectedKeys.value = selected;
-}
+    function get()
+    {  
+        selectedKeys = document.getElementById("selectedKeys");
+        selectedKeys.value = selected;
+    }
 </script>
 <div class="uiForm <%=org.exoplatform.wcm.webui.Utils.toLowerCase(uicomponent.id, 2)%>">
     <%
