@@ -12,20 +12,23 @@
     var oTable;
     var selected = "";
     var keyEntities = new String("$keyEntities");
-    entityList = new Array();
-    var splittedKeys = keyEntities.split(";");
-    for (i = 0; i < splittedKeys.length; i++)
-    { 
-       entitySel = new Array();
-       entitySel[0] = "CustomerNumber";
-       entitySel[1] = "!=";  
-       entitySel[2] = splittedKeys[i].split(",")[0];
-       entityList.push(entitySel);
-       entitySel = new Array();
-       entitySel[0] = "CustomerName";
-       entitySel[1] = "!=";  
-       entitySel[2] = splittedKeys[i].split(",")[1];
-       entityList.push(entitySel);
+    if (keyEntities != "")
+    {
+        entityList = new Array();
+        var splittedKeys = keyEntities.split(";");
+        for (i = 0; i < splittedKeys.length; i++)
+        { 
+           entitySel = new Array();
+           entitySel[0] = "CustomerNumber";
+           entitySel[1] = "!=";  
+           entitySel[2] = splittedKeys[i].split(",")[0];
+           entityList.push(entitySel);
+           entitySel = new Array();
+           entitySel[0] = "CustomerName";
+           entitySel[1] = "!=";  
+           entitySel[2] = splittedKeys[i].split(",")[1];
+           entityList.push(entitySel);
+        }
     }
     j(document).ready(function() 
     {
