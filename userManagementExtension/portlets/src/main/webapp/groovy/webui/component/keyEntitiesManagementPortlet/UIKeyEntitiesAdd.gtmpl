@@ -12,9 +12,9 @@
     var oTable;
     var selected = "";
     var keyEntities = new String("$keyEntities");
+	var entityList = new Array();
     if (keyEntities != "")
     {
-        entityList = new Array();
         var splittedKeys = keyEntities.split(";");
         for (i = 0; i < splittedKeys.length; i++)
         { 
