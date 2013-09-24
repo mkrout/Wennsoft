@@ -55,7 +55,7 @@ public class KeyEntitiesManagement implements ResourceContainer
     @POST
     @Path("saveKeyEntities/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveKeyEntities(@PathParam("name") String name, List<KeyEntity> listKeyEntities) 
+    public void saveKeyEntities(@Context HttpServletRequest request, @PathParam("name") String name, List<KeyEntity> listKeyEntities)
     {    
         try
         {
@@ -63,13 +63,6 @@ public class KeyEntitiesManagement implements ResourceContainer
             OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
             UserProfileHandler userProfileHandler = organizationService.getUserProfileHandler();
             UserProfile userProfile = userProfileHandler.findUserProfileByName(name);
-//            String keyEntities = "";
-//            for (KeyEntity keyEntity : listKeyEntities)
-//            {
-//            	keyEntities += "@" + keyEntity.getConnectId() + "/" + keyEntity.getKey();
-//            }
-//            
-//            userProfile.setAttribute("keyEntities", keyEntities != "" ? keyEntities.substring(1):"");
             userProfile.setAttribute("keyEntities", getListKeyEntities(listKeyEntities));
             userProfileHandler.saveUserProfile(userProfile, false);
             RequestLifeCycle.end();
@@ -78,17 +71,24 @@ public class KeyEntitiesManagement implements ResourceContainer
         {
             e.printStackTrace();
         }
-//      HttpSession httpSession = request.getSession();
-//      httpSession.setAttribute("keyEntities", "");
+      HttpSession httpSession = request.getSession();
+      httpSession.setAttribute("keyEntities", null);
     }
     
     @POST
-    @Path("setKeyEntities/{name}")
+    @Path("setKeyEntities")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void setKeyEntities(@Context HttpServletRequest request, @PathParam("name") String name, List<KeyEntity> listKeyEntities) 
+    public void setKeyEntities(@Context HttpServletRequest request, List<KeyEntity> listKeyEntities)
     {    
       HttpSession httpSession = request.getSession();
-      httpSession.setAttribute("keyEntities", getListKeyEntities(listKeyEntities));
+      if (listKeyEntities!=null)
+      {
+          httpSession.setAttribute("keyEntities", getListKeyEntities(listKeyEntities));
+      }
+      else
+      {
+          httpSession.setAttribute("keyEntities", null);
+      }
     }
     
     private String getListKeyEntities (List<KeyEntity> listKeyEntities)
