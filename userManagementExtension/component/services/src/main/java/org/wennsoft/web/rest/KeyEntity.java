@@ -5,16 +5,16 @@ public class KeyEntity
 	private String connectId;
 	private String key;
 	
+    public KeyEntity() 
+    {
+	}
+	
     public KeyEntity(String connectId, String key) 
     {
     	this.connectId = connectId;
 	    this.key = key;
     }
     
-    public KeyEntity() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public String getConnectId() 
     {
 	    return connectId; 
