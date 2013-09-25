@@ -7,6 +7,8 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.exoplatform.portal.webui.util.Util;
 import org.w3c.dom.Element;
 
 public class UserMangementPortlet extends GenericPortlet
@@ -66,8 +68,28 @@ public class UserMangementPortlet extends GenericPortlet
         element = response.createElement("script");
         element.setAttribute("type", "text/javascript");
         element.setAttribute("language", "javascript");
+        element.setAttribute("src", request.getContextPath() + "/js/globalize-4.0.1.js");
+        response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+
+        element = response.createElement("script");
+        element.setAttribute("type", "text/javascript");
+        element.setAttribute("language", "javascript");
+        element.setAttribute("src", request.getContextPath() + "/js/jquery.globalize.customizations-custom.js");
+        response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+
+        element = response.createElement("script");
+        element.setAttribute("type", "text/javascript");
+        element.setAttribute("language", "javascript");
+        element.setAttribute("src", String.format("/interaction-manager/service/resource/customer-connect/localization/globalize.culture.%s.js",
+                Util.getPortalRequestContext().getLocale().toString().toLowerCase()));
+        response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+
+        element = response.createElement("script");
+        element.setAttribute("type", "text/javascript");
+        element.setAttribute("language", "javascript");
         element.setAttribute("src", request.getContextPath() + "/js/view.js");
         response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
+
     }
 
     @Override
