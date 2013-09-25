@@ -2,7 +2,6 @@
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables-1.9.4-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.customizations-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.feature.filter-custom.js"></script>
-<script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.jqueryui.datatables.rowreordering-1.0.0-custom.js"></script>
 <script type="text/javascript" charset="utf-8" src="/interaction-manager/js/jquery.datatables.tabletools-2.1.5-min.js"></script>
 <%
     def keyEntities = uicomponent.getKeyEntities();
