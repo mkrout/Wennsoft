@@ -64,13 +64,13 @@ function createTable(source)
         "aoColumns": 
         [
 	        {
-	            "sTitle": "Connect"
+	        	"sTitle": Globalize.localize("Connect"),
 	        }, 
 	        {
-	           "sTitle": "Key"
+	        	"sTitle": Globalize.localize("connectkey"),
 	        }, 
 	        {
-	            "sTitle": "Delete",
+	        	"sTitle": Globalize.localize("delete"),
 	            "mRender": function (data, type, row) 
 	            {
 	                return "<input type='checkbox'>";
@@ -126,7 +126,7 @@ function setKeys(listKey_)
 
 $(function () 
 {
-    var test=true;
+	Globalize.culture(eXo.env.portal.language);
     window.require(["SHARED/bootstrap", "SHARED/portalControl"], function (createTab) 
     {
         var originalAjaxGet = window.ajaxGet;
@@ -143,7 +143,7 @@ $(function ()
         };
         var addTab = function () 
         {
-            setTimeout(function () 
+            setInterval(function () 
             {
 	            entityKeyList = new Array();
 	            var selected = "";
@@ -153,7 +153,7 @@ $(function ()
 	            if (($userNameInput.length) && (typeof ($("#addKeys-tab")[0]) == "undefined")) 
 	            {
 	                var keyEntities = "";
-	                $uiOrganizationPortletDiv.find("#UIUserManagement ul").append("<li><a data-toggle='tab' data-target='#addKeys-tab'>Manage Keys</a></li>");
+	                $uiOrganizationPortletDiv.find("#UIUserManagement ul").append("<li><a data-toggle='tab' data-target='#addKeys-tab'>"+Globalize.localize('ManageKeys')+"</a></li>");
 	                $uiOrganizationPortletDiv.find(".tab-content").append("<div id='addKeys-tab' class='tab-pane fade'></div>");
 	                $("#addKeys-tab").append("<div id='addKeys'></div>");
 	                $("#addKeys").append("<table id='listKeyEntities' class='display'></table>");
@@ -181,14 +181,14 @@ $(function ()
 	                         createTable(keyEntities);
 				        }
 				    );
-	                $("#addKeys").append("<button id='my-button' type='button'>ADD</button>");
+	                $("#addKeys").append("<button id='my-button' type='button'>"+Globalize.localize('add')+"</button>");
 	                $("#addKeys").append("<div id='add_pop_up' style='display:none' ></div>");
-	                $("#addKeys").append("<button id='delete' type='button'>delete</button>");
+	                $("#addKeys").append("<button id='delete' type='button'>"+Globalize.localize('delete')+"</button>");
 	                $("#add_pop_up").append("<table id='addKeyEntities' class='display'></table>");
 	                $("#addKeyEntities").append("<thead></thead>").append("<tr><th></th><th></th><th></th></tr>");
 	                $("#addKeyEntities").append("<tbody></tbody>").append("<tr><td></td><td></td><td></td></tr>");
-	                $("#add_pop_up").append("<button id='button-save-add' type='button' class='b-close'>Add</button>");
-	                $("#add_pop_up").append("<button id='button-cancel-add' type='button' class='b-close'>Cancel</button>");
+	                $("#add_pop_up").append("<button id='button-save-add' type='button' class='b-close'>"+Globalize.localize('add')+"</button>");
+	                $("#add_pop_up").append("<button id='button-cancel-add' type='button' class='b-close'>"+Globalize.localize('cancel')+"</button>");
 	                $("#addKeyEntities").on("click", "tbody tr td input", function () 
 	                {
 		                rowIndex = addTable.fnGetPosition($(this).closest("tr")[0]);
@@ -333,7 +333,7 @@ $(function ()
 	                                "sTitle": "CustomerName"
 	                            }, 
 	                            {
-	                                "sTitle": "Include",
+	                            	"sTitle": Globalize.localize("include"),
 	                                "mRender": function (data, type, row) 
 	                                {
 	                                    list = "CustomerNumber:" + row[0] + "|CustomerName:" + row[1];
@@ -373,7 +373,7 @@ $(function ()
 	                    });
 	                });
 	            }
-            }, 500);
+            }, 0);
         };
     });
 });
