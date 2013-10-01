@@ -83,7 +83,7 @@ public class KeyEntitiesManagement implements ResourceContainer
     public void setKeyEntities(@Context HttpServletRequest request, List<KeyEntity> listKeyEntities)
     {    
         HttpSession httpSession = request.getSession();
-        if (listKeyEntities!=null)
+        if (listKeyEntities != null)
         {
             httpSession.setAttribute("keyEntities", getListKeyEntities(listKeyEntities));
         }
